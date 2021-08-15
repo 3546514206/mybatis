@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 设置日志输出为LOG4J -->
+        <setting name="logImpl" value="LOG4J"/>
+
+        <!-- 将以下画线方式命名的数据库列映射到 Java 对象的驼峰式命名属性中 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <!-- 开启缓存 -->
+        <setting name="localCacheScope" value="SESSION"/>
+    </settings>
+
+
+    <!-- 简化类命名空间 -->
+    <typeAliases>
+        <package name="edu.zjnu.model"/>
+    </typeAliases>
+
+    <!-- 环境配置 -->
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url"
+                          value="jdbc:mysql://81.68.198.75:3306/mybatis?useSSL=false"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="UserMapper.xml"/>
+    </mappers>
+
+</configuration>
