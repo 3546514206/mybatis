@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.zjnu.mybatis.dao.RoleDao">
+
+    <select id="getRoleByName" parameterType="String" resultType="edu.zjnu.mybatis.model.Role">
+        SELECT * FROM role WHERE rolename=#{rolename}
+    </select>
+
+    <select id="getRoleList"  parameterType="int" resultMap="BaseResultMap">
+        select
+        a.id, rolename, alias
+        from role a JOIN user_role b
+        on a.id = b.role_id
+        and b.user_id = #{id}
+    </select>
+
+    <resultMap id="BaseResultMap" type="edu.zjnu.mybatis.model.Role">
+        <id property="id" column="id"></id>
+        <result property="rolename" column="rolename"></result>
+        <result property="alias" column="alias"></result>
+    </resultMap>
+
+    <select id="getAllRoles" resultMap="BaseResultMap">
+        select
+        id,rolename,alias
+        from role
+    </select>
+
+    <delete id="deleteRole" parameterType="String">
+        DELETE FROM role WHERE rolename=#{rolename}
+    </delete>
+
+    <insert id="addRole" parameterType="edu.zjnu.mybatis.model.Role">
+        INSERT INTO role(rolename, alias) VALUES(#{rolename},#{alias})
+    </insert>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.zjnu.mybatis.dao.UserDao">
+
+    <select id="getUserByName" parameterType="String" resultType="edu.zjnu.mybatis.model.User">
+        SELECT * FROM user WHERE username=#{username} limit 1;
+    </select>
+
+
+    <select id="getUserList"  parameterType="int" resultMap="BaseResultMap">
+        select
+        a.id,username,password
+        from user a JOIN user_role b
+        on a.id = b.user_id
+        and b.role_id = #{id}
+    </select>
+
+    <resultMap id="BaseResultMap" type="edu.zjnu.mybatis.model.User">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+    </resultMap>
+
+    <select id="getAllUsers" resultMap="BaseResultMap">
+        select
+        id,username,password
+        from user
+    </select>
+
+
+    <update id="modifyUser" parameterType="Map">
+        UPDATE user SET password=#{param2} WHERE username=#{param1}
+    </update>
+
+    <delete id="deleteUser" parameterType="String">
+        DELETE FROM user WHERE username=#{username}
+    </delete>
+
+    <insert id="addUser" parameterType="edu.zjnu.mybatis.model.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(USERNAME, PASSWORD) VALUES(#{username},#{password})
+    </insert>
+
+</mapper>

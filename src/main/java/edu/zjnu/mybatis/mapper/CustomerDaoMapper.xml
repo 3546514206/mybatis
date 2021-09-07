@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.zjnu.mybatis.dao.CustomerDaoMapper">
+
+    <resultMap id="CustomerResultMap" type="edu.zjnu.mybatis.model.Customer">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <collection property="orders" resultMap="OrdersResult">
+        </collection>
+    </resultMap>
+
+    <resultMap id="OrdersResult" type="edu.zjnu.mybatis.model.Order">
+        <id property="id" column="o_id"/>
+        <result property="name" column="o_name"/>
+        <result property="price" column="price"/>
+    </resultMap>
+
+    <select id="getCustomerList" resultMap="CustomerResultMap">
+        select qc.id, qc.name, qo.id o_id, qo.name o_name, qo.price
+        from q_customer qc
+        join q_order qo on qc.id = qo.customer_id
+    </select>
+
+</mapper>
