@@ -1,6 +1,5 @@
-package edu.wzq.mybatis.dao;
+package edu.zjnu.mybatis.dao;
 
-import edu.zjnu.mybatis.dao.UserDao;
 import edu.zjnu.mybatis.model.User;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

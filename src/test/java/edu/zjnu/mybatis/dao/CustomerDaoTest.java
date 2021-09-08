@@ -1,6 +1,5 @@
-package edu.wzq.mybatis.dao;
+package edu.zjnu.mybatis.dao;
 
-import edu.zjnu.mybatis.dao.CustomerDaoMapper;
 import edu.zjnu.mybatis.model.Customer;
 import edu.zjnu.mybatis.model.Order;
 import org.apache.commons.logging.Log;
