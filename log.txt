@@ -1,127 +1,14 @@
-2021-09-07 17:20:10 [INFO] testGetUserByName
-2021-09-07 17:20:10 [INFO] testAddUser
-2021-09-07 17:20:10 [INFO] testGetAllUsers
-2021-09-07 17:20:10 [INFO] testModifyUser
-2021-09-07 17:20:11 [INFO] testDeleteUser
-2021-09-07 17:20:11 [INFO] testGetUserList
-2021-09-07 17:21:00 [INFO] testGetUserByName
-2021-09-07 17:21:00 [INFO] testAddUser
-2021-09-07 17:21:00 [INFO] testGetAllUsers
-2021-09-07 17:21:00 [INFO] testModifyUser
-2021-09-07 17:21:00 [INFO] testDeleteUser
-2021-09-07 17:21:00 [INFO] testGetUserList
-2021-09-07 17:21:30 [INFO] testGetUserByName
-2021-09-07 17:21:30 [INFO] username=zhenqing.wang,password=123
-2021-09-07 17:21:30 [INFO] testGetUserByName
-2021-09-07 17:21:31 [INFO] testAddUser
-2021-09-07 17:21:31 [INFO] username=zhenqing.wang,password=123
-2021-09-07 17:21:31 [INFO] testAddUser: 1
-2021-09-07 17:21:31 [INFO] testAddUser id: 4
-2021-09-07 17:21:31 [INFO] testGetAllUsers
-2021-09-07 17:21:31 [INFO] testGetAllUsers size:4
-2021-09-07 17:21:31 [INFO] testGetAllUsers username=zhenqing.wang
-2021-09-07 17:21:31 [INFO] testModifyUser
-2021-09-07 17:21:31 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:21:31 [INFO] testModifyUser: true
-2021-09-07 17:21:31 [INFO] testDeleteUser
-2021-09-07 17:21:31 [ERROR] user is null
-2021-09-07 17:21:31 [INFO] testDeleteUser: true
-2021-09-07 17:21:31 [INFO] testGetUserList
-2021-09-07 17:21:31 [INFO] testGetUserList size:1
-2021-09-07 17:22:04 [INFO] testGetRoleByName
-2021-09-07 17:22:04 [INFO] rolename=ROLE_ADMIN,alias=超级管理员
-2021-09-07 17:22:04 [INFO] testAddRole
-2021-09-07 17:22:04 [INFO] testGetAllRoles
-2021-09-07 17:22:05 [INFO] roleList:5
-2021-09-07 17:22:05 [INFO] testDeleteRole
-2021-09-07 17:22:05 [ERROR] role is null
-2021-09-07 17:22:05 [INFO] testGetRoleList
-2021-09-07 17:22:05 [INFO] roleList:0
-2021-09-07 17:22:05 [INFO] testGetUserByName
-2021-09-07 17:22:05 [ERROR] user is null
-2021-09-07 17:22:05 [INFO] testGetUserByName
-2021-09-07 17:22:05 [INFO] testAddUser
-2021-09-07 17:22:05 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:22:05 [INFO] testAddUser: 1
-2021-09-07 17:22:05 [INFO] testAddUser id: 5
-2021-09-07 17:22:05 [INFO] testGetAllUsers
-2021-09-07 17:22:05 [INFO] testGetAllUsers size:3
-2021-09-07 17:22:05 [INFO] testGetAllUsers username=admin
-2021-09-07 17:22:05 [INFO] testModifyUser
-2021-09-07 17:22:05 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:22:05 [INFO] testModifyUser: true
-2021-09-07 17:22:05 [INFO] testDeleteUser
-2021-09-07 17:22:05 [ERROR] user is null
-2021-09-07 17:22:05 [INFO] testDeleteUser: true
-2021-09-07 17:22:05 [INFO] testGetUserList
-2021-09-07 17:22:05 [INFO] testGetUserList size:1
-2021-09-07 17:22:05 [INFO] testGetCustomerList
-2021-09-07 17:25:42 [INFO] testGetRoleByName
-2021-09-07 17:25:43 [ERROR] role is null
-2021-09-07 17:25:43 [INFO] testAddRole
-2021-09-07 17:25:43 [INFO] rolename=ROLE_ADMIN,alias=?????
-2021-09-07 17:25:43 [INFO] testGetAllRoles
-2021-09-07 17:25:43 [INFO] roleList:4
-2021-09-07 17:25:43 [INFO] rolename=ROLE_MANAGER,alias=普通管理员
-2021-09-07 17:25:43 [INFO] rolename=ROLE_USER,alias=普通用户
-2021-09-07 17:25:43 [INFO] rolename=ROLE_ANONYMOUS,alias=未登录用户
-2021-09-07 17:25:43 [INFO] rolename=ROLE_ADMIN,alias=?????
-2021-09-07 17:25:43 [INFO] testDeleteRole
-2021-09-07 17:25:43 [ERROR] role is null
-2021-09-07 17:25:43 [INFO] testGetRoleList
-2021-09-07 17:25:43 [INFO] roleList:0
-2021-09-07 17:25:43 [INFO] testGetUserByName
-2021-09-07 17:25:43 [ERROR] user is null
-2021-09-07 17:25:43 [INFO] testGetUserByName
-2021-09-07 17:25:43 [INFO] testAddUser
-2021-09-07 17:25:43 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:25:43 [INFO] testAddUser: 1
-2021-09-07 17:25:43 [INFO] testAddUser id: 6
-2021-09-07 17:25:43 [INFO] testGetAllUsers
-2021-09-07 17:25:43 [INFO] testGetAllUsers size:3
-2021-09-07 17:25:43 [INFO] testGetAllUsers username=admin
-2021-09-07 17:25:43 [INFO] testModifyUser
-2021-09-07 17:25:43 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:25:43 [INFO] testModifyUser: true
-2021-09-07 17:25:43 [INFO] testDeleteUser
-2021-09-07 17:25:43 [ERROR] user is null
-2021-09-07 17:25:43 [INFO] testDeleteUser: true
-2021-09-07 17:25:43 [INFO] testGetUserList
-2021-09-07 17:25:43 [INFO] testGetUserList size:1
-2021-09-07 17:25:43 [INFO] testGetCustomerList
-2021-09-07 17:26:03 [INFO] testGetUserByName
-2021-09-07 17:26:03 [ERROR] user is null
-2021-09-07 17:26:03 [INFO] testGetUserByName
-2021-09-07 17:26:04 [INFO] testAddUser
-2021-09-07 17:26:04 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:26:04 [INFO] testAddUser: 1
-2021-09-07 17:26:04 [INFO] testAddUser id: 7
-2021-09-07 17:26:04 [INFO] testGetAllUsers
-2021-09-07 17:26:04 [INFO] testGetAllUsers size:3
-2021-09-07 17:26:04 [INFO] testGetAllUsers username=admin
-2021-09-07 17:26:04 [INFO] testModifyUser
-2021-09-07 17:26:04 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:26:04 [INFO] testModifyUser: true
-2021-09-07 17:26:04 [INFO] testDeleteUser
-2021-09-07 17:26:04 [ERROR] user is null
-2021-09-07 17:26:04 [INFO] testDeleteUser: true
-2021-09-07 17:26:04 [INFO] testGetUserList
-2021-09-07 17:26:04 [INFO] testGetUserList size:1
-2021-09-07 17:47:12 [INFO] testGetUserByName
-2021-09-07 17:47:13 [ERROR] user is null
-2021-09-07 17:47:13 [INFO] testGetUserByName
-2021-09-07 17:47:13 [INFO] testAddUser
-2021-09-07 17:47:13 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:47:13 [INFO] testAddUser: 1
-2021-09-07 17:47:13 [INFO] testAddUser id: 8
-2021-09-07 17:47:13 [INFO] testGetAllUsers
-2021-09-07 17:47:13 [INFO] testGetAllUsers size:3
-2021-09-07 17:47:13 [INFO] testGetAllUsers username=admin
-2021-09-07 17:47:13 [INFO] testModifyUser
-2021-09-07 17:47:13 [INFO] username=zhenqing.wang,password=abc
-2021-09-07 17:47:13 [INFO] testModifyUser: true
-2021-09-07 17:47:13 [INFO] testDeleteUser
-2021-09-07 17:47:13 [ERROR] user is null
-2021-09-07 17:47:13 [INFO] testDeleteUser: true
-2021-09-07 17:47:13 [INFO] testGetUserList
-2021-09-07 17:47:14 [INFO] testGetUserList size:1
+2021-09-08 19:53:33 [INFO] testGetRoleByName
+2021-09-08 19:53:34 [ERROR] role is null
+2021-09-08 19:53:34 [INFO] testAddRole
+2021-09-08 19:53:34 [INFO] rolename=ROLE_ADMIN,alias=?????
+2021-09-08 19:53:34 [INFO] testGetAllRoles
+2021-09-08 19:53:34 [INFO] roleList:4
+2021-09-08 19:53:34 [INFO] rolename=ROLE_MANAGER,alias=普通管理员
+2021-09-08 19:53:34 [INFO] rolename=ROLE_USER,alias=普通用户
+2021-09-08 19:53:34 [INFO] rolename=ROLE_ANONYMOUS,alias=未登录用户
+2021-09-08 19:53:34 [INFO] rolename=ROLE_ADMIN,alias=?????
+2021-09-08 19:53:34 [INFO] testDeleteRole
+2021-09-08 19:53:34 [ERROR] role is null
+2021-09-08 19:53:34 [INFO] testGetRoleList
+2021-09-08 19:53:34 [INFO] roleList:0
