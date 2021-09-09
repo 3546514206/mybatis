@@ -24,6 +24,7 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.java</include>
                 </includes>
                 <!-- 是否替换资源中的属性 -->
                 <filtering>false</filtering>
@@ -123,6 +124,7 @@
                             <exclude>org/apache/ibatis/ognl/**/*.class</exclude>
                         </excludes>
                     </instrumentation>
+                    <check/>
                 </configuration>
                 <executions>
                     <execution>
