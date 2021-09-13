@@ -39,6 +39,12 @@ public class JDBC {
                 System.out.println(uid + "  " + username + "  " + password + "  ");
             }
 
+            // 数据库元数据
+            DatabaseMetaData metaData = conn.getMetaData();
+            System.out.println(metaData.getMaxColumnNameLength());
+            System.out.println(metaData.getURL());
+            System.out.println(metaData.getUserName());
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
