@@ -44,6 +44,7 @@ public class JDBC {
             System.out.println(metaData.getMaxColumnNameLength());
             System.out.println(metaData.getURL());
             System.out.println(metaData.getUserName());
+            System.out.println(metaData.getDatabaseMajorVersion());
 
         } catch (Exception e) {
             e.printStackTrace();
