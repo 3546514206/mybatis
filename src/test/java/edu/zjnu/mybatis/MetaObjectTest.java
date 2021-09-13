@@ -26,7 +26,7 @@ public class MetaObjectTest {
 
     @Test
     public void test() throws SQLException, IOException {
-        List<OrderVO> orderVOS = new ArrayList<OrderVO>() {  //外层花括号是定义内部类
+        List<OrderVO> orderVOS = new ArrayList<OrderVO>() {  //外层花括号是定义ArrayList的匿名匿名继承类
             { //内层花括号实际上是在内部类中书写代码块，在内部类被加载的时候执行
                 add(new OrderVO(1, "一大包泡面", 200));
                 add(new OrderVO(2, "一块牛肉", 30));
