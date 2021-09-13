@@ -15,7 +15,7 @@ import java.io.Reader;
 import java.util.List;
 
 /**
- * @author: wangzhenqing
+ * @author: 杨海波
  * @data: 2015年04月13日16:11:58
  * @Description:UserDao测试
  */

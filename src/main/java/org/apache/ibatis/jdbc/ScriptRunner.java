@@ -34,18 +34,25 @@ public class ScriptRunner {
 
   private static final String DEFAULT_DELIMITER = ";";
 
+  // 数据库连接对象
   private Connection connection;
 
+  // sql异常是否中断程序
   private boolean stopOnError;
+  // 是否自动提交
   private boolean autoCommit;
+  // 为false时逐条执行SQL语句，默认情况下，SQL语句以分号分隔
   private boolean sendFullScript;
+  // 是否取出windows系统中的\r (回车的转义符)
   private boolean removeCRs;
+  // Statement是否支持转义处理
   private boolean escapeProcessing = true;
 
   private PrintWriter logWriter = new PrintWriter(System.out);
   private PrintWriter errorLogWriter = new PrintWriter(System.err);
 
   private String delimiter = DEFAULT_DELIMITER;
+  // 是否支持SQL语句分隔符
   private boolean fullLineDelimiter = false;
 
   public ScriptRunner(Connection connection) {
@@ -92,6 +99,7 @@ public class ScriptRunner {
   }
 
   public void runScript(Reader reader) {
+    // 设置事务自动提交
     setAutoCommit();
 
     try {
@@ -124,11 +132,13 @@ public class ScriptRunner {
   }
 
   private void executeLineByLine(Reader reader) {
+
     StringBuilder command = new StringBuilder();
     try {
       BufferedReader lineReader = new BufferedReader(reader);
       String line;
       while ((line = lineReader.readLine()) != null) {
+        // 调用 handleLine()处理每一行的内容
         command = handleLine(command, line);
       }
       commitConnection();
@@ -186,15 +196,23 @@ public class ScriptRunner {
 
   private StringBuilder handleLine(StringBuilder command, String line) throws SQLException, UnsupportedEncodingException {
     String trimmedLine = line.trim();
+    // 判断是否是注释，如果是注释则打印注释内容
     if (lineIsComment(trimmedLine)) {
       println(trimmedLine);
-    } else if (commandReadyToExecute(trimmedLine)) {
+    }
+    // 判断本行是否含有分号
+    else if (commandReadyToExecute(trimmedLine)) {
+      // 如果本行含有分号则说明该行是一条完整的SQL的结尾，则需要截取分号之前的SQL的内容，与
+      // 前面读取到的不包含分号的行一起组成一条完整的
       command.append(line.substring(0, line.lastIndexOf(delimiter)));
       command.append(LINE_SEPARATOR);
       println(command);
       executeStatement(command.toString());
       command.setLength(0);
-    } else if (trimmedLine.length() > 0) {
+    }
+    // 如果本行不含有分号且长度大于0，则说明该条SQL语句未结束，追
+    // 加本行内容到之前读取的内容中，继续读取下一行
+    else if (trimmedLine.length() > 0) {
       command.append(line);
       command.append(LINE_SEPARATOR);
     }

@@ -15,6 +15,7 @@
                 <includes>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.sql</include>
                 </includes>
                 <!-- 是否替换资源中的属性 -->
                 <filtering>false</filtering>
@@ -25,6 +26,7 @@
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.java</include>
+                    <include>**/*.sql</include>
                 </includes>
                 <!-- 是否替换资源中的属性 -->
                 <filtering>false</filtering>
