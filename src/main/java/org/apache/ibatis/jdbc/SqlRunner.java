@@ -77,10 +77,15 @@ public class SqlRunner {
      * @throws SQLException If statement prepration or execution fails
      */
     public List<Map<String, Object>> selectAll(String sql, Object... args) throws SQLException {
+        // 调用connection对象的 prepareStatement()方法获取PreparedStatement对象
         PreparedStatement ps = connection.prepareStatement(sql);
         try {
+            // 构造参数，对占位符替换赋值
             setParameters(ps, args);
+            // 调用prepareStatement 的 executeQuery()方法执行查询操作，并返回ResultSet
             ResultSet rs = ps.executeQuery();
+            // 调用getResults()方法，将ResultSet转换为List对象，其中list对象中
+            // 的每个Map对象对应数据库中的一条记录
             return getResults(rs);
         } finally {
             try {
@@ -221,10 +226,13 @@ public class SqlRunner {
             List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
             List<String> columns = new ArrayList<String>();
             List<TypeHandler<?>> typeHandlers = new ArrayList<TypeHandler<?>>();
+            // 根据ResultSetMetaData对象获取所有列名
             ResultSetMetaData rsmd = rs.getMetaData();
+            //这个循环初始化了保存列信息和对应typeHandler的线性表
             for (int i = 0, n = rsmd.getColumnCount(); i < n; i++) {
                 columns.add(rsmd.getColumnLabel(i + 1));
                 try {
+                    //根据获取的列信息的JDBC类型，获取typeHandler对象
                     Class<?> type = Resources.classForName(rsmd.getColumnClassName(i + 1));
                     TypeHandler<?> typeHandler = typeHandlerRegistry.getTypeHandler(type);
                     if (typeHandler == null) {
@@ -235,6 +243,7 @@ public class SqlRunner {
                     typeHandlers.add(typeHandlerRegistry.getTypeHandler(Object.class));
                 }
             }
+            // 遍历ResultSet对象，将每一行记录都封装成map对象并添加到list中
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<String, Object>();
                 for (int i = 0, n = columns.size(); i < n; i++) {
