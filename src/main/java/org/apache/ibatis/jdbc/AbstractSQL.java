@@ -145,6 +145,10 @@ public abstract class AbstractSQL<T> {
     return a;
   }
 
+  /**
+   * 重写了toString方法，调用  public String sql(Appendable a) 生成sql字符串
+   * @return
+   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -177,13 +181,22 @@ public abstract class AbstractSQL<T> {
 
   }
 
+  /**
+   * SqlStatement内部类用于描述一个SQL语句
+   */
   private static class SQLStatement {
 
-    public enum StatementType {
+    /**
+     * 语句类型，增删改查
+     */
+    public enum  StatementType {
       DELETE, INSERT, SELECT, UPDATE
     }
 
     StatementType statementType;
+
+    //维护了一系列的arraylist属性，当调用了SELECT()、UPDATE()等方法时候
+    //这些方法的参数都被纪录在这写线性表中对象中
     List<String> sets = new ArrayList<String>();
     List<String> select = new ArrayList<String>();
     List<String> tables = new ArrayList<String>();
