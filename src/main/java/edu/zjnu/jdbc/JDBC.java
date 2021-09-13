@@ -3,11 +3,11 @@ package edu.zjnu.jdbc;
 import java.sql.*;
 
 /**
- * @description: JDBCDemo
+ * @description: JDBC
  * @author: 杨海波
  * @date: 2021-09-09
  **/
-public class JDBCDemo {
+public class JDBC {
 
     public static void main(String[] args) {
         //一个标准的JDBC程序
