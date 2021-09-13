@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,5 +44,10 @@ public class SqlRunnerTest {
         sqlRunner.insert(insertSql.toString(),"123","jetty");
         sqlRunner.insert(insertSql.toString(),"321","lose");
         sqlRunner.insert(insertSql.toString(),"111","rose");
+
+        // 查询所有
+        List<Map<String,Object>> rsAll = sqlRunner.selectAll("select t.* from user t");
+        System.out.println(JsonPrintUtil.formatToJson(JSON.toJSONString(rsAll)));
+
     }
 }
