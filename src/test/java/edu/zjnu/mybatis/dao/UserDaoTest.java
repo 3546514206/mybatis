@@ -34,7 +34,7 @@ public class UserDaoTest {
 
     @Before
     public void init() throws Exception {
-        reader = Resources.getResourceAsReader("configuration.xml");
+        reader = Resources.getResourceAsReader("configuration-common.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         session = sqlSessionFactory.openSession();
         userDao = session.getMapper(UserDao.class);
