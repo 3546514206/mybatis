@@ -4,6 +4,24 @@
 
 <mapper namespace="edu.zjnu.mybatis.dao.UserDao">
 
+<!--    id：在命名空间中唯一的标识符，可以被用来引用这条配置信息。-->
+<!--    parameterType：用于指定这条语句的参数类的完全限定名或别名。这个属性是可选的，MyBatis能够根据Mapper接口方法中的参数类型推断出传入语句的类型。-->
+<!--    parameterMap：引用通过<parameterMap>标签定义的参数映射，该属性已经废弃。-->
+<!--    resultType：从这条语句中返回的期望类型的类的完全限定名或别名。注意，如果返回结果是集合类型，则resultType属性应该指定集合中可以包含的类型，而不是集合本身。-->
+<!--    resultMap：用于引用通过<resultMap>标签配置的实体属性与数据库字段之间建立的结果集的映射（注意：resultMap和resultType属性不能同时使用）。-->
+<!--    flushCache：用于控制是否刷新缓存。如果将其设置为 true，则任何时候只要语句被调用，都会导致本地缓存和二级缓存被清空，默认值为false。-->
+<!--    useCache：是否使用二级缓存。如果将其设置为 true，则会导致本条语句的结果被缓存在MyBatis的二级缓存中，对应<select>标签，该属性的默认值为true。-->
+<!--    timeout：驱动程序等待数据库返回请求结果的秒数，超时将会抛出异常。-->
+<!--    fetchSize：用于设置JDBC中 Statement对象的fetchSize属性，该属性用于指定SQL执行后返回的最大行数。-->
+<!--    useCache：是否使用二级缓存。如果将其设置为 true，则会导致本条语句的结果被缓存在MyBatis的二级缓存中，对应<select>标签，该属性的默认值为true。-->
+<!--    statementType：参数可选值为STATEMENT、PREPARED或CALLABLE，这会让MyBatis分别使用Statement、PreparedStatement或CallableStatement与数据库交互，默认值为PREPARED。-->
+<!--    resultSetType：参数可选值为FORWARD_ONLY、SCROLL_SENSITIVE或SCROLL_INSENSITIVE，用于设置ResultSet对象的特征，具体可参考第2章JDBC规范的相关内容。默认未设置，由JDBC驱动决定。-->
+<!--    databaseId：如果配置了 databaseIdProvider，MyBatis会加载所有不带databaseId或匹配当前 databaseId 的语句。-->
+<!--    resultOrdered：这个设置仅针对嵌套结果 select语句适用，如果为 true，就是假定嵌套结果包含在一起或分组在一起，这样的话，当返回一个主结果行的时候，就不会发生对前面结果集引用的情况。这就使得在获取嵌套结果集的时候不至于导致内存不够用，默认值为false。-->
+<!--    resultSets：这个设置仅对多结果集的情况适用，它将列出语句执行后返回的结果集并每个结果集给一个名称，名称使用逗号分隔。-->
+<!--    lang：该属性用于指定LanguageDriver实现，MyBatis中的LanguageDriver用于解析<select|update|insert|delete>标签中的SQL语句，生成SqlSource对象-->
+<!--    <select id="getUserById" parameterType="integer" parameterMap="deprecated" resultType="hashmap" resultMap="BaseResultMap" useCache="false" flushCache="false"/>-->
+
     <select id="getUserByName" parameterType="String" resultType="edu.zjnu.mybatis.model.User">
         SELECT * FROM user WHERE username=#{username} limit 1;
     </select>

@@ -13,6 +13,8 @@ public interface UserDao {
 
     User getUserByName(String username);
 
+    User getUserById(Integer id);
+
     boolean modifyUser(String username, String password);
 
     boolean deleteUser(String username);
