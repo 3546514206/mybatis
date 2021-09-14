@@ -21,18 +21,18 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 
 public class ColumnPrefixNestedQueryTest extends ColumnPrefixTest {
-  protected List<Pet> getPetAndRoom(SqlSession sqlSession) {
-    List<Pet> pets = sqlSession.selectList("org.apache.ibatis.submitted.column_prefix.MapperNestedQuery.selectPets");
-    return pets;
-  }
+    protected List<Pet> getPetAndRoom(SqlSession sqlSession) {
+        List<Pet> pets = sqlSession.selectList("org.apache.ibatis.submitted.column_prefix.MapperNestedQuery.selectPets");
+        return pets;
+    }
 
-  protected List<Person> getPersons(SqlSession sqlSession) {
-    List<Person> list = sqlSession
-        .selectList("org.apache.ibatis.submitted.column_prefix.MapperNestedQuery.selectPersons");
-    return list;
-  }
+    protected List<Person> getPersons(SqlSession sqlSession) {
+        List<Person> list = sqlSession
+                .selectList("org.apache.ibatis.submitted.column_prefix.MapperNestedQuery.selectPersons");
+        return list;
+    }
 
-  protected String getConfigPath() {
-    return "org/apache/ibatis/submitted/column_prefix/ConfigNestedQuery.xml";
-  }
+    protected String getConfigPath() {
+        return "org/apache/ibatis/submitted/column_prefix/ConfigNestedQuery.xml";
+    }
 }

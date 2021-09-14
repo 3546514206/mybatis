@@ -17,6 +17,6 @@ package org.apache.ibatis.submitted.unknownobject;
 
 public interface Mapper {
 
-  User getUser(Integer id);
+    User getUser(Integer id);
 
 }

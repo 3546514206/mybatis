@@ -18,14 +18,14 @@
 -->
 
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
-	<mappers>
-		<mapper resource="org/apache/ibatis/submitted/refid_resolution/ExternalMapper1.xml" />
-		<mapper resource="org/apache/ibatis/submitted/refid_resolution/ExternalMapper2.xml" />
-	</mappers>
+    <mappers>
+        <mapper resource="org/apache/ibatis/submitted/refid_resolution/ExternalMapper1.xml"/>
+        <mapper resource="org/apache/ibatis/submitted/refid_resolution/ExternalMapper2.xml"/>
+    </mappers>
 
 </configuration>

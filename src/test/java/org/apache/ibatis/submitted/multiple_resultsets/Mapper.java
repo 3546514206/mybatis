@@ -19,6 +19,6 @@ import java.util.List;
 
 public interface Mapper {
 
-  List<?> getUsersAndGroups();
+    List<?> getUsersAndGroups();
 
 }

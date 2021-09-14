@@ -17,27 +17,27 @@
 
 -->
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-  <typeAliases>
-    <typeAlias alias="Person" type="org.apache.ibatis.submitted.map_class_name_conflict.Person"/>
-  </typeAliases>
+    <typeAliases>
+        <typeAlias alias="Person" type="org.apache.ibatis.submitted.map_class_name_conflict.Person"/>
+    </typeAliases>
 
-  <environments default="test">
-    <environment id="test">
-      <transactionManager type="JDBC"></transactionManager>
-      <dataSource type="UNPOOLED">
-        <property name="driver" value="org.hsqldb.jdbcDriver"/>
-        <property name="url" value="jdbc:hsqldb:file:test.db"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-      </dataSource>
-    </environment>
-  </environments>
+    <environments default="test">
+        <environment id="test">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="org.hsqldb.jdbcDriver"/>
+                <property name="url" value="jdbc:hsqldb:file:test.db"/>
+                <property name="username" value="sa"/>
+                <property name="password" value=""/>
+            </dataSource>
+        </environment>
+    </environments>
 
-  <mappers>
-    <mapper resource="org/apache/ibatis/submitted/map_class_name_conflict/PersonMapper.xml"/>
-  </mappers>
+    <mappers>
+        <mapper resource="org/apache/ibatis/submitted/map_class_name_conflict/PersonMapper.xml"/>
+    </mappers>
 </configuration>

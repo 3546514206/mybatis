@@ -17,13 +17,13 @@ package domain.blog;
 
 public class PostLiteId {
     private int id;
-    
+
     public PostLiteId() {
-      
+
     }
 
     public void setId(int id) {
-      this.id = id;
+        this.id = id;
     }
 
     public PostLiteId(int aId) {

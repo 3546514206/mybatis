@@ -20,35 +20,35 @@ import java.util.List;
 
 public class Author {
 
-  private long id;
-  private List<Post> posts = new ArrayList<Post>();
-  private String name;
+    private long id;
+    private List<Post> posts = new ArrayList<Post>();
+    private String name;
 
-  public Author() {
-    posts.add(new Post(4, "there is a previous post!"));
-  }
+    public Author() {
+        posts.add(new Post(4, "there is a previous post!"));
+    }
 
-  public long getId() {
-    return id;
-  }
+    public long getId() {
+        return id;
+    }
 
-  public void setId(long id) {
-    this.id = id;
-  }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-  public List<Post> getPosts() {
-    return posts;
-  }
+    public List<Post> getPosts() {
+        return posts;
+    }
 
-  public void setPosts(List<Post> posts) {
-    this.posts = posts;
-  }
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 }

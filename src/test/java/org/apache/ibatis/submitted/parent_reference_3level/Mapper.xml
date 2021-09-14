@@ -29,22 +29,22 @@
         left outer join comment c on p.id = c.post_id 
         where b.id = #{id}
     </select>
-    
+
     <resultMap id="BlogResultMap" type="Blog">
-        <id column="blog_id" property="id" />
+        <id column="blog_id" property="id"/>
         <result column="blog_title" property="title"/>
         <collection property="posts" resultMap="PostResultMap"></collection>
     </resultMap>
-    
+
     <resultMap id="PostResultMap" type="Post">
-        <id column="post_id" property="id" />
+        <id column="post_id" property="id"/>
         <result column="post_body" property="body"/>
         <association property="blog" resultMap="BlogResultMap"></association>
         <collection property="comments" resultMap="CommentResultMap"></collection>
     </resultMap>
-    
+
     <resultMap id="CommentResultMap" type="Comment">
-        <id column="comment_id" property="id" />
+        <id column="comment_id" property="id"/>
         <result column="comment" property="comment"/>
         <association property="post" resultMap="PostResultMap"></association>
     </resultMap>
@@ -61,20 +61,20 @@
     </select>
 
     <resultMap id="BlogResultMapColumnPrefix" type="Blog">
-        <id column="blog_id" property="id" />
+        <id column="blog_id" property="id"/>
         <result column="blog_title" property="title"/>
         <collection property="posts" resultMap="PostResultMapColumnPrefix" columnPrefix="post_"></collection>
     </resultMap>
 
     <resultMap id="PostResultMapColumnPrefix" type="Post">
-        <id column="id" property="id" />
+        <id column="id" property="id"/>
         <result column="body" property="body"/>
         <association property="blog" resultMap="BlogResultMapColumnPrefix"></association>
         <collection property="comments" resultMap="CommentResultMapColumnPrefix" columnPrefix="comment_"></collection>
     </resultMap>
 
     <resultMap id="CommentResultMapColumnPrefix" type="Comment">
-        <id column="comment_id" property="id" />
+        <id column="comment_id" property="id"/>
         <result column="comment" property="comment"/>
         <association property="post" resultMap="PostResultMapColumnPrefix"></association>
     </resultMap>

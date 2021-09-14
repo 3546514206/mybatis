@@ -30,42 +30,42 @@ import org.junit.Test;
 
 public class ParentChildTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/parent_childs/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/parent_childs/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/parent_childs/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldGetAUser() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      List<Parent> parents = mapper.getParents();
-      Assert.assertEquals(2, parents.size());
-      Parent firstParent = parents.get(0);
-      Assert.assertEquals("Jose", firstParent.getName());
-      Assert.assertEquals(2, firstParent.getChilds().size());
-      Parent secondParent = parents.get(1);
-      Assert.assertEquals("Juan", secondParent.getName());
-      Assert.assertEquals(0, secondParent.getChilds().size()); // note an empty list is inyected
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/parent_childs/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
+
+    @Test
+    public void shouldGetAUser() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            List<Parent> parents = mapper.getParents();
+            Assert.assertEquals(2, parents.size());
+            Parent firstParent = parents.get(0);
+            Assert.assertEquals("Jose", firstParent.getName());
+            Assert.assertEquals(2, firstParent.getChilds().size());
+            Parent secondParent = parents.get(1);
+            Assert.assertEquals("Juan", secondParent.getName());
+            Assert.assertEquals(0, secondParent.getChilds().size()); // note an empty list is inyected
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

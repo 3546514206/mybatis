@@ -15,25 +15,27 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.foreach_map.Mapper">
 
     <insert id="ins_string_string">
         insert into string_string (key, value) values
         <foreach item="item" index="key" collection="map"
-            open="" separator="," close="">(#{key}, #{item})</foreach>
+                 open="" separator="," close="">(#{key}, #{item})
+        </foreach>
     </insert>
 
-	<select id="sel_string_string" resultType="org.apache.ibatis.submitted.foreach_map.StringStringMapEntry">
+    <select id="sel_string_string" resultType="org.apache.ibatis.submitted.foreach_map.StringStringMapEntry">
 		select * from string_string order by id
 	</select>
 
     <insert id="ins_int_bool">
         insert into int_bool (key, value) values
         <foreach item="item" index="key" collection="map"
-                 open="" separator="," close="">(#{key}, #{item})</foreach>
+                 open="" separator="," close="">(#{key}, #{item})
+        </foreach>
     </insert>
 
     <select id="sel_int_bool" resultType="org.apache.ibatis.submitted.foreach_map.IntBoolMapEntry">
@@ -43,7 +45,8 @@
     <insert id="ins_nested_bean">
         insert into nested_bean (keya, keyb, valuea, valueb) values
         <foreach item="item" index="key" collection="map"
-                 open="" separator="," close="">(#{key.a}, #{key.b}, #{item.a}, #{item.b})</foreach>
+                 open="" separator="," close="">(#{key.a}, #{key.b}, #{item.a}, #{item.b})
+        </foreach>
     </insert>
 
     <select id="sel_nested_bean" resultType="org.apache.ibatis.submitted.foreach_map.NestedBeanMapEntry">
@@ -53,7 +56,8 @@
     <select id="sel_key_cols" resultType="int">
         select count(*) from key_cols where
         <foreach item="item" index="key" collection="map"
-            open="" separator="AND" close="">${key} = #{item}</foreach>
+                 open="" separator="AND" close="">${key} = #{item}
+        </foreach>
     </select>
 
 </mapper>

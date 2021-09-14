@@ -16,5 +16,5 @@
 package org.apache.ibatis.submitted.automatic_lazy_loading;
 
 public interface ElementMapper {
-  Element selectElementById(String aValue);
+    Element selectElementById(String aValue);
 }

@@ -17,21 +17,21 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.cglib_lazy_error.PersonMapper">
 
-  <resultMap id="personMap" type="Person">
-    <id property="id" column="Person_id"/>
-    <result property="firstName" column="Person_firstName"/>
-    <result property="lastName" column="Person_lastName"/>
-    <association property="parent" column="Person_parent"
-                 select="selectById"/>
-  </resultMap>
+    <resultMap id="personMap" type="Person">
+        <id property="id" column="Person_id"/>
+        <result property="firstName" column="Person_firstName"/>
+        <result property="lastName" column="Person_lastName"/>
+        <association property="parent" column="Person_parent"
+                     select="selectById"/>
+    </resultMap>
 
 
-  <sql id="columns">
+    <sql id="columns">
     Person.id AS Person_id,
     Person.firstName AS Person_firstName,
     Person.lastName AS Person_lastName,
@@ -39,21 +39,21 @@
   </sql>
 
 
-  <select id="selectById" resultMap="personMap" parameterType="int">
-    SELECT
-    <include refid="columns"/>
-    FROM Person
-    WHERE id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="selectById" resultMap="personMap" parameterType="int">
+        SELECT
+        <include refid="columns"/>
+        FROM Person
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
 
-  <select id="selectByStringId" resultMap="personMap" parameterType="String">
-    SELECT
-    <include refid="columns"/>
-    FROM Person
-    WHERE id = ${value}
-  </select>
+    <select id="selectByStringId" resultMap="personMap" parameterType="String">
+        SELECT
+        <include refid="columns"/>
+        FROM Person
+        WHERE id = ${value}
+    </select>
 
-  <insert id="insertPerson">
+    <insert id="insertPerson">
     INSERT INTO person (id, firstName, lastName, parent)
     VALUES (#{id}, #{firstName}, #{lastName}, null);
   </insert>

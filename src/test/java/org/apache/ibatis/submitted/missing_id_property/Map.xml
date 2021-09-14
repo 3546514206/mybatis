@@ -17,34 +17,34 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.missing_id_property.CarMapper">
 
-	<resultMap id="carResult" type="Car">
-		<id column="id" /> <!-- id missing property attribute -->
-		<result property="name" column="name" />
-		<collection property="carParts"
-			column="id"
-			javaType="ArrayList"
-			ofType="Part"
-			select="getCarPartInfo" />
-	</resultMap>
-	
-	<resultMap id="partResult" type="Part">
-		<constructor>
-			<arg column="name" javaType="String"/>
-		</constructor>
-		<id column="partId" /> <!-- id missing property attribute -->
-	</resultMap>
+    <resultMap id="carResult" type="Car">
+        <id column="id"/> <!-- id missing property attribute -->
+        <result property="name" column="name"/>
+        <collection property="carParts"
+                    column="id"
+                    javaType="ArrayList"
+                    ofType="Part"
+                    select="getCarPartInfo"/>
+    </resultMap>
 
-	<select id="getCarsInfo" resultMap="carResult">
+    <resultMap id="partResult" type="Part">
+        <constructor>
+            <arg column="name" javaType="String"/>
+        </constructor>
+        <id column="partId"/> <!-- id missing property attribute -->
+    </resultMap>
+
+    <select id="getCarsInfo" resultMap="carResult">
 		SELECT car_id as "id", name
 		FROM car where car_id=#{id}
 	</select>
 
-	<select id="getCarPartInfo" resultMap="partResult">
+    <select id="getCarPartInfo" resultMap="partResult">
 		SELECT part_id as "partId", name
 		FROM part where car_id=#{id}
 	</select>

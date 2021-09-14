@@ -20,10 +20,14 @@ import java.util.Map;
 
 public interface Mapper {
 
-  User getUserMapped(Integer id);
-  User getUserUnmapped(Integer id);
-  Map getUserInMap(Integer id);
-  List<Map<String,Object>> getNameOnly();
-  List<Map<String,Object>> getNameOnlyMapped();
+    User getUserMapped(Integer id);
+
+    User getUserUnmapped(Integer id);
+
+    Map getUserInMap(Integer id);
+
+    List<Map<String, Object>> getNameOnly();
+
+    List<Map<String, Object>> getNameOnlyMapped();
 
 }

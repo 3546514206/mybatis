@@ -15,23 +15,23 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.stringlist.Mapper">
 
-	<select id="getUsersAndGroups" resultMap="results">
+    <select id="getUsersAndGroups" resultMap="results">
 		select * from users
 	</select>
-	
-	<resultMap type="org.apache.ibatis.submitted.stringlist.User" id="results">
-		<id column="id" property="id"/>
-		<collection property="groups" ofType="string">
-			<result column="group_id"/>
-		</collection>
-		<collection property="roles" ofType="string">
-			<result column="rol_id"/>
-		</collection>
-	</resultMap>
+
+    <resultMap type="org.apache.ibatis.submitted.stringlist.User" id="results">
+        <id column="id" property="id"/>
+        <collection property="groups" ofType="string">
+            <result column="group_id"/>
+        </collection>
+        <collection property="roles" ofType="string">
+            <result column="rol_id"/>
+        </collection>
+    </resultMap>
 
 </mapper>

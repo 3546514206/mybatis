@@ -30,8 +30,8 @@ public class BlobRecord {
         this.id = id;
         final byte[] newBytes = new byte[blob.length];
         for (int i = 0; i < blob.length; i++) {
-          Byte b = blob[i];
-          newBytes[i] = b;
+            Byte b = blob[i];
+            newBytes[i] = b;
         }
         this.blob = newBytes;
     }

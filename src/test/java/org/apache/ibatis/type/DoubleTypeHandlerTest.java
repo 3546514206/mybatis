@@ -23,26 +23,26 @@ import org.junit.Test;
 
 public class DoubleTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Double> TYPE_HANDLER = new DoubleTypeHandler();
+    private static final TypeHandler<Double> TYPE_HANDLER = new DoubleTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, 100d, null);
-    verify(ps).setDouble(1, 100d);
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, 100d, null);
+        verify(ps).setDouble(1, 100d);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getDouble("column")).thenReturn(100d);
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new Double(100d), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getDouble("column")).thenReturn(100d);
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new Double(100d), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getDouble(1)).thenReturn(100d);
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new Double(100d), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getDouble(1)).thenReturn(100d);
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new Double(100d), TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

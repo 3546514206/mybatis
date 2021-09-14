@@ -30,36 +30,36 @@ import org.junit.Test;
 // see issue #289
 public class InheritanceTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/inheritance/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/inheritance/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/inheritance/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldGetAUser() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      UserProfileMapper mapper = sqlSession.getMapper(UserProfileMapper.class);
-      UserProfile user = mapper.retrieveById(1);
-      Assert.assertEquals("Profile1", user.getName());
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/inheritance/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
+
+    @Test
+    public void shouldGetAUser() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            UserProfileMapper mapper = sqlSession.getMapper(UserProfileMapper.class);
+            UserProfile user = mapper.retrieveById(1);
+            Assert.assertEquals("Profile1", user.getName());
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

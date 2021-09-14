@@ -26,13 +26,13 @@ import org.junit.Test;
  * @see http://code.google.com/p/mybatis/issues/detail?id=291
  */
 public class ExternalRefidResolutionTest {
-  @Test
-  public void testExternalRefAfterSelectKey() throws Exception {
-    String resource = "org/apache/ibatis/submitted/refid_resolution/ExternalMapperConfig.xml";
-    Reader reader = Resources.getResourceAsReader(resource);
-    SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-    SqlSessionFactory sqlSessionFactory = builder.build(reader);
-    reader.close();
-    sqlSessionFactory.getConfiguration().getMappedStatementNames();
-  }
+    @Test
+    public void testExternalRefAfterSelectKey() throws Exception {
+        String resource = "org/apache/ibatis/submitted/refid_resolution/ExternalMapperConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);
+        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+        SqlSessionFactory sqlSessionFactory = builder.build(reader);
+        reader.close();
+        sqlSessionFactory.getConfiguration().getMappedStatementNames();
+    }
 }

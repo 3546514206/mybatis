@@ -24,12 +24,12 @@ import org.junit.Test;
 
 public class IntegerEnumTest extends BaseDataTest {
 
-  @Test
-  public void shouldParseMapWithIntegerJdbcType() throws Exception {
-    String resource = "org/apache/ibatis/submitted/integer_enum/MapperConfig.xml";
-    Reader reader = Resources.getResourceAsReader(resource);
-    SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
-    builder.build(reader);
-  }
+    @Test
+    public void shouldParseMapWithIntegerJdbcType() throws Exception {
+        String resource = "org/apache/ibatis/submitted/integer_enum/MapperConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);
+        SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+        builder.build(reader);
+    }
 
 }

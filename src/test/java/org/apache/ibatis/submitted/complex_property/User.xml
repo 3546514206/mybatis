@@ -18,31 +18,31 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="User">
 
-  <resultMap type="UserAlias" id="UserResult">
-    <id column="id" jdbcType="INTEGER" property="id"/>
-    <result column="username" jdbcType="VARCHAR" property="username"/>
-    <result column="password" jdbcType="VARCHAR" property="password.encrypted"/>
-    <result column="administrator" jdbcType="BOOLEAN" property="administrator"/>
-  </resultMap>
+    <resultMap type="UserAlias" id="UserResult">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password.encrypted"/>
+        <result column="administrator" jdbcType="BOOLEAN" property="administrator"/>
+    </resultMap>
 
-  <select id="find" parameterType="long" resultMap="UserResult">
+    <select id="find" parameterType="long" resultMap="UserResult">
     SELECT * FROM user WHERE id = #{id:INTEGER}
   </select>
 
-  <select id="version" parameterType="long" resultType="int">
+    <select id="version" parameterType="long" resultType="int">
     SELECT version FROM user WHERE id = #{id,jdbcType=INTEGER}
   </select>
 
-  <delete id="delete" parameterType="UserAlias">
+    <delete id="delete" parameterType="UserAlias">
     DELETE FROM user WHERE id = #{id:INTEGER}
   </delete>
 
-  <insert id="insert" parameterType="UserAlias" useGeneratedKeys="false">
+    <insert id="insert" parameterType="UserAlias" useGeneratedKeys="false">
     INSERT INTO user
     ( id,
     username,
@@ -57,7 +57,7 @@
     )
   </insert>
 
-  <update id="update" parameterType="UserAlias">
+    <update id="update" parameterType="UserAlias">
     UPDATE user SET
     username = #{username,jdbcType=VARCHAR},
     password = #{password.encrypted,jdbcType=VARCHAR},
@@ -66,12 +66,13 @@
     id = #{id,jdbcType=INTEGER}
   </update>
 
-  <!--   Unique constraint check -->
-  <select id="isUniqueUsername" parameterType="map" resultType="boolean">
-    SELECT (count(*) = 0)
-    FROM user
-    WHERE ((#{userId,jdbcType=BIGINT} IS NOT NULL AND id != #{userId,jdbcType=BIGINT}) OR #{userId,jdbcType=BIGINT} IS
-    NULL)  <!-- other than me -->
-    AND (username = #{username,jdbcType=VARCHAR})
-  </select>
+    <!--   Unique constraint check -->
+    <select id="isUniqueUsername" parameterType="map" resultType="boolean">
+        SELECT (count(*) = 0)
+        FROM user
+        WHERE ((#{userId,jdbcType=BIGINT} IS NOT NULL AND id != #{userId,jdbcType=BIGINT}) OR #{userId,jdbcType=BIGINT}
+        IS
+        NULL)  <!-- other than me -->
+        AND (username = #{username,jdbcType=VARCHAR})
+    </select>
 </mapper>

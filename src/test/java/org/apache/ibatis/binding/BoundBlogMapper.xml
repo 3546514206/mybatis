@@ -62,7 +62,8 @@
         <constructor>
             <idArg column="id" javaType="_int"/>
             <arg column="title" javaType="java.lang.String"/>
-            <arg javaType="domain.blog.Author" resultMap="org.apache.ibatis.binding.BoundAuthorMapper.authorResultMapWithProperties"/>
+            <arg javaType="domain.blog.Author"
+                 resultMap="org.apache.ibatis.binding.BoundAuthorMapper.authorResultMapWithProperties"/>
             <arg column="id" javaType="java.util.List" select="selectPostsForBlog"/>
         </constructor>
     </resultMap>
@@ -76,21 +77,21 @@
         </constructor>
     </resultMap>
 
-  <select id="selectBlogWithPostsUsingSubSelect" parameterType="int" resultMap="blogWithPosts">
+    <select id="selectBlogWithPostsUsingSubSelect" parameterType="int" resultMap="blogWithPosts">
     select * from Blog where id = #{id}
   </select>
 
-  <select id="selectAuthorWithInlineParams"
+    <select id="selectAuthorWithInlineParams"
             parameterType="int"
             resultType="domain.blog.Author">
     select * from author where id = #{id}
   </select>
 
-  <select id="selectPostsForBlog" parameterType="int" resultType="Post">
+    <select id="selectPostsForBlog" parameterType="int" resultType="Post">
     select * from Post where blog_id = #{blog_id}
   </select>
 
-  <select id="selectBlogByIdUsingConstructor" parameterType="int" resultMap="blogUsingConstructor">
+    <select id="selectBlogByIdUsingConstructor" parameterType="int" resultMap="blogUsingConstructor">
     select * from Blog where id = #{id}
   </select>
 
@@ -121,7 +122,7 @@
       on b.author_id = a.id 
       where b.id = #{id}
     </select>
-    
+
     <select id="selectBlogUsingConstructorWithResultMapCollection" parameterType="int"
             resultMap="blogUsingConstructorWithResultMapCollection">
       select b.*, p.*,
@@ -136,5 +137,5 @@
           join Post p on b.id = p.blog_id 
       where b.id = #{id}
     </select>
-    
+
 </mapper>

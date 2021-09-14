@@ -19,13 +19,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MapParam {
-  public Map<Object, Object> getMap() {
-    return map;
-  }
+    public Map<Object, Object> getMap() {
+        return map;
+    }
 
-  public void setMap(Map<Object, Object> map) {
-    this.map = map;
-  }
+    public void setMap(Map<Object, Object> map) {
+        this.map = map;
+    }
 
-  private Map<Object, Object> map = new LinkedHashMap<Object, Object>();
+    private Map<Object, Object> map = new LinkedHashMap<Object, Object>();
 }

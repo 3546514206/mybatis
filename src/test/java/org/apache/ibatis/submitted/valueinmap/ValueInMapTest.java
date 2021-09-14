@@ -34,52 +34,52 @@ import org.junit.Test;
 
 public class ValueInMapTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/valueinmap/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/valueinmap/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/valueinmap/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test // issue #165
-  public void shouldWorkWithAPropertyNamedValue() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Map<String, String> map = new HashMap<String, String>();
-      map.put("table", "users");
-      map.put("column", "name");
-      map.put("value", "User1");
-      Integer count = sqlSession.selectOne("count", map);
-      Assert.assertEquals(new Integer(1), count);
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/valueinmap/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
 
-  @Test(expected=PersistenceException.class)
-  public void shouldWorkWithAList() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      List<String> list = new ArrayList<String>();
-      list.add("users");
-      Integer count = sqlSession.selectOne("count2",list);
-      Assert.assertEquals(new Integer(1), count);
-    } finally {
-      sqlSession.close();
+    @Test // issue #165
+    public void shouldWorkWithAPropertyNamedValue() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("table", "users");
+            map.put("column", "name");
+            map.put("value", "User1");
+            Integer count = sqlSession.selectOne("count", map);
+            Assert.assertEquals(new Integer(1), count);
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
+
+    @Test(expected = PersistenceException.class)
+    public void shouldWorkWithAList() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            List<String> list = new ArrayList<String>();
+            list.add("users");
+            Integer count = sqlSession.selectOne("count2", list);
+            Assert.assertEquals(new Integer(1), count);
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

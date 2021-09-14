@@ -30,86 +30,86 @@ import org.junit.Test;
 
 public class PermissionsTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/permissions/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/permissions/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/permissions/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.setErrorLogWriter(null);
-    runner.runScript(reader);
-    conn.commit();
-    conn.close();
-    reader.close();
-  }
-
-  @Test // see issue #168
-  public void checkNestedResultMapLoop() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      final PermissionsMapper mapper = sqlSession.getMapper(PermissionsMapper.class);
-
-      final List<Resource> resources = mapper.getResources();
-      Assert.assertEquals(2, resources.size());
-
-      final Resource firstResource = resources.get(0);
-      final List<Principal> principalPermissions = firstResource.getPrincipals();
-      Assert.assertEquals(1, principalPermissions.size());
-      
-      final Principal firstPrincipal = principalPermissions.get(0);
-      final List<Permission> permissions = firstPrincipal.getPermissions();
-      Assert.assertEquals(2, permissions.size());
-      
-      final Permission firstPermission = firstPrincipal.getPermissions().get(0);
-      Assert.assertSame(firstResource, firstPermission.getResource());
-      final Permission secondPermission = firstPrincipal.getPermissions().get(1);
-      Assert.assertSame(firstResource, secondPermission.getResource());
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/permissions/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.setErrorLogWriter(null);
+        runner.runScript(reader);
+        conn.commit();
+        conn.close();
+        reader.close();
     }
-  }
 
-  @Test
-  public void checkNestedSelectLoop() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      final PermissionsMapper mapper = sqlSession.getMapper(PermissionsMapper.class);
+    @Test // see issue #168
+    public void checkNestedResultMapLoop() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            final PermissionsMapper mapper = sqlSession.getMapper(PermissionsMapper.class);
 
-      final List<Resource> resources = mapper.getResource("read");
-      Assert.assertEquals(1, resources.size());
+            final List<Resource> resources = mapper.getResources();
+            Assert.assertEquals(2, resources.size());
 
-      final Resource firstResource = resources.get(0);
-      final List<Principal> principalPermissions = firstResource.getPrincipals();
-      Assert.assertEquals(1, principalPermissions.size());
-      
-      final Principal firstPrincipal = principalPermissions.get(0);
-      final List<Permission> permissions = firstPrincipal.getPermissions();
-      Assert.assertEquals(4, permissions.size());
+            final Resource firstResource = resources.get(0);
+            final List<Principal> principalPermissions = firstResource.getPrincipals();
+            Assert.assertEquals(1, principalPermissions.size());
 
-      boolean readFound = false;
-      for (Permission permission : permissions) {
-        if ("read".equals(permission.getPermission())) {
-          Assert.assertSame(firstResource, permission.getResource());
-          readFound = true;
+            final Principal firstPrincipal = principalPermissions.get(0);
+            final List<Permission> permissions = firstPrincipal.getPermissions();
+            Assert.assertEquals(2, permissions.size());
+
+            final Permission firstPermission = firstPrincipal.getPermissions().get(0);
+            Assert.assertSame(firstResource, firstPermission.getResource());
+            final Permission secondPermission = firstPrincipal.getPermissions().get(1);
+            Assert.assertSame(firstResource, secondPermission.getResource());
+        } finally {
+            sqlSession.close();
         }
-      }
-      
-      if (!readFound) {
-        Assert.fail();
-      }
-
-    } finally {
-      sqlSession.close();
     }
-  }
-  
+
+    @Test
+    public void checkNestedSelectLoop() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            final PermissionsMapper mapper = sqlSession.getMapper(PermissionsMapper.class);
+
+            final List<Resource> resources = mapper.getResource("read");
+            Assert.assertEquals(1, resources.size());
+
+            final Resource firstResource = resources.get(0);
+            final List<Principal> principalPermissions = firstResource.getPrincipals();
+            Assert.assertEquals(1, principalPermissions.size());
+
+            final Principal firstPrincipal = principalPermissions.get(0);
+            final List<Permission> permissions = firstPrincipal.getPermissions();
+            Assert.assertEquals(4, permissions.size());
+
+            boolean readFound = false;
+            for (Permission permission : permissions) {
+                if ("read".equals(permission.getPermission())) {
+                    Assert.assertSame(firstResource, permission.getResource());
+                    readFound = true;
+                }
+            }
+
+            if (!readFound) {
+                Assert.fail();
+            }
+
+        } finally {
+            sqlSession.close();
+        }
+    }
+
 }

@@ -21,5 +21,5 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 public interface Mapper {
-  List<Map<String, Object>> simpleSelectWithMapperAndPrimitives(@Param("ids") int... values);
+    List<Map<String, Object>> simpleSelectWithMapperAndPrimitives(@Param("ids") int... values);
 }

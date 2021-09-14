@@ -23,26 +23,26 @@ import org.junit.Test;
 
 public class IntegerTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Integer> TYPE_HANDLER = new IntegerTypeHandler();
+    private static final TypeHandler<Integer> TYPE_HANDLER = new IntegerTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, 100, null);
-    verify(ps).setInt(1, 100);
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, 100, null);
+        verify(ps).setInt(1, 100);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getInt("column")).thenReturn(100);
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new Integer(100), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getInt("column")).thenReturn(100);
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new Integer(100), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getInt(1)).thenReturn(100);
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new Integer(100), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getInt(1)).thenReturn(100);
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new Integer(100), TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

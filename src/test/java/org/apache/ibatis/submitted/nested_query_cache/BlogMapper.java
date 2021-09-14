@@ -19,8 +19,8 @@ import domain.blog.Blog;
 
 public interface BlogMapper {
 
-  Blog selectBlog(int id);
+    Blog selectBlog(int id);
 
-  Blog selectBlogUsingConstructor(int id);
+    Blog selectBlogUsingConstructor(int id);
 
 }

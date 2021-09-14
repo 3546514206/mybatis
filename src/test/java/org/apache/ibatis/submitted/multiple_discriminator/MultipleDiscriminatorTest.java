@@ -29,9 +29,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class MultipleDiscriminatorTest {
-    
+
     private static SqlSessionFactory sqlSessionFactory;
-    
+
     @BeforeClass
     public static void initDatabase() throws Exception {
         Connection conn = null;
@@ -59,7 +59,7 @@ public class MultipleDiscriminatorTest {
             }
         }
     }
-    
+
     @Test
     public void testMultipleDiscriminator() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -67,8 +67,9 @@ public class MultipleDiscriminatorTest {
         Person person = personMapper.get(1L);
         Assert.assertNotNull("Person must not be null", person);
         Assert.assertEquals("Person must be a director", Director.class, person.getClass());
-      sqlSession.close();
+        sqlSession.close();
     }
+
     @Test
     public void testMultipleDiscriminator2() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -76,14 +77,15 @@ public class MultipleDiscriminatorTest {
         Person person = personMapper.get2(1L);
         Assert.assertNotNull("Person must not be null", person);
         Assert.assertEquals("Person must be a director", Director.class, person.getClass());
-      sqlSession.close();
+        sqlSession.close();
     }
-    @Test(timeout=20000)
+
+    @Test(timeout = 20000)
     public void testMultipleDiscriminatorLoop() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
         personMapper.getLoop();
-      sqlSession.close();
-      
+        sqlSession.close();
+
     }
 }

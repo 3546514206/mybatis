@@ -28,33 +28,33 @@ import org.mockito.Mockito;
 
 public class ClobTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<String> TYPE_HANDLER = new ClobTypeHandler();
+    private static final TypeHandler<String> TYPE_HANDLER = new ClobTypeHandler();
 
-  @Mock
-  protected Clob clob;
+    @Mock
+    protected Clob clob;
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
-    verify(ps).setCharacterStream(Mockito.eq(1), Mockito.any(Reader.class), Mockito.eq(5));
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
+        verify(ps).setCharacterStream(Mockito.eq(1), Mockito.any(Reader.class), Mockito.eq(5));
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getClob("column")).thenReturn(clob);
-    when(rs.wasNull()).thenReturn(false);
-    when(clob.length()).thenReturn(3l);
-    when(clob.getSubString(1, 3)).thenReturn("Hello");
-    assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getClob("column")).thenReturn(clob);
+        when(rs.wasNull()).thenReturn(false);
+        when(clob.length()).thenReturn(3l);
+        when(clob.getSubString(1, 3)).thenReturn("Hello");
+        assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getClob(1)).thenReturn(clob);
-    when(cs.wasNull()).thenReturn(false);
-    when(clob.length()).thenReturn(3l);
-    when(clob.getSubString(1, 3)).thenReturn("Hello");
-    assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getClob(1)).thenReturn(clob);
+        when(cs.wasNull()).thenReturn(false);
+        when(clob.length()).thenReturn(3l);
+        when(clob.getSubString(1, 3)).thenReturn("Hello");
+        assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

@@ -21,37 +21,37 @@ import java.util.List;
  * @author Jeff Butler
  */
 public class Parameter {
-  private String schema;
-  private List<Integer> ids;
-  private boolean enabled;
-  
-  public String getFred() {
-    // added this method to check for bug with DynamicContext
-    // IBATIS-777
-    throw new RuntimeException("This method should not be called.");
-  }
+    private String schema;
+    private List<Integer> ids;
+    private boolean enabled;
 
-  public String getSchema() {
-    return schema;
-  }
+    public String getFred() {
+        // added this method to check for bug with DynamicContext
+        // IBATIS-777
+        throw new RuntimeException("This method should not be called.");
+    }
 
-  public void setSchema(String schema) {
-    this.schema = schema;
-  }
+    public String getSchema() {
+        return schema;
+    }
 
-  public List<Integer> getIds() {
-    return ids;
-  }
+    public void setSchema(String schema) {
+        this.schema = schema;
+    }
 
-  public void setIds(List<Integer> ids) {
-    this.ids = ids;
-  }
+    public List<Integer> getIds() {
+        return ids;
+    }
 
-  public boolean isEnabled() {
-    return enabled;
-  }
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
 
-  public void setEnabled(boolean enabled) {
-    this.enabled = enabled;
-  }
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

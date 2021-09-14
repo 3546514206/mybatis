@@ -15,16 +15,16 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.valueinmap.Mapper">
 
-	<select id="count" resultType="int" parameterType="map">
+    <select id="count" resultType="int" parameterType="map">
 		select count(*) from ${table} where ${column}=#{value}
 	</select>
 
-	<select id="count2" resultType="int">
+    <select id="count2" resultType="int">
 		select count(*) from ${listx} 
 	</select>
 

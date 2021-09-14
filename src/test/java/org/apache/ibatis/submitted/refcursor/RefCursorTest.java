@@ -34,12 +34,12 @@ import org.junit.Test;
 /*
  * This class contains tests for refcursors.  The tests require a
  * local install of PostgreSQL and cannot be run as a part of the normal
- * MyBatis build unless PostreSQL is setup on the build machine as 
+ * MyBatis build unless PostreSQL is setup on the build machine as
  * described in setupdb.txt
- * 
+ *
  * If PostgreSQL is setup as described in setupdb.txt, then remove
  * the @Ignore annotation to enable the tests.
- * 
+ *
  * @author Jeff Butler
  *
  */
@@ -56,7 +56,7 @@ public class RefCursorTest {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("orderId", 1);
             mapper.getOrder1(parameter);
-            
+
             assertNotNull(parameter.get("order"));
             List<Order> orders = (List<Order>) parameter.get("order");
             assertEquals(1, orders.size());
@@ -78,7 +78,7 @@ public class RefCursorTest {
             Map<String, Object> parameter = new HashMap<String, Object>();
             parameter.put("orderId", 1);
             mapper.getOrder2(parameter);
-            
+
             assertNotNull(parameter.get("order"));
             List<Order> orders = (List<Order>) parameter.get("order");
             assertEquals(1, orders.size());

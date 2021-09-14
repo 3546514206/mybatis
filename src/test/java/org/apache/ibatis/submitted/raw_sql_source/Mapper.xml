@@ -15,23 +15,23 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.raw_sql_source.Mapper">
 
-	<select id="getUser1" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
+    <select id="getUser1" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
 		select * from users where id = #{value}
 	</select>
 
-	<select id="getUser2" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
+    <select id="getUser2" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
 		select * from users where id = ${value}
 	</select>
 
-	<select id="getUser3" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
-		<if test="true">
-			select * from users where id = #{value}
-		</if>
-	</select>
+    <select id="getUser3" resultType="org.apache.ibatis.submitted.raw_sql_source.User">
+        <if test="true">
+            select * from users where id = #{value}
+        </if>
+    </select>
 
 </mapper>

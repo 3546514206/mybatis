@@ -23,26 +23,26 @@ import org.junit.Test;
 
 public class ShortTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Short> TYPE_HANDLER = new ShortTypeHandler();
+    private static final TypeHandler<Short> TYPE_HANDLER = new ShortTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, (short) 100, null);
-    verify(ps).setShort(1, (short) 100);
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, (short) 100, null);
+        verify(ps).setShort(1, (short) 100);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getShort("column")).thenReturn((short) 100);
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new Short((short) 100), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getShort("column")).thenReturn((short) 100);
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new Short((short) 100), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getShort(1)).thenReturn((short) 100);
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new Short((short) 100), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getShort(1)).thenReturn((short) 100);
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new Short((short) 100), TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

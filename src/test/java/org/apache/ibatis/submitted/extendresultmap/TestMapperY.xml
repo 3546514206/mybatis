@@ -17,10 +17,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apache.ibatis.submitted.extendresultmap.TestMapperY">
 
-	<resultMap type="org.apache.ibatis.submitted.extendresultmap.TestModel"
-		id="map" extends="org.apache.ibatis.submitted.extendresultmap.TestMapperX.map">
+    <resultMap type="org.apache.ibatis.submitted.extendresultmap.TestModel"
+               id="map" extends="org.apache.ibatis.submitted.extendresultmap.TestMapperX.map">
 
-		<result property="a" column="B" />
-	</resultMap>
+        <result property="a" column="B"/>
+    </resultMap>
 
 </mapper>

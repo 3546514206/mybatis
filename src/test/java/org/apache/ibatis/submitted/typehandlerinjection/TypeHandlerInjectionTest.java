@@ -30,41 +30,41 @@ import org.junit.Test;
 
 public class TypeHandlerInjectionTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  private static UserStateTypeHandler<String> handler = new UserStateTypeHandler<String>();
+    private static UserStateTypeHandler<String> handler = new UserStateTypeHandler<String>();
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/typehandlerinjection/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/typehandlerinjection/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(handler);
-    sqlSessionFactory.getConfiguration().addMapper(Mapper.class);
+        sqlSessionFactory.getConfiguration().getTypeHandlerRegistry().register(handler);
+        sqlSessionFactory.getConfiguration().addMapper(Mapper.class);
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/typehandlerinjection/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldGetAUser() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      List<User> users = mapper.getUsers();
-      Assert.assertEquals("Inactive", users.get(0).getName());
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/typehandlerinjection/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
+
+    @Test
+    public void shouldGetAUser() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            List<User> users = mapper.getUsers();
+            Assert.assertEquals("Inactive", users.get(0).getName());
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

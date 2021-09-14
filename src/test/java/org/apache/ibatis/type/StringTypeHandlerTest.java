@@ -23,40 +23,40 @@ import org.junit.Test;
 
 public class StringTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<String> TYPE_HANDLER = new StringTypeHandler();
+    private static final TypeHandler<String> TYPE_HANDLER = new StringTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
-    verify(ps).setString(1, "Hello");
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
+        verify(ps).setString(1, "Hello");
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getString("column")).thenReturn("Hello");
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getString("column")).thenReturn("Hello");
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetNullResultFromResultSet() throws Exception {
-    when(cs.getString(1)).thenReturn(null);
-    when(cs.wasNull()).thenReturn(true);
-    assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetNullResultFromResultSet() throws Exception {
+        when(cs.getString(1)).thenReturn(null);
+        when(cs.wasNull()).thenReturn(true);
+        assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getString(1)).thenReturn("Hello");
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getString(1)).thenReturn("Hello");
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
+    }
 
-  @Test
-  public void shouldGetNullResultFromCallableStatement() throws Exception {
-    when(cs.getString(1)).thenReturn(null);
-    when(cs.wasNull()).thenReturn(true);
-    assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetNullResultFromCallableStatement() throws Exception {
+        when(cs.getString(1)).thenReturn(null);
+        when(cs.wasNull()).thenReturn(true);
+        assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

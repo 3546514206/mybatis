@@ -18,50 +18,50 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.nested.Mapper">
-  <select id="simpleSelect" parameterType="Parameter" resultType="map">
-    select *
-    from names
-    <where>
-      <foreach collection="names" item="name" separator="or">
-        lastName = #{name.lastName}
-      </foreach>
-    </where>
-  </select>
+    <select id="simpleSelect" parameterType="Parameter" resultType="map">
+        select *
+        from names
+        <where>
+            <foreach collection="names" item="name" separator="or">
+                lastName = #{name.lastName}
+            </foreach>
+        </where>
+    </select>
 
-  <select id="nestedSelect" parameterType="Parameter" resultType="map">
-    select *
-    from names
-    <where>
-      <foreach collection="names" item="name" separator="or">
-        <foreach collection="name.firstNames" item="firstName" separator="or">
-          (lastName = #{name.lastName} and firstName = #{firstName})
-        </foreach>
-      </foreach>
-    </where>
-  </select>
+    <select id="nestedSelect" parameterType="Parameter" resultType="map">
+        select *
+        from names
+        <where>
+            <foreach collection="names" item="name" separator="or">
+                <foreach collection="name.firstNames" item="firstName" separator="or">
+                    (lastName = #{name.lastName} and firstName = #{firstName})
+                </foreach>
+            </foreach>
+        </where>
+    </select>
 
-  <select id="simpleSelectWithPrimitives" parameterType="map" resultType="map">
-    select *
-    from names
-    <where>
-      <foreach collection="ids" item="id" separator="," open="id in (" close=")">
-        ${id}
-      </foreach>
-    </where>
-  </select>
+    <select id="simpleSelectWithPrimitives" parameterType="map" resultType="map">
+        select *
+        from names
+        <where>
+            <foreach collection="ids" item="id" separator="," open="id in (" close=")">
+                ${id}
+            </foreach>
+        </where>
+    </select>
 
-  <select id="simpleSelectWithMapperAndPrimitives" resultType="map">
-    select *
-    from names
-    <where>
-      <foreach collection="ids" item="id" separator="," open="id in (" close=")">
-        ${id}
-      </foreach>
-    </where>
-  </select>
+    <select id="simpleSelectWithMapperAndPrimitives" resultType="map">
+        select *
+        from names
+        <where>
+            <foreach collection="ids" item="id" separator="," open="id in (" close=")">
+                ${id}
+            </foreach>
+        </where>
+    </select>
 
 </mapper>

@@ -33,52 +33,52 @@ import org.junit.Test;
 
 public class CriterionTest {
 
-  protected static SqlSessionFactory sqlSessionFactory;
+    protected static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    Connection conn = null;
+    @BeforeClass
+    public static void setUp() throws Exception {
+        Connection conn = null;
 
-    try {
-      Class.forName("org.hsqldb.jdbcDriver");
-      conn = DriverManager.getConnection("jdbc:hsqldb:mem:aname", "sa",
-          "");
+        try {
+            Class.forName("org.hsqldb.jdbcDriver");
+            conn = DriverManager.getConnection("jdbc:hsqldb:mem:aname", "sa",
+                    "");
 
-      Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/criterion/CreateDB.sql");
+            Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/criterion/CreateDB.sql");
 
-      ScriptRunner runner = new ScriptRunner(conn);
-      runner.setLogWriter(null);
-      runner.setErrorLogWriter(null);
-      runner.runScript(reader);
-      conn.commit();
-      reader.close();
+            ScriptRunner runner = new ScriptRunner(conn);
+            runner.setLogWriter(null);
+            runner.setErrorLogWriter(null);
+            runner.runScript(reader);
+            conn.commit();
+            reader.close();
 
-      reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/criterion/MapperConfig.xml");
-      sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-      reader.close();
-    } finally {
-      if (conn != null) {
-        conn.close();
-      }
+            reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/criterion/MapperConfig.xml");
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            reader.close();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
-  }
 
-  @Test
-  public void testSimpleSelect() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Criterion criterion = new Criterion();
-      criterion.setTest("firstName =");
-      criterion.setValue("Fred");
-      Parameter parameter = new Parameter();
-      parameter.setCriterion(criterion);
+    @Test
+    public void testSimpleSelect() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Criterion criterion = new Criterion();
+            criterion.setTest("firstName =");
+            criterion.setValue("Fred");
+            Parameter parameter = new Parameter();
+            parameter.setCriterion(criterion);
 
-      List<Map<String, Object>> answer =
-          sqlSession.selectList("org.apache.ibatis.submitted.criterion.simpleSelect", parameter);
+            List<Map<String, Object>> answer =
+                    sqlSession.selectList("org.apache.ibatis.submitted.criterion.simpleSelect", parameter);
 
-      assertEquals(1, answer.size());
-    } finally {
-      sqlSession.close();
+            assertEquals(1, answer.size());
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
 }

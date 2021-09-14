@@ -15,12 +15,12 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.mapper_extend.ParentMapper">
 
-	<select id="getUserXML" resultType="org.apache.ibatis.submitted.mapper_extend.User">
+    <select id="getUserXML" resultType="org.apache.ibatis.submitted.mapper_extend.User">
 		select * from users where id = 1
 	</select>
 

@@ -52,18 +52,17 @@ public class NonFullyQualifiedNamespaceTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         try {
             Person person = (Person) sqlSession.selectOne("person namespace.select", 1);
-            assertEquals((Integer)1, person.getId());
+            assertEquals((Integer) 1, person.getId());
             assertEquals(2, person.getPets().size());
-            assertEquals((Integer)2, person.getPets().get(1).getId());
+            assertEquals((Integer) 2, person.getPets().get(1).getId());
 
             Pet pet = (Pet) sqlSession.selectOne("person namespace.selectPet", 1);
             assertEquals(Integer.valueOf(1), pet.getId());
 
             Pet pet2 = (Pet) sqlSession.selectOne("pet namespace.select", 3);
-            assertEquals((Integer)3, pet2.getId());
-            assertEquals((Integer)2, pet2.getOwner().getId());
-        }
-        finally {
+            assertEquals((Integer) 3, pet2.getId());
+            assertEquals((Integer) 2, pet2.getOwner().getId());
+        } finally {
             sqlSession.close();
         }
     }
@@ -78,8 +77,7 @@ public class NonFullyQualifiedNamespaceTest {
             runner.runScript(scriptReader);
             conn.commit();
             scriptReader.close();
-        }
-        finally {
+        } finally {
             if (conn != null) {
                 conn.close();
             }

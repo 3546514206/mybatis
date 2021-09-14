@@ -33,90 +33,90 @@ import org.junit.Test;
 
 public class NoParamTypeTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/no_param_type/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/no_param_type/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/no_param_type/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldAcceptDifferentTypeInTheSameBatch() {
-    SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
-    try {
-      ObjA a = new ObjA();
-      a.setId(1);
-      a.setName(111);
-      sqlSession.insert("insertUser", a);
-      ObjB b = new ObjB();
-      b.setId(2);
-      b.setName("222");
-      sqlSession.insert("insertUser", b);
-      List<BatchResult> batchResults = sqlSession.flushStatements();
-      batchResults.clear();
-      sqlSession.clearCache();
-      sqlSession.commit();
-      List<User> users = sqlSession.selectList("selectUser");
-      assertEquals(2, users.size());
-    } finally {
-      sqlSession.close();
-    }
-  }
-
-  public static class ObjA {
-    private Integer id;
-
-    private Integer name;
-
-    public Integer getId() {
-      return id;
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/no_param_type/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
 
-    public void setId(Integer id) {
-      this.id = id;
+    @Test
+    public void shouldAcceptDifferentTypeInTheSameBatch() {
+        SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH);
+        try {
+            ObjA a = new ObjA();
+            a.setId(1);
+            a.setName(111);
+            sqlSession.insert("insertUser", a);
+            ObjB b = new ObjB();
+            b.setId(2);
+            b.setName("222");
+            sqlSession.insert("insertUser", b);
+            List<BatchResult> batchResults = sqlSession.flushStatements();
+            batchResults.clear();
+            sqlSession.clearCache();
+            sqlSession.commit();
+            List<User> users = sqlSession.selectList("selectUser");
+            assertEquals(2, users.size());
+        } finally {
+            sqlSession.close();
+        }
     }
 
-    public Integer getName() {
-      return name;
+    public static class ObjA {
+        private Integer id;
+
+        private Integer name;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public Integer getName() {
+            return name;
+        }
+
+        public void setName(Integer name) {
+            this.name = name;
+        }
     }
 
-    public void setName(Integer name) {
-      this.name = name;
+    public static class ObjB {
+        private Integer id;
+
+        private String name;
+
+        public Integer getId() {
+            return id;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
-  }
-
-  public static class ObjB {
-    private Integer id;
-
-    private String name;
-
-    public Integer getId() {
-      return id;
-    }
-
-    public void setId(Integer id) {
-      this.id = id;
-    }
-
-    public String getName() {
-      return name;
-    }
-
-    public void setName(String name) {
-      this.name = name;
-    }
-  }
 }

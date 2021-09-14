@@ -15,30 +15,30 @@
        limitations under the License.
 -->
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
-	<properties>
-		<property name="table" value="users"/>
-	</properties>
+    <properties>
+        <property name="table" value="users"/>
+    </properties>
 
-	<environments default="development">
-		<environment id="development">
-			<transactionManager type="JDBC">
-				<property name="" value="" />
-			</transactionManager>
-			<dataSource type="UNPOOLED">
-				<property name="driver" value="org.hsqldb.jdbcDriver" />
-				<property name="url" value="jdbc:hsqldb:mem:global_variables" />
-				<property name="username" value="sa" />
-			</dataSource>
-		</environment>
-	</environments>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+                <property name="" value=""/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="org.hsqldb.jdbcDriver"/>
+                <property name="url" value="jdbc:hsqldb:mem:global_variables"/>
+                <property name="username" value="sa"/>
+            </dataSource>
+        </environment>
+    </environments>
 
-	<mappers>
-		<mapper class="org.apache.ibatis.submitted.global_variables.Mapper" />
-	</mappers>
+    <mappers>
+        <mapper class="org.apache.ibatis.submitted.global_variables.Mapper"/>
+    </mappers>
 
 </configuration>

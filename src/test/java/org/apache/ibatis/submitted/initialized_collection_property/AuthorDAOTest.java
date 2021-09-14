@@ -20,6 +20,7 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
 import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
@@ -32,48 +33,48 @@ import java.util.List;
 
 public class AuthorDAOTest {
 
-  private static SqlSessionFactory factory;
+    private static SqlSessionFactory factory;
 
-  @BeforeClass
-  public static void testGetMessageForEmptyDatabase() throws Exception {
-    final String resource = "org/apache/ibatis/submitted/initialized_collection_property/mybatis-config.xml";
-    Reader reader = Resources.getResourceAsReader(resource);
-    factory = new SqlSessionFactoryBuilder().build(reader);
+    @BeforeClass
+    public static void testGetMessageForEmptyDatabase() throws Exception {
+        final String resource = "org/apache/ibatis/submitted/initialized_collection_property/mybatis-config.xml";
+        Reader reader = Resources.getResourceAsReader(resource);
+        factory = new SqlSessionFactoryBuilder().build(reader);
 
-    SqlSession session = factory.openSession();
+        SqlSession session = factory.openSession();
 
-    Connection conn = session.getConnection();
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.setErrorLogWriter(null);
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/initialized_collection_property/create.sql");
-    runner.runScript(reader);
-    session.close();
-  }
-
-  @Test
-  public void shouldNotOverwriteCollectionOnNestedResultMap() {
-    SqlSession session = factory.openSession();
-    try {
-    List<Author> authors = session.selectList("getAllAuthors");
-    assertEquals(1, authors.size());
-    assertEquals(4, authors.get(0).getPosts().size());
-    } finally {
-      session.close();
+        Connection conn = session.getConnection();
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.setErrorLogWriter(null);
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/initialized_collection_property/create.sql");
+        runner.runScript(reader);
+        session.close();
     }
-  }
 
-  @Ignore // issue #75 nested selects overwrite collections
-  @Test
-  public void shouldNotOverwriteCollectionOnNestedQuery() {
-    SqlSession session = factory.openSession();
-    try {
-    List<Author> authors = session.selectList("getAllAuthorsNestedQuery");
-    assertEquals(1, authors.size());
-    assertEquals(4, authors.get(0).getPosts().size());
-    } finally {
-      session.close();
+    @Test
+    public void shouldNotOverwriteCollectionOnNestedResultMap() {
+        SqlSession session = factory.openSession();
+        try {
+            List<Author> authors = session.selectList("getAllAuthors");
+            assertEquals(1, authors.size());
+            assertEquals(4, authors.get(0).getPosts().size());
+        } finally {
+            session.close();
+        }
     }
-  }
+
+    @Ignore // issue #75 nested selects overwrite collections
+    @Test
+    public void shouldNotOverwriteCollectionOnNestedQuery() {
+        SqlSession session = factory.openSession();
+        try {
+            List<Author> authors = session.selectList("getAllAuthorsNestedQuery");
+            assertEquals(1, authors.size());
+            assertEquals(4, authors.get(0).getPosts().size());
+        } finally {
+            session.close();
+        }
+    }
 
 }

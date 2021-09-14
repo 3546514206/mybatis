@@ -13,7 +13,7 @@ import org.junit.Test;
 public class SQLTest {
 
     @Test
-    public void test(){
+    public void test() {
         SQL sql = new SQL().SELECT("T.ID,T.NAME").FROM("USER P").WHERE("ID = 1").AND().WHERE("NAME LIKE '%杨%'");
         System.out.println(sql);
     }

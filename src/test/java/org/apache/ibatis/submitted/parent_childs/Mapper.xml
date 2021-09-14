@@ -15,26 +15,26 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.parent_childs.Mapper">
 
-	<resultMap id="ParentMap" type="org.apache.ibatis.submitted.parent_childs.Parent">
-		<id column="p_Id" property="id" />
-		<id column="p_Name" property="name" />
-		<id column="p_SurName" property="surName" />
-		<collection property="childs" resultMap="ChildMap" />
-	</resultMap>
+    <resultMap id="ParentMap" type="org.apache.ibatis.submitted.parent_childs.Parent">
+        <id column="p_Id" property="id"/>
+        <id column="p_Name" property="name"/>
+        <id column="p_SurName" property="surName"/>
+        <collection property="childs" resultMap="ChildMap"/>
+    </resultMap>
 
-	<resultMap id="ChildMap" type="org.apache.ibatis.submitted.parent_childs.Child">
-		<id column="c_id" property="id" />
-		<id column="c_Name" property="name" />
-		<id column="c_SurName" property="surName" />
-		<id column="c_Age" property="age" />
-	</resultMap>
+    <resultMap id="ChildMap" type="org.apache.ibatis.submitted.parent_childs.Child">
+        <id column="c_id" property="id"/>
+        <id column="c_Name" property="name"/>
+        <id column="c_SurName" property="surName"/>
+        <id column="c_Age" property="age"/>
+    </resultMap>
 
-	<select id="getParents" resultMap="ParentMap">
+    <select id="getParents" resultMap="ParentMap">
 		select
 		p.Id as p_Id, 
 		p.Name as p_Name, 

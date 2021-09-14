@@ -43,6 +43,6 @@ public class Person {
 
     public void setContacts(CustomCollection<Contact> contacts) {
         this.contacts = contacts;
-    }    
-    
+    }
+
 }

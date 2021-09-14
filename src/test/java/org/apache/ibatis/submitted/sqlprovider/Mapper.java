@@ -20,9 +20,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.SelectProvider;
 
 public interface Mapper {
-  @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUsersQuery")
-  List<User> getUsers(List<Integer> allFilterIds);
+    @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUsersQuery")
+    List<User> getUsers(List<Integer> allFilterIds);
 
-  @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUserQuery")
-  User getUser(Integer userId);
+    @SelectProvider(type = OurSqlBuilder.class, method = "buildGetUserQuery")
+    User getUser(Integer userId);
 }

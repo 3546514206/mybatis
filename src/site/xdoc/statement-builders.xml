@@ -20,24 +20,30 @@
 <document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
-  <properties>
-    <title>MyBatis 3 | The SQL BUilder Class</title>
-    <author email="clinton.begin@gmail.com">Clinton Begin</author>
-  </properties>
+    <properties>
+        <title>MyBatis 3 | The SQL BUilder Class</title>
+        <author email="clinton.begin@gmail.com">Clinton Begin</author>
+    </properties>
 
-  <body>
-    <section name="The SQL Builder Class">
-      <subsection name="The Problem">
-        <p>One of the nastiest things a Java developer will ever have to do is embed SQL in Java code. Usually this is
-          done because the SQL has to be dynamically generated - otherwise you could externalize it in a file or a
-          stored proc. As you've already seen, MyBatis has a powerful answer for dynamic SQL generation in its
-          XML mapping features. However, sometimes it becomes necessary to build a SQL statement string inside of Java
-          code. In that case, MyBatis has one more feature to help you out, before reducing yourself to the typical mess
-          of plus signs, quotes, newlines, formatting problems and nested conditionals to deal with extra commas or
-          AND conjunctions. Indeed, dynamically generating SQL code in Java can be a real nightmare.  For example:
-        </p>
+    <body>
+        <section name="The SQL Builder Class">
+            <subsection name="The Problem">
+                <p>One of the nastiest things a Java developer will ever have to do is embed SQL in Java code. Usually
+                    this is
+                    done because the SQL has to be dynamically generated - otherwise you could externalize it in a file
+                    or a
+                    stored proc. As you've already seen, MyBatis has a powerful answer for dynamic SQL generation in its
+                    XML mapping features. However, sometimes it becomes necessary to build a SQL statement string inside
+                    of Java
+                    code. In that case, MyBatis has one more feature to help you out, before reducing yourself to the
+                    typical mess
+                    of plus signs, quotes, newlines, formatting problems and nested conditionals to deal with extra
+                    commas or
+                    AND conjunctions. Indeed, dynamically generating SQL code in Java can be a real nightmare. For
+                    example:
+                </p>
 
-        <source><![CDATA[
+                <source><![CDATA[
 String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
 "P.LAST_NAME,P.CREATED_ON, P.UPDATED_ON " +
 "FROM PERSON P, ACCOUNT A " +
@@ -50,14 +56,16 @@ String sql = "SELECT P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME, "
 "OR (P.FIRST_NAME like ?) " +
 "ORDER BY P.ID, P.FULL_NAME";
 ]]></source>
-      </subsection>
-      <subsection name="The Solution">
-      <p>MyBatis 3 offers a convenient utility class to help with the problem.
-        With the SQL class, you simply create an instance lets you call methods against it to build a SQL statement
-        one step at a time.  The example problem above would look like this when rewritten with the SQL class:
-      </p>
+            </subsection>
+            <subsection name="The Solution">
+                <p>MyBatis 3 offers a convenient utility class to help with the problem.
+                    With the SQL class, you simply create an instance lets you call methods against it to build a SQL
+                    statement
+                    one step at a time. The example problem above would look like this when rewritten with the SQL
+                    class:
+                </p>
 
-      <source><![CDATA[
+                <source><![CDATA[
 private String selectPersonSql() {
   return new SQL() {{
     SELECT("P.ID, P.USERNAME, P.PASSWORD, P.FULL_NAME");
@@ -80,19 +88,19 @@ private String selectPersonSql() {
 }
 ]]></source>
 
-      <p>What is so special about that example? Well, if you look closely, it doesn't have to worry about
-          accidentally duplicating "AND" keywords, or choosing between "WHERE"
-          and "AND" or none at all. The SQL class takes care of understanding where "WHERE"
-          needs to go, where an "AND" should be used and all of the String concatenation.
-        </p>
+                <p>What is so special about that example? Well, if you look closely, it doesn't have to worry about
+                    accidentally duplicating "AND" keywords, or choosing between "WHERE"
+                    and "AND" or none at all. The SQL class takes care of understanding where "WHERE"
+                    needs to go, where an "AND" should be used and all of the String concatenation.
+                </p>
 
-      </subsection>
+            </subsection>
 
-      <subsection name="The SQL Class">
+            <subsection name="The SQL Class">
 
-        <p>Here are some examples:</p>
+                <p>Here are some examples:</p>
 
-        <source><![CDATA[
+                <source><![CDATA[
 // Anonymous inner class
 public String deletePersonSql() {
   return new SQL() {{
@@ -153,260 +161,278 @@ public String updatePersonSql() {
 }
 ]]></source>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                <code>SELECT(String)</code>
-              </td>
-              <td>Starts or appends to a
-                <code>SELECT</code>
-                clause. Can be called more than once, and parameters will be appended to
-                the
-                <code>SELECT</code>
-                clause. The parameters are usually a comma separated list of columns and aliases, but can be
-                anything acceptable to the driver.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>SELECT_DISTINCT(String)</code>
-              </td>
-              <td>Starts or appends to a
-                <code>SELECT</code>
-                clause, also adds the
-                <code>DISTINCT</code>
-                keyword to the generated query.
-                Can be called more than once, and parameters will be appended to the
-                <code>SELECT</code>
-                clause. The parameters
-                are usually a comma separated list of columns and aliases, but can be anything acceptable to the driver.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>FROM(String)</code>
-              </td>
-              <td>Starts or appends to a
-                <code>FROM</code>
-                clause. Can be called more than once, and parameters will be appended to the
-                <code>FROM</code>
-                clause. Parameters are usually a table name and an alias, or anything acceptable to the driver.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <ul>
-                  <li>
-                    <code>JOIN(String)</code>
-                  </li>
-                  <li>
-                    <code>INNER_JOIN(String)</code>
-                  </li>
-                  <li>
-                    <code>LEFT_OUTER_JOIN(String)</code>
-                  </li>
-                  <li>
-                    <code>RIGHT_OUTER_JOIN(String)</code>
-                  </li>
-                </ul>
-              </td>
-              <td>Adds a new
-                <code>JOIN</code>
-                clause of the appropriate type, depending on the method called. The parameter can include
-                a standard join consisting of the columns and the conditions to join on.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>WHERE(String)</code>
-              </td>
-              <td>Appends a new
-                <code>WHERE</code>
-                clause condition, concatenated by<code>AND</code>. Can be called multiple times, which causes it
-                to concatenate the new conditions each time with<code>AND</code>. Use
-                <code>OR()</code>
-                to split with an<code>OR</code>.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>OR()</code>
-              </td>
-              <td>Splits the current
-                <code>WHERE</code>
-                clause conditions with an<code>OR</code>. Can be called more than once, but calling more
-                than once in a row will generate erratic<code>SQL</code>.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>AND()</code>
-              </td>
-              <td>Splits the current
-                <code>WHERE</code>
-                clause conditions with an<code>AND</code>. Can be called more than once, but calling more
-                than once in a row will generate erratic<code>SQL</code>. Because
-                <code>WHERE</code>
-                and
-                <code>HAVING</code>
-                both automatically concatenate with
-                <code>AND</code>, this is a very uncommon method to use and is only really included for completeness.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>GROUP_BY(String)</code>
-              </td>
-              <td>Appends a new
-                <code>GROUP BY</code>
-                clause elements, concatenated by a comma. Can be called multiple times, which
-                causes it to concatenate the new conditions each time with a comma.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>HAVING(String)</code>
-              </td>
-              <td>Appends a new
-                <code>HAVING</code>
-                clause condition, concatenated by AND. Can be called multiple times, which causes it
-                to concatenate the new conditions each time with<code>AND</code>. Use
-                <code>OR()</code>
-                to split with an<code>OR</code>.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>ORDER_BY(String)</code>
-              </td>
-              <td>Appends a new
-                <code>ORDER BY</code>
-                clause elements, concatenated by a comma. Can be called multiple times, which
-                causes it to concatenate the new conditions each time with a comma.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>DELETE_FROM(String)</code>
-              </td>
-              <td>Starts a delete statement and specifies the table to delete from. Generally this should be followed by
-                a
-                WHERE statement!
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>INSERT_INTO(String)</code>
-              </td>
-              <td>Starts an insert statement and specifies the table to insert into. This should be followed by one or
-                more
-                VALUES() calls.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>SET(String)</code>
-              </td>
-              <td>Appends to the "set" list for an update statement.</td>
-            </tr>
-            <tr>
-              <td>
-                <code>UPDATE(String)</code>
-              </td>
-              <td>Starts an update statement and specifies the table to update. This should be followed by one or more
-                SET() calls, and usually a WHERE() call.
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <code>VALUES(String, String)</code>
-              </td>
-              <td>Appends to an insert statement. The first parameter is the column(s) to insert, the second parameter
-                is
-                the value(s).
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <code>SELECT(String)</code>
+                            </td>
+                            <td>Starts or appends to a
+                                <code>SELECT</code>
+                                clause. Can be called more than once, and parameters will be appended to
+                                the
+                                <code>SELECT</code>
+                                clause. The parameters are usually a comma separated list of columns and aliases, but
+                                can be
+                                anything acceptable to the driver.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>SELECT_DISTINCT(String)</code>
+                            </td>
+                            <td>Starts or appends to a
+                                <code>SELECT</code>
+                                clause, also adds the
+                                <code>DISTINCT</code>
+                                keyword to the generated query.
+                                Can be called more than once, and parameters will be appended to the
+                                <code>SELECT</code>
+                                clause. The parameters
+                                are usually a comma separated list of columns and aliases, but can be anything
+                                acceptable to the driver.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>FROM(String)</code>
+                            </td>
+                            <td>Starts or appends to a
+                                <code>FROM</code>
+                                clause. Can be called more than once, and parameters will be appended to the
+                                <code>FROM</code>
+                                clause. Parameters are usually a table name and an alias, or anything acceptable to the
+                                driver.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <code>JOIN(String)</code>
+                                    </li>
+                                    <li>
+                                        <code>INNER_JOIN(String)</code>
+                                    </li>
+                                    <li>
+                                        <code>LEFT_OUTER_JOIN(String)</code>
+                                    </li>
+                                    <li>
+                                        <code>RIGHT_OUTER_JOIN(String)</code>
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>Adds a new
+                                <code>JOIN</code>
+                                clause of the appropriate type, depending on the method called. The parameter can
+                                include
+                                a standard join consisting of the columns and the conditions to join on.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>WHERE(String)</code>
+                            </td>
+                            <td>Appends a new
+                                <code>WHERE</code>
+                                clause condition, concatenated by<code>AND</code>. Can be called multiple times, which
+                                causes it
+                                to concatenate the new conditions each time with<code>AND</code>. Use
+                                <code>OR()</code>
+                                to split with an<code>OR</code>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>OR()</code>
+                            </td>
+                            <td>Splits the current
+                                <code>WHERE</code>
+                                clause conditions with an<code>OR</code>. Can be called more than once, but calling more
+                                than once in a row will generate erratic<code>SQL</code>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>AND()</code>
+                            </td>
+                            <td>Splits the current
+                                <code>WHERE</code>
+                                clause conditions with an<code>AND</code>. Can be called more than once, but calling
+                                more
+                                than once in a row will generate erratic<code>SQL</code>. Because
+                                <code>WHERE</code>
+                                and
+                                <code>HAVING</code>
+                                both automatically concatenate with
+                                <code>AND</code>, this is a very uncommon method to use and is only really included for
+                                completeness.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>GROUP_BY(String)</code>
+                            </td>
+                            <td>Appends a new
+                                <code>GROUP BY</code>
+                                clause elements, concatenated by a comma. Can be called multiple times, which
+                                causes it to concatenate the new conditions each time with a comma.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>HAVING(String)</code>
+                            </td>
+                            <td>Appends a new
+                                <code>HAVING</code>
+                                clause condition, concatenated by AND. Can be called multiple times, which causes it
+                                to concatenate the new conditions each time with<code>AND</code>. Use
+                                <code>OR()</code>
+                                to split with an<code>OR</code>.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>ORDER_BY(String)</code>
+                            </td>
+                            <td>Appends a new
+                                <code>ORDER BY</code>
+                                clause elements, concatenated by a comma. Can be called multiple times, which
+                                causes it to concatenate the new conditions each time with a comma.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>DELETE_FROM(String)</code>
+                            </td>
+                            <td>Starts a delete statement and specifies the table to delete from. Generally this should
+                                be followed by
+                                a
+                                WHERE statement!
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>INSERT_INTO(String)</code>
+                            </td>
+                            <td>Starts an insert statement and specifies the table to insert into. This should be
+                                followed by one or
+                                more
+                                VALUES() calls.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>SET(String)</code>
+                            </td>
+                            <td>Appends to the "set" list for an update statement.</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>UPDATE(String)</code>
+                            </td>
+                            <td>Starts an update statement and specifies the table to update. This should be followed by
+                                one or more
+                                SET() calls, and usually a WHERE() call.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>VALUES(String, String)</code>
+                            </td>
+                            <td>Appends to an insert statement. The first parameter is the column(s) to insert, the
+                                second parameter
+                                is
+                                the value(s).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-      </subsection>
+            </subsection>
 
-      <subsection name="SqlBuilder and SelectBuilder (DEPRECATED)">
-        <p>
-          Before version 3.2 we took a bit of a different approach, by utilizing a ThreadLocal variable to mask some of the
-          language limitations that make Java DSLs a bit cumbersome. However, this approach is now deprecated, as modern
-          frameworks have warmed people to the idea of using builder-type patterns and anonymous inner classes for such
-          things. Therefore the SelectBuilder and SqlBuilder classes have been deprecated.
-        </p>
-        <p>
-          The following methods apply to only the deprecated SqlBuilder and SelectBuilder classes.
-        </p>
-        <table>
-        <thead>
-          <tr>
-            <th>Method</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>
-            <code>BEGIN()</code>
-            /
-            <code>RESET()</code>
-          </td>
-          <td>These methods clear the ThreadLocal state of the SelectBuilder class, and prepare it for a new
-            statement to be
-            built.
-            <code>BEGIN()</code>
-            reads best when starting a new statement.
-            <code>RESET()</code>
-            reads best when clearing a
-            statement in the middle of execution for some reason (perhaps if the logic demands a completely
-            different
-            statement under some conditions).
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>SQL()</code>
-          </td>
-          <td>This returns the generated
-            <code>SQL()</code>
-            and resets the
-            <code>SelectBuilder</code>
-            state (as if
-            <code>BEGIN()</code>
-            or
-            <code>RESET()</code>
-            were called).
-            Thus, this method can only be called ONCE!
-          </td>
-        </tr>
-        </tbody>
-        </table>
+            <subsection name="SqlBuilder and SelectBuilder (DEPRECATED)">
+                <p>
+                    Before version 3.2 we took a bit of a different approach, by utilizing a ThreadLocal variable to
+                    mask some of the
+                    language limitations that make Java DSLs a bit cumbersome. However, this approach is now deprecated,
+                    as modern
+                    frameworks have warmed people to the idea of using builder-type patterns and anonymous inner classes
+                    for such
+                    things. Therefore the SelectBuilder and SqlBuilder classes have been deprecated.
+                </p>
+                <p>
+                    The following methods apply to only the deprecated SqlBuilder and SelectBuilder classes.
+                </p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <code>BEGIN()</code>
+                                /
+                                <code>RESET()</code>
+                            </td>
+                            <td>These methods clear the ThreadLocal state of the SelectBuilder class, and prepare it for
+                                a new
+                                statement to be
+                                built.
+                                <code>BEGIN()</code>
+                                reads best when starting a new statement.
+                                <code>RESET()</code>
+                                reads best when clearing a
+                                statement in the middle of execution for some reason (perhaps if the logic demands a
+                                completely
+                                different
+                                statement under some conditions).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <code>SQL()</code>
+                            </td>
+                            <td>This returns the generated
+                                <code>SQL()</code>
+                                and resets the
+                                <code>SelectBuilder</code>
+                                state (as if
+                                <code>BEGIN()</code>
+                                or
+                                <code>RESET()</code>
+                                were called).
+                                Thus, this method can only be called ONCE!
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        <p>
-          The SelectBuilder and SqlBuilder classes are not magical, but it's important to know how they work.
-          SelectBuilder and SqlBuilder use a combination of
-          Static Imports and a ThreadLocal variable to enable a clean syntax that can be easily interlaced with
-          conditionals.  To use them, you statically import the methods from the classes like this (one or the other,
-          not both):
-        </p>
+                <p>
+                    The SelectBuilder and SqlBuilder classes are not magical, but it's important to know how they work.
+                    SelectBuilder and SqlBuilder use a combination of
+                    Static Imports and a ThreadLocal variable to enable a clean syntax that can be easily interlaced
+                    with
+                    conditionals. To use them, you statically import the methods from the classes like this (one or the
+                    other,
+                    not both):
+                </p>
 
-        <source>import static org.apache.ibatis.jdbc.SelectBuilder.*;</source>
-        <source>import static org.apache.ibatis.jdbc.SqlBuilder.*;</source>
+                <source>import static org.apache.ibatis.jdbc.SelectBuilder.*;</source>
+                <source>import static org.apache.ibatis.jdbc.SqlBuilder.*;</source>
 
-        <p>This allows us to create methods like these:</p>
+                <p>This allows us to create methods like these:</p>
 
-        <source><![CDATA[
+                <source><![CDATA[
 /* DEPRECATED */
 public String selectBlogsSql() {
   BEGIN(); // Clears ThreadLocal variable
@@ -416,7 +442,7 @@ public String selectBlogsSql() {
 }
         ]]></source>
 
-        <source><![CDATA[
+                <source><![CDATA[
 /* DEPRECATED */
 private String selectPersonSql() {
   BEGIN(); // Clears ThreadLocal variable
@@ -440,10 +466,10 @@ private String selectPersonSql() {
 }
         ]]></source>
 
-      </subsection>
+            </subsection>
 
 
-    </section>
-  </body>
+        </section>
+    </body>
 
 </document>

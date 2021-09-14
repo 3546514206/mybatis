@@ -34,40 +34,40 @@ import domain.blog.Author;
 
 public class JavassistProxyTest extends SerializableProxyTest {
 
-  public JavassistProxyTest() {
-    proxyFactory = new JavassistProxyFactory();
-  }
+    public JavassistProxyTest() {
+        proxyFactory = new JavassistProxyFactory();
+    }
 
-  @Test
-  public void shouldCreateAProxyForAPartiallyLoadedBean() throws Exception {
-    ResultLoaderMap loader = new ResultLoaderMap();
-    loader.addLoader("id", null, null);
-    Object proxy = proxyFactory.createProxy(author, loader, new Configuration(), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
-    Author author2 = (Author) deserialize(serialize((Serializable) proxy));
-    assertTrue(author2 instanceof Proxy);
-  }
+    @Test
+    public void shouldCreateAProxyForAPartiallyLoadedBean() throws Exception {
+        ResultLoaderMap loader = new ResultLoaderMap();
+        loader.addLoader("id", null, null);
+        Object proxy = proxyFactory.createProxy(author, loader, new Configuration(), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
+        Author author2 = (Author) deserialize(serialize((Serializable) proxy));
+        assertTrue(author2 instanceof Proxy);
+    }
 
-  @Test(expected = ExecutorException.class)
-  public void shouldFailCallingAnUnloadedProperty() throws Exception {
-    // yes, it must go in uppercase
-    HashMap<String, ResultLoaderMap.LoadPair> unloadedProperties = new HashMap<String, ResultLoaderMap.LoadPair> ();
-    unloadedProperties.put("ID", null);
-    Author author2 = (Author) ((JavassistProxyFactory)proxyFactory).createDeserializationProxy(author, unloadedProperties, new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
-    author2.getId();
-  }
+    @Test(expected = ExecutorException.class)
+    public void shouldFailCallingAnUnloadedProperty() throws Exception {
+        // yes, it must go in uppercase
+        HashMap<String, ResultLoaderMap.LoadPair> unloadedProperties = new HashMap<String, ResultLoaderMap.LoadPair>();
+        unloadedProperties.put("ID", null);
+        Author author2 = (Author) ((JavassistProxyFactory) proxyFactory).createDeserializationProxy(author, unloadedProperties, new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
+        author2.getId();
+    }
 
-  @Test
-  public void shouldLetCallALoadedProperty() throws Exception {
-    Author author2 = (Author) ((JavassistProxyFactory)proxyFactory).createDeserializationProxy(author, new HashMap<String, ResultLoaderMap.LoadPair>(), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
-    assertEquals(999, author2.getId());
-  }
+    @Test
+    public void shouldLetCallALoadedProperty() throws Exception {
+        Author author2 = (Author) ((JavassistProxyFactory) proxyFactory).createDeserializationProxy(author, new HashMap<String, ResultLoaderMap.LoadPair>(), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
+        assertEquals(999, author2.getId());
+    }
 
-  @Test
-  public void shouldSerizalizeADeserlizaliedProxy() throws Exception {
-    Object proxy = ((JavassistProxyFactory)proxyFactory).createDeserializationProxy(author, new HashMap<String, ResultLoaderMap.LoadPair> (), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
-    Author author2 = (Author) deserialize(serialize((Serializable) proxy));
-    assertEquals(author, author2);
-    assertFalse(author.getClass().equals(author2.getClass()));
-  }
+    @Test
+    public void shouldSerizalizeADeserlizaliedProxy() throws Exception {
+        Object proxy = ((JavassistProxyFactory) proxyFactory).createDeserializationProxy(author, new HashMap<String, ResultLoaderMap.LoadPair>(), new DefaultObjectFactory(), new ArrayList<Class<?>>(), new ArrayList<Object>());
+        Author author2 = (Author) deserialize(serialize((Serializable) proxy));
+        assertEquals(author, author2);
+        assertFalse(author.getClass().equals(author2.getClass()));
+    }
 
 }

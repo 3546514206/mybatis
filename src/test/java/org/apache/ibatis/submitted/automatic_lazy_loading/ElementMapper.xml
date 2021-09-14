@@ -18,21 +18,24 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.automatic_lazy_loading.ElementMapper">
 
-  <resultMap id="selectElementValueInContainerUsingInline" type="org.apache.ibatis.submitted.automatic_lazy_loading.Element">
-	<result property="value" column="VALUECOLUMN"/>
-    <association property="element" column="PARENTVALUECOLUMN" javaType="org.apache.ibatis.submitted.automatic_lazy_loading.Element" select="org.apache.ibatis.submitted.automatic_lazy_loading.ElementMapper.selectParentElement"/>
-  </resultMap>
+    <resultMap id="selectElementValueInContainerUsingInline"
+               type="org.apache.ibatis.submitted.automatic_lazy_loading.Element">
+        <result property="value" column="VALUECOLUMN"/>
+        <association property="element" column="PARENTVALUECOLUMN"
+                     javaType="org.apache.ibatis.submitted.automatic_lazy_loading.Element"
+                     select="org.apache.ibatis.submitted.automatic_lazy_loading.ElementMapper.selectParentElement"/>
+    </resultMap>
 
-  <select id="selectElementById" resultMap="selectElementValueInContainerUsingInline" >
+    <select id="selectElementById" resultMap="selectElementValueInContainerUsingInline">
       select VALUECOLUMN, PARENTVALUECOLUMN from VALUETABLE where VALUECOLUMN = #{id}
   </select>
 
-  <select id="selectParentElement" resultMap="selectElementValueInContainerUsingInline" >
+    <select id="selectParentElement" resultMap="selectElementValueInContainerUsingInline">
       select VALUECOLUMN, PARENTVALUECOLUMN from VALUETABLE where VALUECOLUMN = #{id}
   </select>
 

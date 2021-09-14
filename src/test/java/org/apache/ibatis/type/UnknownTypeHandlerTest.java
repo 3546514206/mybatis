@@ -23,31 +23,31 @@ import org.junit.Test;
 
 public class UnknownTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Object> TYPE_HANDLER = new UnknownTypeHandler(new TypeHandlerRegistry());
+    private static final TypeHandler<Object> TYPE_HANDLER = new UnknownTypeHandler(new TypeHandlerRegistry());
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
-    verify(ps).setString(1, "Hello");
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
+        verify(ps).setString(1, "Hello");
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getMetaData()).thenReturn(rsmd);
-    when(rsmd.getColumnCount()).thenReturn(1);
-    when(rsmd.getColumnName(1)).thenReturn("column");
-    when(rsmd.getColumnClassName(1)).thenReturn(String.class.getName());
-    when(rsmd.getColumnType(1)).thenReturn(JdbcType.VARCHAR.TYPE_CODE);
-    when(rs.getString("column")).thenReturn("Hello");
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getMetaData()).thenReturn(rsmd);
+        when(rsmd.getColumnCount()).thenReturn(1);
+        when(rsmd.getColumnName(1)).thenReturn("column");
+        when(rsmd.getColumnClassName(1)).thenReturn(String.class.getName());
+        when(rsmd.getColumnType(1)).thenReturn(JdbcType.VARCHAR.TYPE_CODE);
+        when(rs.getString("column")).thenReturn("Hello");
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getObject(1)).thenReturn("Hello");
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getObject(1)).thenReturn("Hello");
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

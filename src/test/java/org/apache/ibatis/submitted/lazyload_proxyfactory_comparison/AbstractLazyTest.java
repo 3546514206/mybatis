@@ -30,67 +30,67 @@ import org.junit.Test;
 
 public abstract class AbstractLazyTest {
 
-  private SqlSessionFactory sqlSessionFactory;
-  private SqlSession sqlSession; 
-  private Mapper mapper;
+    private SqlSessionFactory sqlSessionFactory;
+    private SqlSession sqlSession;
+    private Mapper mapper;
 
-  protected abstract String getConfiguration();
-  
-  @Before
-  public void before() throws Exception {
-	    // create a SqlSessionFactory
-	    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/lazyload_proxyfactory_comparison/mybatis-config-" + getConfiguration() + ".xml");
-	    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-	    reader.close();
+    protected abstract String getConfiguration();
 
-	    // populate in-memory database
-	    SqlSession session = sqlSessionFactory.openSession();
-	    Connection conn = session.getConnection();
-	    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/lazyload_proxyfactory_comparison/CreateDB.sql");
-	    ScriptRunner runner = new ScriptRunner(conn);
-	    runner.setLogWriter(null);
-	    runner.runScript(reader);
-	    reader.close();
-	    session.close();
-	    
-	    sqlSession = sqlSessionFactory.openSession();
-	    mapper = sqlSession.getMapper(Mapper.class);
-  }
-  
-  @After 
-  public void after() {
-	  if (sqlSession != null) {
-		  sqlSession.close();
-	  }
-  }
-  
-  @Test
-  public void lazyLoadUserWithGetObjectWithInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithGetObjectWithInterface(1).getOwner());
-  }
-  
-  @Test
-  public void lazyLoadUserWithGetObjectWithoutInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithGetObjectWithoutInterface(1).getOwner());
-  }
-  
-  @Test
-  public void lazyLoadUserWithGetXxxWithInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithGetXxxWithInterface(1).getOwner());
-  }
-  
-  @Test
-  public void lazyLoadUserWithGetXxxWithoutInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithGetXxxWithoutInterface(1).getOwner());
-  }
-  
-  @Test
-  public void lazyLoadUserWithNothingWithInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithNothingWithInterface(1).getOwner());
-  }
-  
-  @Test
-  public void lazyLoadUserWithNothingWithoutInterface() throws Exception {
-	  Assert.assertNotNull(mapper.getUserWithNothingWithoutInterface(1).getOwner());
-  }
+    @Before
+    public void before() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/lazyload_proxyfactory_comparison/mybatis-config-" + getConfiguration() + ".xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
+
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/lazyload_proxyfactory_comparison/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
+
+        sqlSession = sqlSessionFactory.openSession();
+        mapper = sqlSession.getMapper(Mapper.class);
+    }
+
+    @After
+    public void after() {
+        if (sqlSession != null) {
+            sqlSession.close();
+        }
+    }
+
+    @Test
+    public void lazyLoadUserWithGetObjectWithInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithGetObjectWithInterface(1).getOwner());
+    }
+
+    @Test
+    public void lazyLoadUserWithGetObjectWithoutInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithGetObjectWithoutInterface(1).getOwner());
+    }
+
+    @Test
+    public void lazyLoadUserWithGetXxxWithInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithGetXxxWithInterface(1).getOwner());
+    }
+
+    @Test
+    public void lazyLoadUserWithGetXxxWithoutInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithGetXxxWithoutInterface(1).getOwner());
+    }
+
+    @Test
+    public void lazyLoadUserWithNothingWithInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithNothingWithInterface(1).getOwner());
+    }
+
+    @Test
+    public void lazyLoadUserWithNothingWithoutInterface() throws Exception {
+        Assert.assertNotNull(mapper.getUserWithNothingWithoutInterface(1).getOwner());
+    }
 }

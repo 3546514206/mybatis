@@ -15,26 +15,26 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.nestedresulthandler.Mapper">
-	<resultMap id="personResult" type="org.apache.ibatis.submitted.nestedresulthandler.Person">
-		<id property="id" column="person_id" />
-		<result property="name" column="person_name"/>
-		<collection property="items" ofType="org.apache.ibatis.submitted.nestedresulthandler.Item">
-			<id property="id" column="item_id"/>
-			<result property="name" column="item_name"/>
-		</collection>
-	</resultMap>
+    <resultMap id="personResult" type="org.apache.ibatis.submitted.nestedresulthandler.Person">
+        <id property="id" column="person_id"/>
+        <result property="name" column="person_name"/>
+        <collection property="items" ofType="org.apache.ibatis.submitted.nestedresulthandler.Item">
+            <id property="id" column="item_id"/>
+            <result property="name" column="item_name"/>
+        </collection>
+    </resultMap>
 
-	<select id="getPersons" resultMap="personResult" resultOrdered="true">
+    <select id="getPersons" resultMap="personResult" resultOrdered="true">
 		select p.id as person_id, p.name as person_name, i.id as item_id, i.name as item_name
 		from persons p, items i
 		where p.id = i.owner
 	</select>
 
-	<select id="getPersonsWithItemsOrdered" resultMap="personResult">
+    <select id="getPersonsWithItemsOrdered" resultMap="personResult">
 		select p.id as person_id, p.name as person_name, i.id as item_id, i.name as item_name
 		from persons p, items i
 		where p.id = i.owner

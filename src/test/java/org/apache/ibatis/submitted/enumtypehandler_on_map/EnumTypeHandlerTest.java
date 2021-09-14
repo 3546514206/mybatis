@@ -32,9 +32,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class EnumTypeHandlerTest {
-    
+
     private static SqlSessionFactory sqlSessionFactory;
-    
+
     @BeforeClass
     public static void initDatabase() throws Exception {
         Connection conn = null;
@@ -62,7 +62,7 @@ public class EnumTypeHandlerTest {
             }
         }
     }
-    
+
     @Test
     public void testEnumWithParam() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -70,8 +70,9 @@ public class EnumTypeHandlerTest {
         List<Person> persons = personMapper.getByType(Person.Type.PERSON, "");
         Assert.assertNotNull("Persons must not be null", persons);
         Assert.assertEquals("Persons must contain exactly 1 person", 1, persons.size());
-      sqlSession.close();
+        sqlSession.close();
     }
+
     @Test
     public void testEnumWithoutParam() {
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -80,12 +81,13 @@ public class EnumTypeHandlerTest {
             public String getName() {
                 return "";
             }
+
             public Type getType() {
                 return Person.Type.PERSON;
             }
         });
         Assert.assertNotNull("Persons must not be null", persons);
         Assert.assertEquals("Persons must contain exactly 1 person", 1, persons.size());
-      sqlSession.close();
+        sqlSession.close();
     }
 }

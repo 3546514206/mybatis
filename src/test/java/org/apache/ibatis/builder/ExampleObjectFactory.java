@@ -22,16 +22,16 @@ import java.util.Properties;
 
 public class ExampleObjectFactory extends DefaultObjectFactory {
 
-  public <T> T create(Class<T> type) {
-    return super.<T>create(type);
-  }
+    public <T> T create(Class<T> type) {
+        return super.<T>create(type);
+    }
 
-  public <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
-    return super.<T>create(type, constructorArgTypes, constructorArgs);
-  }
+    public <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
+        return super.<T>create(type, constructorArgTypes, constructorArgs);
+    }
 
-  public void setProperties(Properties properties) {
-    super.setProperties(properties);
-  }
+    public void setProperties(Properties properties) {
+        super.setProperties(properties);
+    }
 
 }

@@ -29,14 +29,14 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /*
- * This class contains tests for multiple results.  
+ * This class contains tests for multiple results.
  * It is based on Jeff's ref cursor tests.
- * 
+ *
  * The tests require a
  * local install of PostgreSQL and cannot be run as a part of the normal
- * MyBatis build unless PostreSQL is setup on the build machine as 
+ * MyBatis build unless PostreSQL is setup on the build machine as
  * described in setupdb.txt
- * 
+ *
  * If PostgreSQL is setup as described in setupdb.txt, then remove
  * the @Ignore annotation to enable the tests.
  *
@@ -44,25 +44,25 @@ import org.junit.Test;
 @Ignore("See setupdb.txt for instructions on how to run the tests in this class")
 public class MultipleResultTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multiple_resultsets/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
-  }
-
-  @Test
-  public void shouldGetMultipleResultSetsWithOneStatement() throws IOException {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      List<?> usersAndGroups = mapper.getUsersAndGroups();
-      Assert.assertEquals(2, usersAndGroups.size());
-    } finally {
-      sqlSession.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/multiple_resultsets/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
     }
-  }
+
+    @Test
+    public void shouldGetMultipleResultSetsWithOneStatement() throws IOException {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            List<?> usersAndGroups = mapper.getUsersAndGroups();
+            Assert.assertEquals(2, usersAndGroups.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

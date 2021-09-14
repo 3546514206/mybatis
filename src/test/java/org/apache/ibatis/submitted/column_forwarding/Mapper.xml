@@ -15,30 +15,31 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.column_forwarding.Mapper">
 
-	<select id="getUser" parameterType="map" resultMap="userResult">
+    <select id="getUser" parameterType="map" resultMap="userResult">
 		select * from users where id=#{id}
 	</select>
-	
-	<select id="getGroup" parameterType="map" resultMap="groupResult">
+
+    <select id="getGroup" parameterType="map" resultMap="groupResult">
 		select * from groups where id=#{id} and state=#{state}
 	</select>
 
-	<resultMap id="userResult"
-		type="org.apache.ibatis.submitted.column_forwarding.User">
-		<id column="id" property="id" />
-		<result column="name" property="name" />
-		<result column="state" property="state" />
-		<association property="group" column="{id=group_id,state=state}" select="getGroup" javaType="org.apache.ibatis.submitted.column_forwarding.Group" />
-	</resultMap>
-	
-	<resultMap id="groupResult"
-		type="org.apache.ibatis.submitted.column_forwarding.Group">
-		<id column="id" property="id" />
-		<result column="state" property="state" />	
-	</resultMap>
+    <resultMap id="userResult"
+               type="org.apache.ibatis.submitted.column_forwarding.User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="state" property="state"/>
+        <association property="group" column="{id=group_id,state=state}" select="getGroup"
+                     javaType="org.apache.ibatis.submitted.column_forwarding.Group"/>
+    </resultMap>
+
+    <resultMap id="groupResult"
+               type="org.apache.ibatis.submitted.column_forwarding.Group">
+        <id column="id" property="id"/>
+        <result column="state" property="state"/>
+    </resultMap>
 </mapper>

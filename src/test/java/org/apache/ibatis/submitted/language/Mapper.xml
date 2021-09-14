@@ -18,25 +18,25 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.language.Mapper">
 
-  <select id="selectNames" resultType="Name">
+    <select id="selectNames" resultType="Name">
     SELECT firstName #if($_parameter.includeLastName), lastName#end
     FROM names
     WHERE lastName LIKE @{name}
   </select>
 
-  <select id="selectNamesWithExpressions" resultType="Name">
+    <select id="selectNamesWithExpressions" resultType="Name">
     #set( $pattern = $_parameter.name + "%" )
     SELECT firstName #if($_parameter.includeLastName), lastName#end
     FROM names
     WHERE lastName LIKE @{pattern, javaType=string}
   </select>
 
-  <select id="selectNamesWithIteration" resultType="Name">
+    <select id="selectNamesWithIteration" resultType="Name">
     SELECT *
     FROM names
     WHERE id IN (
@@ -48,43 +48,51 @@
     )
   </select>
 
-  <select id="selectRaw" resultType="Name" lang="raw">
+    <select id="selectRaw" resultType="Name" lang="raw">
     SELECT firstName, lastName
     FROM names
     WHERE lastName LIKE #{name}
   </select>
 
-  <select id="selectRawWithInclude" resultType="Name" lang="raw">
-    SELECT firstName, lastName
-    <include refid="include"/>
-    WHERE lastName LIKE #{name}
-  </select>
+    <select id="selectRawWithInclude" resultType="Name" lang="raw">
+        SELECT firstName, lastName
+        <include refid="include"/>
+        WHERE lastName LIKE #{name}
+    </select>
 
-  <sql id="include">
+    <sql id="include">
   	FROM names
   </sql>
 
-  <select id="selectRawWithIncludeAndCData" resultType="Name" lang="raw">
-  	<![CDATA[
+    <select id="selectRawWithIncludeAndCData" resultType="Name" lang="raw">
+        <![CDATA[
     SELECT firstName, lastName
   	]]>
-    <include refid="includeWithCData"/>
-  	<![CDATA[
+        <include refid="includeWithCData"/>
+        <![CDATA[
     WHERE lastName LIKE #{name}
   	]]>
-  </select>
+    </select>
 
-  <sql id="includeWithCData">
+    <sql id="includeWithCData">
   	<![CDATA[
-  	FROM names
-  	]]>
+
+
+
+
+                                      FROM names
+
+
+
+
+        ]]>
   </sql>
-  
-  <select id="selectXml" resultType="Name" lang="xml">
-    SELECT firstName
-    <if test="includeLastName != null">, lastName</if>
-    FROM names
-    WHERE lastName LIKE #{name}
-  </select>
+
+    <select id="selectXml" resultType="Name" lang="xml">
+        SELECT firstName
+        <if test="includeLastName != null">, lastName</if>
+        FROM names
+        WHERE lastName LIKE #{name}
+    </select>
 
 </mapper>

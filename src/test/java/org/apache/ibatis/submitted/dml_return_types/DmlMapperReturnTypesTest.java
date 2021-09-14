@@ -32,91 +32,91 @@ import static org.junit.Assert.assertEquals;
 
 public class DmlMapperReturnTypesTest {
 
-  private static final String SQL = "org/apache/ibatis/submitted/dml_return_types/CreateDB.sql";
-  private static final String XML = "org/apache/ibatis/submitted/dml_return_types/mybatis-config.xml";
+    private static final String SQL = "org/apache/ibatis/submitted/dml_return_types/CreateDB.sql";
+    private static final String XML = "org/apache/ibatis/submitted/dml_return_types/mybatis-config.xml";
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  private SqlSession sqlSession;
-  private Mapper mapper;
+    private SqlSession sqlSession;
+    private Mapper mapper;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader(XML);
-    try {
-      sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    } finally {
-      reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader(XML);
+        try {
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        } finally {
+            reader.close();
+        }
+
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        try {
+            Connection conn = session.getConnection();
+            reader = Resources.getResourceAsReader(SQL);
+            try {
+                ScriptRunner runner = new ScriptRunner(conn);
+                runner.setLogWriter(null);
+                runner.runScript(reader);
+            } finally {
+                reader.close();
+            }
+        } finally {
+            session.close();
+        }
     }
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    try {
-      Connection conn = session.getConnection();
-      reader = Resources.getResourceAsReader(SQL);
-      try {
-        ScriptRunner runner = new ScriptRunner(conn);
-        runner.setLogWriter(null);
-        runner.runScript(reader);
-      } finally {
-        reader.close();
-      }
-    } finally {
-      session.close();
+    @Before
+    public void openSession() {
+        sqlSession = sqlSessionFactory.openSession();
+        mapper = sqlSession.getMapper(Mapper.class);
     }
-  }
 
-  @Before
-  public void openSession() {
-    sqlSession = sqlSessionFactory.openSession();
-    mapper = sqlSession.getMapper(Mapper.class);
-  }
+    @After
+    public void closeSession() {
+        sqlSession.close();
+    }
 
-  @After
-  public void closeSession() {
-    sqlSession.close();
-  }
+    @Test
+    public void updateShouldReturnVoid() {
+        mapper.updateReturnsVoid(new User(1, "updateShouldReturnVoid"));
+    }
 
-  @Test
-  public void updateShouldReturnVoid() {
-      mapper.updateReturnsVoid(new User(1, "updateShouldReturnVoid"));
-  }
+    @Test
+    public void shouldReturnPrimitiveInteger() {
+        final int rows = mapper.updateReturnsPrimitiveInteger(new User(1, "shouldReturnPrimitiveInteger"));
+        assertEquals(1, rows);
+    }
 
-  @Test
-  public void shouldReturnPrimitiveInteger() {
-    final int rows = mapper.updateReturnsPrimitiveInteger(new User(1, "shouldReturnPrimitiveInteger"));
-    assertEquals(1, rows);
-  }
+    @Test
+    public void shouldReturnInteger() {
+        final Integer rows = mapper.updateReturnsInteger(new User(1, "shouldReturnInteger"));
+        assertEquals(Integer.valueOf(1), rows);
+    }
 
-  @Test
-  public void shouldReturnInteger() {
-    final Integer rows = mapper.updateReturnsInteger(new User(1, "shouldReturnInteger"));
-    assertEquals(Integer.valueOf(1), rows);
-  }
+    @Test
+    public void shouldReturnPrimitiveLong() {
+        final long rows = mapper.updateReturnsPrimitiveLong(new User(1, "shouldReturnPrimitiveLong"));
+        assertEquals(1L, rows);
+    }
 
-  @Test
-  public void shouldReturnPrimitiveLong() {
-    final long rows = mapper.updateReturnsPrimitiveLong(new User(1, "shouldReturnPrimitiveLong"));
-    assertEquals(1L, rows);
-  }
+    @Test
+    public void shouldReturnLong() {
+        final Long rows = mapper.updateReturnsLong(new User(1, "shouldReturnLong"));
+        assertEquals(Long.valueOf(1), rows);
+    }
 
-  @Test
-  public void shouldReturnLong() {
-    final Long rows = mapper.updateReturnsLong(new User(1, "shouldReturnLong"));
-    assertEquals(Long.valueOf(1), rows);
-  }
+    @Test
+    public void shouldReturnPrimitiveBoolean() {
+        final boolean rows = mapper.updateReturnsPrimitiveBoolean(new User(1, "shouldReturnPrimitiveBoolean"));
+        assertEquals(true, rows);
+    }
 
-  @Test
-  public void shouldReturnPrimitiveBoolean() {
-    final boolean rows = mapper.updateReturnsPrimitiveBoolean(new User(1, "shouldReturnPrimitiveBoolean"));
-    assertEquals(true, rows);
-  }
-
-  @Test
-  public void shouldReturnBoolean() {
-    final Boolean rows = mapper.updateReturnsBoolean(new User(1, "shouldReturnBoolean"));
-    assertEquals(Boolean.TRUE, rows);
-  }
+    @Test
+    public void shouldReturnBoolean() {
+        final Boolean rows = mapper.updateReturnsBoolean(new User(1, "shouldReturnBoolean"));
+        assertEquals(Boolean.TRUE, rows);
+    }
 
 }

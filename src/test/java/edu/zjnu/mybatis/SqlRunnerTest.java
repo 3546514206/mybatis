@@ -38,15 +38,15 @@ public class SqlRunnerTest {
         System.out.println(JsonPrintUtil.formatToJson(JSON.toJSONString(map)));
 
         // 插入数据
-        SQL insertSql = new SQL().INSERT_INTO("USER ").VALUES("PASSWORD","?").VALUES("USERNAME","?");
+        SQL insertSql = new SQL().INSERT_INTO("USER ").VALUES("PASSWORD", "?").VALUES("USERNAME", "?");
         System.out.println(insertSql);
 
-        sqlRunner.insert(insertSql.toString(),"123","jetty");
-        sqlRunner.insert(insertSql.toString(),"321","lose");
-        sqlRunner.insert(insertSql.toString(),"111","rose");
+        sqlRunner.insert(insertSql.toString(), "123", "jetty");
+        sqlRunner.insert(insertSql.toString(), "321", "lose");
+        sqlRunner.insert(insertSql.toString(), "111", "rose");
 
         // 查询所有
-        List<Map<String,Object>> rsAll = sqlRunner.selectAll("select t.* from user t");
+        List<Map<String, Object>> rsAll = sqlRunner.selectAll("select t.* from user t");
         System.out.println(JsonPrintUtil.formatToJson(JSON.toJSONString(rsAll)));
 
     }

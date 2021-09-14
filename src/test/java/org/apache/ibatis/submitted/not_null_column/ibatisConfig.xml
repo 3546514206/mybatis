@@ -17,20 +17,20 @@
 
 -->
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	
+
     <settings>
         <setting name="lazyLoadingEnabled" value="true"/>
     </settings>
-	
+
     <typeAliases>
         <typeAlias alias="Child" type="org.apache.ibatis.submitted.not_null_column.Child"/>
         <typeAlias alias="Father" type="org.apache.ibatis.submitted.not_null_column.Father"/>
     </typeAliases>
-    
+
     <environments default="test">
         <environment id="test">
             <transactionManager type="JDBC"></transactionManager>
@@ -41,7 +41,7 @@
             </dataSource>
         </environment>
     </environments>
-    
+
     <mappers>
         <mapper resource="org/apache/ibatis/submitted/not_null_column/FatherMapper.xml"/>
     </mappers>

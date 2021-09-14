@@ -26,17 +26,17 @@ import org.apache.ibatis.annotations.Select;
 import domain.blog.Blog;
 
 public interface MapperWithOneAndMany {
-    
+
     @Select({
-        "SELECT *",
-        "FROM blog"
+            "SELECT *",
+            "FROM blog"
     })
-    @Results({ 
-        @Result(
-               property = "author", column = "author_id", 
-               one = @One(select = "org.apache.ibatis.binding.BoundAuthorMapper.selectAuthor"), 
-               many = @Many(select = "selectPostsById"))
+    @Results({
+            @Result(
+                    property = "author", column = "author_id",
+                    one = @One(select = "org.apache.ibatis.binding.BoundAuthorMapper.selectAuthor"),
+                    many = @Many(select = "selectPostsById"))
     })
-    List<Blog> selectWithBothOneAndMany();    
-    
+    List<Blog> selectWithBothOneAndMany();
+
 }

@@ -19,13 +19,13 @@ import java.util.List;
 
 public interface Mapper {
 
-  User getUser(Integer id);
+    User getUser(Integer id);
 
-  User getUserWithPets_Inline(Integer id);
+    User getUserWithPets_Inline(Integer id);
 
-  User getUserWithPets_External(Integer id);
+    User getUserWithPets_External(Integer id);
 
-  List<Book> getBooks();
+    List<Book> getBooks();
 
-  Article getArticle();
+    Article getArticle();
 }

@@ -24,10 +24,10 @@ import java.io.Reader;
 
 public class MapperNameTest {
 
-  @Test
-  public void initDatabase() throws IOException {
-    String resource = "org/apache/ibatis/submitted/map_class_name_conflict/ibatisConfig.xml";
-    Reader reader = Resources.getResourceAsReader(resource);
-    new SqlSessionFactoryBuilder().build(reader);
-  }
+    @Test
+    public void initDatabase() throws IOException {
+        String resource = "org/apache/ibatis/submitted/map_class_name_conflict/ibatisConfig.xml";
+        Reader reader = Resources.getResourceAsReader(resource);
+        new SqlSessionFactoryBuilder().build(reader);
+    }
 }

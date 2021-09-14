@@ -18,7 +18,6 @@ package org.apache.ibatis.submitted.lazy_deserialize;
 import org.apache.ibatis.annotations.Param;
 
 /**
- *
  * @author Franta Mejta
  * @date 2011-04-06T11:00:30+0200
  */

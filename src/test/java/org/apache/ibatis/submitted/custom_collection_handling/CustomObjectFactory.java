@@ -27,7 +27,7 @@ public class CustomObjectFactory implements ObjectFactory {
     public <T> T create(Class<T> type, List<Class<?>> constructorArgTypes, List<Object> constructorArgs) {
         Class<?> classToCreate = resolveInterface(type);
         @SuppressWarnings("unchecked") // we know types are assignable
-        T created = (T) instantiateClass(classToCreate, constructorArgTypes, constructorArgs);
+                T created = (T) instantiateClass(classToCreate, constructorArgTypes, constructorArgs);
         return created;
     }
 
@@ -84,14 +84,14 @@ public class CustomObjectFactory implements ObjectFactory {
         }
         return classToCreate;
     }
-    
+
     public <T> boolean isCollection(Class<T> type) {
-      return CustomCollection.class.isAssignableFrom(type);
+        return CustomCollection.class.isAssignableFrom(type);
     }
 
     @SuppressWarnings("unchecked")
     public <T> T[] createArray(Class<T> type, int size) {
-      return (T[]) Array.newInstance(type, size);
+        return (T[]) Array.newInstance(type, size);
     }
 
 }

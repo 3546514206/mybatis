@@ -23,46 +23,46 @@ import org.junit.Test;
 
 public class CharacterTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Character> TYPE_HANDLER = new CharacterTypeHandler();
+    private static final TypeHandler<Character> TYPE_HANDLER = new CharacterTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, 'a', null);
-    verify(ps).setString(1, "a");
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, 'a', null);
+        verify(ps).setString(1, "a");
+    }
 
-  @Test
-  public void shouldSetNullParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, null, JdbcType.VARCHAR);
-    verify(ps).setNull(1, JdbcType.VARCHAR.TYPE_CODE);
-  }
+    @Test
+    public void shouldSetNullParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, null, JdbcType.VARCHAR);
+        verify(ps).setNull(1, JdbcType.VARCHAR.TYPE_CODE);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getString("column")).thenReturn("a");
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new Character('a'), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getString("column")).thenReturn("a");
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new Character('a'), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetNullResultFromResultSet() throws Exception {
-    when(rs.getString("column")).thenReturn(null);
-    when(rs.wasNull()).thenReturn(true);
-    assertEquals(null, TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetNullResultFromResultSet() throws Exception {
+        when(rs.getString("column")).thenReturn(null);
+        when(rs.wasNull()).thenReturn(true);
+        assertEquals(null, TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getString(1)).thenReturn("a");
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new Character('a'), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getString(1)).thenReturn("a");
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new Character('a'), TYPE_HANDLER.getResult(cs, 1));
+    }
 
-  @Test
-  public void shouldGetNullResultFromCallableStatement() throws Exception {
-    when(cs.getString("column")).thenReturn(null);
-    when(cs.wasNull()).thenReturn(true);
-    assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetNullResultFromCallableStatement() throws Exception {
+        when(cs.getString("column")).thenReturn(null);
+        when(cs.wasNull()).thenReturn(true);
+        assertEquals(null, TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

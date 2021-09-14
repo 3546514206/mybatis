@@ -18,45 +18,45 @@ package org.apache.ibatis.submitted.xml_external_ref;
 import java.io.Serializable;
 
 public class Pet implements Serializable {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private Integer id;
+    private Integer id;
 
-  private Integer ownerId;
+    private Integer ownerId;
 
-  private String name;
+    private String name;
 
-  private Person owner;
+    private Person owner;
 
-  public Integer getId() {
-    return id;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public Integer getOwnerId() {
-    return ownerId;
-  }
+    public Integer getOwnerId() {
+        return ownerId;
+    }
 
-  public void setOwnerId(Integer ownerId) {
-    this.ownerId = ownerId;
-  }
+    public void setOwnerId(Integer ownerId) {
+        this.ownerId = ownerId;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Person getOwner() {
-    return owner;
-  }
+    public Person getOwner() {
+        return owner;
+    }
 
-  public void setOwner(Person owner) {
-    this.owner = owner;
-  }
+    public void setOwner(Person owner) {
+        this.owner = owner;
+    }
 }

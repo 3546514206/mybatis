@@ -25,28 +25,28 @@ import org.junit.Test;
 
 public class TimeOnlyTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Date> TYPE_HANDLER = new TimeOnlyTypeHandler();
-  private static final Date DATE = new Date();
-  private static final java.sql.Time SQL_TIME = new java.sql.Time(DATE.getTime());
+    private static final TypeHandler<Date> TYPE_HANDLER = new TimeOnlyTypeHandler();
+    private static final Date DATE = new Date();
+    private static final java.sql.Time SQL_TIME = new java.sql.Time(DATE.getTime());
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, DATE, null);
-    verify(ps).setTime(1, SQL_TIME);
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, DATE, null);
+        verify(ps).setTime(1, SQL_TIME);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getTime("column")).thenReturn(SQL_TIME);
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(DATE, TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getTime("column")).thenReturn(SQL_TIME);
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(DATE, TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getTime(1)).thenReturn(SQL_TIME);
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(DATE, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getTime(1)).thenReturn(SQL_TIME);
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(DATE, TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

@@ -23,19 +23,19 @@ import org.apache.ibatis.session.ResultHandler;
 
 public interface CopyOfAuthorMapper {
 
-  List selectAllAuthors();
+    List selectAllAuthors();
 
-  void selectAllAuthors(ResultHandler handler);
+    void selectAllAuthors(ResultHandler handler);
 
-  Author selectAuthor(int id);
+    Author selectAuthor(int id);
 
-  void selectAuthor(int id, ResultHandler handler);
+    void selectAuthor(int id, ResultHandler handler);
 
-  void insertAuthor(Author author);
+    void insertAuthor(Author author);
 
-  int deleteAuthor(int id);
+    int deleteAuthor(int id);
 
-  int updateAuthor(Author author);
+    int updateAuthor(Author author);
 
 }
 

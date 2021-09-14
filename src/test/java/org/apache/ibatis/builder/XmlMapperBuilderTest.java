@@ -24,14 +24,14 @@ import org.junit.Test;
 
 public class XmlMapperBuilderTest {
 
-  @Test
-  public void shouldSuccessfullyLoadXMLMapperFile() throws Exception {
-    Configuration configuration = new Configuration();
-    String resource = "org/apache/ibatis/builder/AuthorMapper.xml";
-    InputStream inputStream = Resources.getResourceAsStream(resource);
-    XMLMapperBuilder builder = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
-    builder.parse();
-  }
+    @Test
+    public void shouldSuccessfullyLoadXMLMapperFile() throws Exception {
+        Configuration configuration = new Configuration();
+        String resource = "org/apache/ibatis/builder/AuthorMapper.xml";
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        XMLMapperBuilder builder = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
+        builder.parse();
+    }
 
 //  @Test
 //  public void shouldNotLoadTheSameNamespaceFromTwoResourcesWithDifferentNames() throws Exception {

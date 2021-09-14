@@ -23,26 +23,26 @@ import org.junit.Test;
 
 public class ObjectTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Object> TYPE_HANDLER = new ObjectTypeHandler();
+    private static final TypeHandler<Object> TYPE_HANDLER = new ObjectTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
-    verify(ps).setObject(1, "Hello");
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, "Hello", null);
+        verify(ps).setObject(1, "Hello");
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getObject("column")).thenReturn("Hello");
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getObject("column")).thenReturn("Hello");
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getObject(1)).thenReturn("Hello");
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getObject(1)).thenReturn("Hello");
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals("Hello", TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

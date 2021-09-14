@@ -12,5 +12,6 @@ import java.util.List;
 
 public interface CustomerDaoMapper {
     List<Customer> getCustomerList();
+
     Customer getCustomerByName(String name);
 }

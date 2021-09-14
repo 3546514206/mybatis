@@ -20,6 +20,6 @@ import java.util.Map;
 
 public interface Mapper {
 
-  List<Map<String, Object>> selectAllBlogs();
+    List<Map<String, Object>> selectAllBlogs();
 
 }

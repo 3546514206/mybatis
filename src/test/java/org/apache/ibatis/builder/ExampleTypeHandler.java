@@ -25,20 +25,20 @@ import java.sql.SQLException;
 
 public class ExampleTypeHandler implements TypeHandler<String> {
 
-  public void setParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
-    ps.setString(i, parameter);
-  }
+    public void setParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType) throws SQLException {
+        ps.setString(i, parameter);
+    }
 
-  public String getResult(ResultSet rs, String columnName) throws SQLException {
-    return rs.getString(columnName);
-  }
+    public String getResult(ResultSet rs, String columnName) throws SQLException {
+        return rs.getString(columnName);
+    }
 
-  public String getResult(ResultSet rs, int columnIndex) throws SQLException {
-    return rs.getString(columnIndex);
-  }
+    public String getResult(ResultSet rs, int columnIndex) throws SQLException {
+        return rs.getString(columnIndex);
+    }
 
-  public String getResult(CallableStatement cs, int columnIndex) throws SQLException {
-    return cs.getString(columnIndex);
-  }
+    public String getResult(CallableStatement cs, int columnIndex) throws SQLException {
+        return cs.getString(columnIndex);
+    }
 
 }

@@ -19,9 +19,9 @@ import org.apache.ibatis.annotations.Select;
 
 public interface Mapper {
 
-  User getUser(Integer id);
-  
-  @Select("select * from ${table} where id = #{id}")
-  User getUserFromAnnotation(Integer id);
+    User getUser(Integer id);
+
+    @Select("select * from ${table} where id = #{id}")
+    User getUserFromAnnotation(Integer id);
 
 }

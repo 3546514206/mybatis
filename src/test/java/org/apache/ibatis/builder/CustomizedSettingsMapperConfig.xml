@@ -18,34 +18,34 @@
 -->
 
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
-  <settings>
-    <setting name="autoMappingBehavior" value="NONE"/>
-    <setting name="cacheEnabled" value="false"/>
-    <setting name="proxyFactory" value="JAVASSIST"/>
-    <setting name="lazyLoadingEnabled" value="true"/>
-    <setting name="aggressiveLazyLoading" value="false"/>
-    <setting name="multipleResultSetsEnabled" value="false"/>
-    <setting name="useColumnLabel" value="false"/>
-    <setting name="useGeneratedKeys" value="true"/>
-    <setting name="defaultExecutorType" value="BATCH"/>
-    <setting name="defaultStatementTimeout" value="10"/>
-    <setting name="defaultFetchSize" value="100"/>
-    <setting name="mapUnderscoreToCamelCase" value="true"/>
-    <setting name="safeRowBoundsEnabled" value="true"/>
-    <setting name="localCacheScope" value="STATEMENT"/>
-    <setting name="jdbcTypeForNull" value="NULL"/>
-    <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString,xxx"/>
-    <setting name="safeResultHandlerEnabled" value="false"/>
-    <setting name="defaultScriptingLanguage" value="org.apache.ibatis.scripting.defaults.RawLanguageDriver"/>
-    <setting name="callSettersOnNulls" value="true"/>
-    <setting name="logPrefix" value="mybatis_"/>
-    <setting name="logImpl" value="SLF4J"/>
-    <setting name="configurationFactory" value="java.lang.String"/>
-  </settings>
+    <settings>
+        <setting name="autoMappingBehavior" value="NONE"/>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="proxyFactory" value="JAVASSIST"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="multipleResultSetsEnabled" value="false"/>
+        <setting name="useColumnLabel" value="false"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="BATCH"/>
+        <setting name="defaultStatementTimeout" value="10"/>
+        <setting name="defaultFetchSize" value="100"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="safeRowBoundsEnabled" value="true"/>
+        <setting name="localCacheScope" value="STATEMENT"/>
+        <setting name="jdbcTypeForNull" value="NULL"/>
+        <setting name="lazyLoadTriggerMethods" value="equals,clone,hashCode,toString,xxx"/>
+        <setting name="safeResultHandlerEnabled" value="false"/>
+        <setting name="defaultScriptingLanguage" value="org.apache.ibatis.scripting.defaults.RawLanguageDriver"/>
+        <setting name="callSettersOnNulls" value="true"/>
+        <setting name="logPrefix" value="mybatis_"/>
+        <setting name="logImpl" value="SLF4J"/>
+        <setting name="configurationFactory" value="java.lang.String"/>
+    </settings>
 
 </configuration>

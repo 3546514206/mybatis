@@ -19,31 +19,31 @@ import java.util.List;
 
 public class User {
 
-  private Integer id;
-  private String name;
-  private List<Pet> pets;
+    private Integer id;
+    private String name;
+    private List<Pet> pets;
 
-  public Integer getId() {
-    return id;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public List<Pet> getPets() {
-    return pets;
-  }
+    public List<Pet> getPets() {
+        return pets;
+    }
 
-  public void setPets(List<Pet> pets) {
-    this.pets = pets;
-  }
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
 }

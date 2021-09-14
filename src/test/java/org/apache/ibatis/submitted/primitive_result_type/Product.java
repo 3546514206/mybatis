@@ -34,5 +34,5 @@ public class Product {
     public void setProductType(Integer productType) {
         this.productType = productType;
     }
-    
+
 }

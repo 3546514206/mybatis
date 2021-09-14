@@ -17,50 +17,50 @@ package org.apache.ibatis.submitted.multipleresultsetswithassociation;
 
 public class OrderDetail {
 
-  private int orderId;
-  private int lineNumber;
-  private int quantity;
-  private String itemDescription;
-  
-  private OrderHeader orderHeader;
+    private int orderId;
+    private int lineNumber;
+    private int quantity;
+    private String itemDescription;
 
-  public int getOrderId() {
-    return orderId;
-  }
+    private OrderHeader orderHeader;
 
-  public void setOrderId(int orderId) {
-    this.orderId = orderId;
-  }
+    public int getOrderId() {
+        return orderId;
+    }
 
-  public int getLineNumber() {
-    return lineNumber;
-  }
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
 
-  public void setLineNumber(int lineNumber) {
-    this.lineNumber = lineNumber;
-  }
+    public int getLineNumber() {
+        return lineNumber;
+    }
 
-  public int getQuantity() {
-    return quantity;
-  }
+    public void setLineNumber(int lineNumber) {
+        this.lineNumber = lineNumber;
+    }
 
-  public void setQuantity(int quantity) {
-    this.quantity = quantity;
-  }
+    public int getQuantity() {
+        return quantity;
+    }
 
-  public String getItemDescription() {
-    return itemDescription;
-  }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-  public void setItemDescription(String itemDescription) {
-    this.itemDescription = itemDescription;
-  }
+    public String getItemDescription() {
+        return itemDescription;
+    }
 
-  public OrderHeader getOrderHeader() {
-      return orderHeader;
-  }
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
 
-  public void setOrderHeader(OrderHeader orderHeader) {
-      this.orderHeader = orderHeader;
-  }
+    public OrderHeader getOrderHeader() {
+        return orderHeader;
+    }
+
+    public void setOrderHeader(OrderHeader orderHeader) {
+        this.orderHeader = orderHeader;
+    }
 }

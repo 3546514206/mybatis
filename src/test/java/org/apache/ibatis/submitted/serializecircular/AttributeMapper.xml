@@ -18,15 +18,15 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.serializecircular.AttributeMapper">
-	<resultMap id="map" type="org.apache.ibatis.submitted.serializecircular.Attribute">
-		<id column="nr_id" property="id" />
-	</resultMap>
-	
-	<select id="getById" parameterType="Integer" resultMap="map">
+    <resultMap id="map" type="org.apache.ibatis.submitted.serializecircular.Attribute">
+        <id column="nr_id" property="id"/>
+    </resultMap>
+
+    <select id="getById" parameterType="Integer" resultMap="map">
         SELECT
         	productattribute.nr_id
         FROM

@@ -30,274 +30,274 @@ import java.sql.Statement;
  */
 public class ScriptRunner {
 
-  private static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
+    private static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
 
-  private static final String DEFAULT_DELIMITER = ";";
+    private static final String DEFAULT_DELIMITER = ";";
 
-  // 数据库连接对象
-  private Connection connection;
+    // 数据库连接对象
+    private Connection connection;
 
-  // sql异常是否中断程序
-  private boolean stopOnError;
-  // 是否自动提交
-  private boolean autoCommit;
-  // 为false时逐条执行SQL语句，默认情况下，SQL语句以分号分隔
-  private boolean sendFullScript;
-  // 是否取出windows系统中的\r (回车的转义符)
-  private boolean removeCRs;
-  // Statement是否支持转义处理
-  private boolean escapeProcessing = true;
+    // sql异常是否中断程序
+    private boolean stopOnError;
+    // 是否自动提交
+    private boolean autoCommit;
+    // 为false时逐条执行SQL语句，默认情况下，SQL语句以分号分隔
+    private boolean sendFullScript;
+    // 是否取出windows系统中的\r (回车的转义符)
+    private boolean removeCRs;
+    // Statement是否支持转义处理
+    private boolean escapeProcessing = true;
 
-  private PrintWriter logWriter = new PrintWriter(System.out);
-  private PrintWriter errorLogWriter = new PrintWriter(System.err);
+    private PrintWriter logWriter = new PrintWriter(System.out);
+    private PrintWriter errorLogWriter = new PrintWriter(System.err);
 
-  private String delimiter = DEFAULT_DELIMITER;
-  // 是否支持SQL语句分隔符
-  private boolean fullLineDelimiter = false;
+    private String delimiter = DEFAULT_DELIMITER;
+    // 是否支持SQL语句分隔符
+    private boolean fullLineDelimiter = false;
 
-  public ScriptRunner(Connection connection) {
-    this.connection = connection;
-  }
-
-  public void setStopOnError(boolean stopOnError) {
-    this.stopOnError = stopOnError;
-  }
-
-  public void setAutoCommit(boolean autoCommit) {
-    this.autoCommit = autoCommit;
-  }
-
-  public void setSendFullScript(boolean sendFullScript) {
-    this.sendFullScript = sendFullScript;
-  }
-
-  public void setRemoveCRs(boolean removeCRs) {
-    this.removeCRs = removeCRs;
-  }
-
-  /**
-   * @since 3.1.1
-   */
-  public void setEscapeProcessing(boolean escapeProcessing) {
-    this.escapeProcessing = escapeProcessing;
-  }
-
-  public void setLogWriter(PrintWriter logWriter) {
-    this.logWriter = logWriter;
-  }
-
-  public void setErrorLogWriter(PrintWriter errorLogWriter) {
-    this.errorLogWriter = errorLogWriter;
-  }
-
-  public void setDelimiter(String delimiter) {
-    this.delimiter = delimiter;
-  }
-
-  public void setFullLineDelimiter(boolean fullLineDelimiter) {
-    this.fullLineDelimiter = fullLineDelimiter;
-  }
-
-  public void runScript(Reader reader) {
-    // 设置事务自动提交
-    setAutoCommit();
-
-    try {
-      if (sendFullScript) {
-        executeFullScript(reader);
-      } else {
-        executeLineByLine(reader);
-      }
-    } finally {
-      rollbackConnection();
+    public ScriptRunner(Connection connection) {
+        this.connection = connection;
     }
-  }
 
-  private void executeFullScript(Reader reader) {
-    StringBuilder script = new StringBuilder();
-    try {
-      BufferedReader lineReader = new BufferedReader(reader);
-      String line;
-      while ((line = lineReader.readLine()) != null) {
-        script.append(line);
-        script.append(LINE_SEPARATOR);
-      }
-      executeStatement(script.toString());
-      commitConnection();
-    } catch (Exception e) {
-      String message = "Error executing: " + script + ".  Cause: " + e;
-      printlnError(message);
-      throw new RuntimeSqlException(message, e);
+    public void setStopOnError(boolean stopOnError) {
+        this.stopOnError = stopOnError;
     }
-  }
 
-  private void executeLineByLine(Reader reader) {
-
-    StringBuilder command = new StringBuilder();
-    try {
-      BufferedReader lineReader = new BufferedReader(reader);
-      String line;
-      while ((line = lineReader.readLine()) != null) {
-        // 调用 handleLine()处理每一行的内容
-        command = handleLine(command, line);
-      }
-      commitConnection();
-      checkForMissingLineTerminator(command);
-    } catch (Exception e) {
-      String message = "Error executing: " + command + ".  Cause: " + e;
-      printlnError(message);
-      throw new RuntimeSqlException(message, e);
+    public void setAutoCommit(boolean autoCommit) {
+        this.autoCommit = autoCommit;
     }
-  }
 
-  public void closeConnection() {
-    try {
-      connection.close();
-    } catch (Exception e) {
-      // ignore
+    public void setSendFullScript(boolean sendFullScript) {
+        this.sendFullScript = sendFullScript;
     }
-  }
 
-  private void setAutoCommit() {
-    try {
-      if (autoCommit != connection.getAutoCommit()) {
-        connection.setAutoCommit(autoCommit);
-      }
-    } catch (Throwable t) {
-      throw new RuntimeSqlException("Could not set AutoCommit to " + autoCommit + ". Cause: " + t, t);
+    public void setRemoveCRs(boolean removeCRs) {
+        this.removeCRs = removeCRs;
     }
-  }
 
-  private void commitConnection() {
-    try {
-      if (!connection.getAutoCommit()) {
-        connection.commit();
-      }
-    } catch (Throwable t) {
-      throw new RuntimeSqlException("Could not commit transaction. Cause: " + t, t);
+    /**
+     * @since 3.1.1
+     */
+    public void setEscapeProcessing(boolean escapeProcessing) {
+        this.escapeProcessing = escapeProcessing;
     }
-  }
 
-  private void rollbackConnection() {
-    try {
-      if (!connection.getAutoCommit()) {
-        connection.rollback();
-      }
-    } catch (Throwable t) {
-      // ignore
+    public void setLogWriter(PrintWriter logWriter) {
+        this.logWriter = logWriter;
     }
-  }
 
-  private void checkForMissingLineTerminator(StringBuilder command) {
-    if (command != null && command.toString().trim().length() > 0) {
-      throw new RuntimeSqlException("Line missing end-of-line terminator (" + delimiter + ") => " + command);
+    public void setErrorLogWriter(PrintWriter errorLogWriter) {
+        this.errorLogWriter = errorLogWriter;
     }
-  }
 
-  private StringBuilder handleLine(StringBuilder command, String line) throws SQLException, UnsupportedEncodingException {
-    String trimmedLine = line.trim();
-    // 判断是否是注释，如果是注释则打印注释内容
-    if (lineIsComment(trimmedLine)) {
-      println(trimmedLine);
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
     }
-    // 判断本行是否含有分号
-    else if (commandReadyToExecute(trimmedLine)) {
-      // 如果本行含有分号则说明该行是一条完整的SQL的结尾，则需要截取分号之前的SQL的内容，与
-      // 前面读取到的不包含分号的行一起组成一条完整的
-      command.append(line.substring(0, line.lastIndexOf(delimiter)));
-      command.append(LINE_SEPARATOR);
-      println(command);
-      executeStatement(command.toString());
-      command.setLength(0);
-    }
-    // 如果本行不含有分号且长度大于0，则说明该条SQL语句未结束，追
-    // 加本行内容到之前读取的内容中，继续读取下一行
-    else if (trimmedLine.length() > 0) {
-      command.append(line);
-      command.append(LINE_SEPARATOR);
-    }
-    return command;
-  }
 
-  private boolean lineIsComment(String trimmedLine) {
-    return trimmedLine.startsWith("//") || trimmedLine.startsWith("--");
-  }
-
-  private boolean commandReadyToExecute(String trimmedLine) {
-    // issue #561 remove anything after the delimiter
-    return !fullLineDelimiter && trimmedLine.contains(delimiter) || fullLineDelimiter && trimmedLine.equals(delimiter);
-  }
-
-  private void executeStatement(String command) throws SQLException, UnsupportedEncodingException {
-    boolean hasResults = false;
-    Statement statement = connection.createStatement();
-    statement.setEscapeProcessing(escapeProcessing);
-    String sql = command;
-    if (removeCRs)
-      sql = sql.replaceAll("\r\n", "\n");
-    if (stopOnError) {
-      hasResults = statement.execute(sql);
-    } else {
-      try {
-        hasResults = statement.execute(sql);
-      } catch (SQLException e) {
-        String message = "Error executing: " + command + ".  Cause: " + e;
-        printlnError(message);
-      }
+    public void setFullLineDelimiter(boolean fullLineDelimiter) {
+        this.fullLineDelimiter = fullLineDelimiter;
     }
-    printResults(statement, hasResults);
-    try {
-      statement.close();
-    } catch (Exception e) {
-      // Ignore to workaround a bug in some connection pools
-    }
-  }
 
-  private void printResults(Statement statement, boolean hasResults) {
-    try {
-      if (hasResults) {
-        ResultSet rs = statement.getResultSet();
-        if (rs != null) {
-          ResultSetMetaData md = rs.getMetaData();
-          int cols = md.getColumnCount();
-          for (int i = 0; i < cols; i++) {
-            String name = md.getColumnLabel(i + 1);
-            print(name + "\t");
-          }
-          println("");
-          while (rs.next()) {
-            for (int i = 0; i < cols; i++) {
-              String value = rs.getString(i + 1);
-              print(value + "\t");
+    public void runScript(Reader reader) {
+        // 设置事务自动提交
+        setAutoCommit();
+
+        try {
+            if (sendFullScript) {
+                executeFullScript(reader);
+            } else {
+                executeLineByLine(reader);
             }
-            println("");
-          }
+        } finally {
+            rollbackConnection();
         }
-      }
-    } catch (SQLException e) {
-      printlnError("Error printing results: " + e.getMessage());
     }
-  }
 
-  private void print(Object o) {
-    if (logWriter != null) {
-      logWriter.print(o);
-      logWriter.flush();
+    private void executeFullScript(Reader reader) {
+        StringBuilder script = new StringBuilder();
+        try {
+            BufferedReader lineReader = new BufferedReader(reader);
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                script.append(line);
+                script.append(LINE_SEPARATOR);
+            }
+            executeStatement(script.toString());
+            commitConnection();
+        } catch (Exception e) {
+            String message = "Error executing: " + script + ".  Cause: " + e;
+            printlnError(message);
+            throw new RuntimeSqlException(message, e);
+        }
     }
-  }
 
-  private void println(Object o) {
-    if (logWriter != null) {
-      logWriter.println(o);
-      logWriter.flush();
-    }
-  }
+    private void executeLineByLine(Reader reader) {
 
-  private void printlnError(Object o) {
-    if (errorLogWriter != null) {
-      errorLogWriter.println(o);
-      errorLogWriter.flush();
+        StringBuilder command = new StringBuilder();
+        try {
+            BufferedReader lineReader = new BufferedReader(reader);
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                // 调用 handleLine()处理每一行的内容
+                command = handleLine(command, line);
+            }
+            commitConnection();
+            checkForMissingLineTerminator(command);
+        } catch (Exception e) {
+            String message = "Error executing: " + command + ".  Cause: " + e;
+            printlnError(message);
+            throw new RuntimeSqlException(message, e);
+        }
     }
-  }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (Exception e) {
+            // ignore
+        }
+    }
+
+    private void setAutoCommit() {
+        try {
+            if (autoCommit != connection.getAutoCommit()) {
+                connection.setAutoCommit(autoCommit);
+            }
+        } catch (Throwable t) {
+            throw new RuntimeSqlException("Could not set AutoCommit to " + autoCommit + ". Cause: " + t, t);
+        }
+    }
+
+    private void commitConnection() {
+        try {
+            if (!connection.getAutoCommit()) {
+                connection.commit();
+            }
+        } catch (Throwable t) {
+            throw new RuntimeSqlException("Could not commit transaction. Cause: " + t, t);
+        }
+    }
+
+    private void rollbackConnection() {
+        try {
+            if (!connection.getAutoCommit()) {
+                connection.rollback();
+            }
+        } catch (Throwable t) {
+            // ignore
+        }
+    }
+
+    private void checkForMissingLineTerminator(StringBuilder command) {
+        if (command != null && command.toString().trim().length() > 0) {
+            throw new RuntimeSqlException("Line missing end-of-line terminator (" + delimiter + ") => " + command);
+        }
+    }
+
+    private StringBuilder handleLine(StringBuilder command, String line) throws SQLException, UnsupportedEncodingException {
+        String trimmedLine = line.trim();
+        // 判断是否是注释，如果是注释则打印注释内容
+        if (lineIsComment(trimmedLine)) {
+            println(trimmedLine);
+        }
+        // 判断本行是否含有分号
+        else if (commandReadyToExecute(trimmedLine)) {
+            // 如果本行含有分号则说明该行是一条完整的SQL的结尾，则需要截取分号之前的SQL的内容，与
+            // 前面读取到的不包含分号的行一起组成一条完整的
+            command.append(line.substring(0, line.lastIndexOf(delimiter)));
+            command.append(LINE_SEPARATOR);
+            println(command);
+            executeStatement(command.toString());
+            command.setLength(0);
+        }
+        // 如果本行不含有分号且长度大于0，则说明该条SQL语句未结束，追
+        // 加本行内容到之前读取的内容中，继续读取下一行
+        else if (trimmedLine.length() > 0) {
+            command.append(line);
+            command.append(LINE_SEPARATOR);
+        }
+        return command;
+    }
+
+    private boolean lineIsComment(String trimmedLine) {
+        return trimmedLine.startsWith("//") || trimmedLine.startsWith("--");
+    }
+
+    private boolean commandReadyToExecute(String trimmedLine) {
+        // issue #561 remove anything after the delimiter
+        return !fullLineDelimiter && trimmedLine.contains(delimiter) || fullLineDelimiter && trimmedLine.equals(delimiter);
+    }
+
+    private void executeStatement(String command) throws SQLException, UnsupportedEncodingException {
+        boolean hasResults = false;
+        Statement statement = connection.createStatement();
+        statement.setEscapeProcessing(escapeProcessing);
+        String sql = command;
+        if (removeCRs)
+            sql = sql.replaceAll("\r\n", "\n");
+        if (stopOnError) {
+            hasResults = statement.execute(sql);
+        } else {
+            try {
+                hasResults = statement.execute(sql);
+            } catch (SQLException e) {
+                String message = "Error executing: " + command + ".  Cause: " + e;
+                printlnError(message);
+            }
+        }
+        printResults(statement, hasResults);
+        try {
+            statement.close();
+        } catch (Exception e) {
+            // Ignore to workaround a bug in some connection pools
+        }
+    }
+
+    private void printResults(Statement statement, boolean hasResults) {
+        try {
+            if (hasResults) {
+                ResultSet rs = statement.getResultSet();
+                if (rs != null) {
+                    ResultSetMetaData md = rs.getMetaData();
+                    int cols = md.getColumnCount();
+                    for (int i = 0; i < cols; i++) {
+                        String name = md.getColumnLabel(i + 1);
+                        print(name + "\t");
+                    }
+                    println("");
+                    while (rs.next()) {
+                        for (int i = 0; i < cols; i++) {
+                            String value = rs.getString(i + 1);
+                            print(value + "\t");
+                        }
+                        println("");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            printlnError("Error printing results: " + e.getMessage());
+        }
+    }
+
+    private void print(Object o) {
+        if (logWriter != null) {
+            logWriter.print(o);
+            logWriter.flush();
+        }
+    }
+
+    private void println(Object o) {
+        if (logWriter != null) {
+            logWriter.println(o);
+            logWriter.flush();
+        }
+    }
+
+    private void printlnError(Object o) {
+        if (errorLogWriter != null) {
+            errorLogWriter.println(o);
+            errorLogWriter.flush();
+        }
+    }
 
 }

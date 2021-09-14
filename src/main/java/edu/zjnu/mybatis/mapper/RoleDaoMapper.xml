@@ -8,7 +8,7 @@
         SELECT * FROM role WHERE rolename=#{rolename}
     </select>
 
-    <select id="getRoleList"  parameterType="int" resultMap="BaseResultMap">
+    <select id="getRoleList" parameterType="int" resultMap="BaseResultMap">
         select
         a.id, rolename, alias
         from role a JOIN user_role b

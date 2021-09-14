@@ -19,6 +19,8 @@ import java.util.List;
 
 public interface BlobMapper {
     int insert(BlobRecord blobRecord);
+
     List<BlobRecord> selectAll();
+
     List<BlobRecord> selectAllWithBlobObjects();
 }

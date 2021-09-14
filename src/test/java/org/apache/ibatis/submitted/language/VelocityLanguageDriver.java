@@ -29,15 +29,15 @@ import org.apache.ibatis.session.Configuration;
  */
 public class VelocityLanguageDriver implements LanguageDriver {
 
-  public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
-    return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
-  }
+    public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+        return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
+    }
 
-  public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
-    return new VelocitySqlSource(configuration, script.getStringBody(""));
-  }
+    public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
+        return new VelocitySqlSource(configuration, script.getStringBody(""));
+    }
 
-  public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
-    return new VelocitySqlSource(configuration, script);
-  }
+    public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
+        return new VelocitySqlSource(configuration, script);
+    }
 }

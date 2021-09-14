@@ -15,16 +15,16 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.no_param_type.Mapper">
 
-  <insert id="insertUser">
+    <insert id="insertUser">
     insert into users (id, name) values (#{id}, #{name})
   </insert>
 
-  <select id="selectUser" resultType="org.apache.ibatis.submitted.no_param_type.User">
+    <select id="selectUser" resultType="org.apache.ibatis.submitted.no_param_type.User">
     select * from users
   </select>
 

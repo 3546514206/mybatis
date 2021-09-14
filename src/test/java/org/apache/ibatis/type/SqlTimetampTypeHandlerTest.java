@@ -26,27 +26,27 @@ import org.junit.Test;
 
 public class SqlTimetampTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<Timestamp> TYPE_HANDLER = new SqlTimestampTypeHandler();
-  private static final java.sql.Timestamp SQL_TIME = new java.sql.Timestamp(new Date().getTime());
+    private static final TypeHandler<Timestamp> TYPE_HANDLER = new SqlTimestampTypeHandler();
+    private static final java.sql.Timestamp SQL_TIME = new java.sql.Timestamp(new Date().getTime());
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, SQL_TIME, null);
-    verify(ps).setTimestamp(1, SQL_TIME);
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, SQL_TIME, null);
+        verify(ps).setTimestamp(1, SQL_TIME);
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getTimestamp("column")).thenReturn(SQL_TIME);
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(SQL_TIME, TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getTimestamp("column")).thenReturn(SQL_TIME);
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(SQL_TIME, TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getTimestamp(1)).thenReturn(SQL_TIME);
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(SQL_TIME, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getTimestamp(1)).thenReturn(SQL_TIME);
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(SQL_TIME, TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

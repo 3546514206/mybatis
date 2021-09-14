@@ -32,80 +32,80 @@ import org.junit.Test;
 
 public class ForEachMapTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUpClass() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/foreach_map/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/foreach_map/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/foreach_map/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/foreach_map/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
+    }
 
-  @Before
-  public void setUp() throws Exception {
-    sqlSession = sqlSessionFactory.openSession();
-  }
+    @Before
+    public void setUp() throws Exception {
+        sqlSession = sqlSessionFactory.openSession();
+    }
 
-  @After
-  public void tearDown() throws Exception {
-    sqlSession.close();
-  }
+    @After
+    public void tearDown() throws Exception {
+        sqlSession.close();
+    }
 
-  @Test
-  public void shouldGetStringKeyStringValueEntries() {
-    MapParam mapParam = new MapParam();
-    mapParam.getMap().put("key 1", "value 1");
-    mapParam.getMap().put("key 2", "value 2");
-    sqlSession.insert("ins_string_string", mapParam);
+    @Test
+    public void shouldGetStringKeyStringValueEntries() {
+        MapParam mapParam = new MapParam();
+        mapParam.getMap().put("key 1", "value 1");
+        mapParam.getMap().put("key 2", "value 2");
+        sqlSession.insert("ins_string_string", mapParam);
 
-    List<StringStringMapEntry> entries = sqlSession.selectList("sel_string_string", new MapParam());
-    Assert.assertEquals(new StringStringMapEntry("key 1", "value 1"), entries.get(0));
-    Assert.assertEquals(new StringStringMapEntry("key 2", "value 2"), entries.get(1));
-  }
+        List<StringStringMapEntry> entries = sqlSession.selectList("sel_string_string", new MapParam());
+        Assert.assertEquals(new StringStringMapEntry("key 1", "value 1"), entries.get(0));
+        Assert.assertEquals(new StringStringMapEntry("key 2", "value 2"), entries.get(1));
+    }
 
-  @Test
-  public void shouldGetIntKeyBoolValueEntries() throws Exception {
-    MapParam mapParam = new MapParam();
-    mapParam.getMap().put(12345, true);
-    mapParam.getMap().put(54321, false);
-    sqlSession.insert("ins_int_bool", mapParam);
+    @Test
+    public void shouldGetIntKeyBoolValueEntries() throws Exception {
+        MapParam mapParam = new MapParam();
+        mapParam.getMap().put(12345, true);
+        mapParam.getMap().put(54321, false);
+        sqlSession.insert("ins_int_bool", mapParam);
 
-    List<IntBoolMapEntry> entries = sqlSession.selectList("sel_int_bool");
-    Assert.assertEquals(new IntBoolMapEntry(12345, true), entries.get(0));
-    Assert.assertEquals(new IntBoolMapEntry(54321, false), entries.get(1));
-  }
+        List<IntBoolMapEntry> entries = sqlSession.selectList("sel_int_bool");
+        Assert.assertEquals(new IntBoolMapEntry(12345, true), entries.get(0));
+        Assert.assertEquals(new IntBoolMapEntry(54321, false), entries.get(1));
+    }
 
-  @Test
-  public void shouldGetNestedBeanKeyValueEntries() throws Exception {
-    MapParam mapParam = new MapParam();
-    mapParam.getMap().put(new NestedBean(12345, true), new NestedBean(54321, false));
-    mapParam.getMap().put(new NestedBean(67890, true), new NestedBean(9876, false));
-    sqlSession.insert("ins_nested_bean", mapParam);
+    @Test
+    public void shouldGetNestedBeanKeyValueEntries() throws Exception {
+        MapParam mapParam = new MapParam();
+        mapParam.getMap().put(new NestedBean(12345, true), new NestedBean(54321, false));
+        mapParam.getMap().put(new NestedBean(67890, true), new NestedBean(9876, false));
+        sqlSession.insert("ins_nested_bean", mapParam);
 
-    List<NestedBeanMapEntry> entries = sqlSession.selectList("sel_nested_bean");
-    Assert.assertEquals(new NestedBeanMapEntry(12345, true, 54321, false), entries.get(0));
-    Assert.assertEquals(new NestedBeanMapEntry(67890, true, 9876, false), entries.get(1));
-  }
-  
-  @Test
-  public void shouldSubstituteIndexWithKey() throws Exception {
-    MapParam mapParam = new MapParam();
-    mapParam.getMap().put("col_a", 22);
-    mapParam.getMap().put("col_b", 222);
-    Integer count = sqlSession.selectOne("sel_key_cols", mapParam);
-    Assert.assertEquals(Integer.valueOf(1), count);
-  }
+        List<NestedBeanMapEntry> entries = sqlSession.selectList("sel_nested_bean");
+        Assert.assertEquals(new NestedBeanMapEntry(12345, true, 54321, false), entries.get(0));
+        Assert.assertEquals(new NestedBeanMapEntry(67890, true, 9876, false), entries.get(1));
+    }
 
-  private SqlSession sqlSession;
+    @Test
+    public void shouldSubstituteIndexWithKey() throws Exception {
+        MapParam mapParam = new MapParam();
+        mapParam.getMap().put("col_a", 22);
+        mapParam.getMap().put("col_b", 222);
+        Integer count = sqlSession.selectOne("sel_key_cols", mapParam);
+        Assert.assertEquals(Integer.valueOf(1), count);
+    }
+
+    private SqlSession sqlSession;
 }

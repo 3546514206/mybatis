@@ -28,33 +28,33 @@ import org.mockito.Mockito;
 
 public class BlobTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<byte[]> TYPE_HANDLER = new BlobTypeHandler();
+    private static final TypeHandler<byte[]> TYPE_HANDLER = new BlobTypeHandler();
 
-  @Mock
-  protected Blob blob;
+    @Mock
+    protected Blob blob;
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, new byte[] { 1, 2, 3 }, null);
-    verify(ps).setBinaryStream(Mockito.eq(1), Mockito.any(InputStream.class), Mockito.eq(3));
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, new byte[]{1, 2, 3}, null);
+        verify(ps).setBinaryStream(Mockito.eq(1), Mockito.any(InputStream.class), Mockito.eq(3));
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getBlob("column")).thenReturn(blob);
-    when(rs.wasNull()).thenReturn(false);
-    when(blob.length()).thenReturn(3l);
-    when(blob.getBytes(1, 3)).thenReturn(new byte[] { 1, 2, 3 });
-    assertArrayEquals(new byte[] { 1, 2, 3 }, TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getBlob("column")).thenReturn(blob);
+        when(rs.wasNull()).thenReturn(false);
+        when(blob.length()).thenReturn(3l);
+        when(blob.getBytes(1, 3)).thenReturn(new byte[]{1, 2, 3});
+        assertArrayEquals(new byte[]{1, 2, 3}, TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getBlob(1)).thenReturn(blob);
-    when(cs.wasNull()).thenReturn(false);
-    when(blob.length()).thenReturn(3l);
-    when(blob.getBytes(1, 3)).thenReturn(new byte[] { 1, 2, 3 });
-    assertArrayEquals(new byte[] { 1, 2, 3 }, TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getBlob(1)).thenReturn(blob);
+        when(cs.wasNull()).thenReturn(false);
+        when(blob.length()).thenReturn(3l);
+        when(blob.getBytes(1, 3)).thenReturn(new byte[]{1, 2, 3});
+        assertArrayEquals(new byte[]{1, 2, 3}, TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

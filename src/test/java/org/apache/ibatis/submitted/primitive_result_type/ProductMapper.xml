@@ -18,24 +18,24 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.primitive_result_type.ProductMapper">
 
-  <select id="selectProductCodes" resultType="Integer">
+    <select id="selectProductCodes" resultType="Integer">
     select distinct productcode from product
   </select>
 
-  <select id="selectProductCodesL" resultType="Long">
+    <select id="selectProductCodesL" resultType="Long">
     select distinct productcode from product
   </select>
 
-  <select id="selectProductCodesB" resultType="BigDecimal">
+    <select id="selectProductCodesB" resultType="BigDecimal">
     select distinct productcode from product
   </select>
-  
-  <select id="selectAllProducts" resultType="org.apache.ibatis.submitted.primitive_result_type.Product">
+
+    <select id="selectAllProducts" resultType="org.apache.ibatis.submitted.primitive_result_type.Product">
     select productcode,producttype from product
   </select>
 </mapper>

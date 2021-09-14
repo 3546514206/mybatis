@@ -15,23 +15,23 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.nested_query_cache.AuthorMapper">
 
-  <cache readOnly="true" />
+    <cache readOnly="true"/>
 
-  <resultMap id="selectAuthor" type="domain.blog.Author">
-    <id column="id" property="id" />
-    <result property="username" column="username" />
-    <result property="password" column="password" />
-    <result property="email" column="email" />
-    <result property="bio" column="bio" />
-    <result property="favouriteSection" column="favourite_section" />
-  </resultMap>
+    <resultMap id="selectAuthor" type="domain.blog.Author">
+        <id column="id" property="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="bio" column="bio"/>
+        <result property="favouriteSection" column="favourite_section"/>
+    </resultMap>
 
-  <select id="selectAuthor" resultMap="selectAuthor">
+    <select id="selectAuthor" resultMap="selectAuthor">
     select id, username, password, email, bio, favourite_section
     from author where id = #{id}
   </select>

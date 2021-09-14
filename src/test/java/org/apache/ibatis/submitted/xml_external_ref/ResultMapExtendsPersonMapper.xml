@@ -17,16 +17,17 @@
 
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.apache.ibatis.submitted.xml_external_ref.ResultMapReferencePersonMapper">
 
-	<!--  extends another resultmap that has not been loaded yet -->
-	<resultMap type="org.apache.ibatis.submitted.xml_external_ref.Pet" id="dogResult" extends="org.apache.ibatis.submitted.xml_external_ref.ResultMapReferencePetMapper.petResult">
-	</resultMap>
+    <!--  extends another resultmap that has not been loaded yet -->
+    <resultMap type="org.apache.ibatis.submitted.xml_external_ref.Pet" id="dogResult"
+               extends="org.apache.ibatis.submitted.xml_external_ref.ResultMapReferencePetMapper.petResult">
+    </resultMap>
 
-	<!-- Referencing a result map in another file -->
-	<select id="selectPet" parameterType="java.lang.Integer"
-		resultMap="dogResult">
+    <!-- Referencing a result map in another file -->
+    <select id="selectPet" parameterType="java.lang.Integer"
+            resultMap="dogResult">
 		SELECT pet_id, owner_id, pet_name
 		FROM pet
 		WHERE pet_id = #{id}

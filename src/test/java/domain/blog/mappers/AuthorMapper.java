@@ -27,29 +27,29 @@ import domain.blog.Author;
 
 public interface AuthorMapper {
 
-  List<Author> selectAllAuthors();
+    List<Author> selectAllAuthors();
 
-  Set<Author> selectAllAuthorsSet();
+    Set<Author> selectAllAuthorsSet();
 
-  Vector<Author> selectAllAuthorsVector();
+    Vector<Author> selectAllAuthorsVector();
 
-  LinkedList<Author> selectAllAuthorsLinkedList();
+    LinkedList<Author> selectAllAuthorsLinkedList();
 
-  Author[] selectAllAuthorsArray();
+    Author[] selectAllAuthorsArray();
 
-  void selectAllAuthors(ResultHandler handler);
+    void selectAllAuthors(ResultHandler handler);
 
-  Author selectAuthor(int id);
+    Author selectAuthor(int id);
 
-  void selectAuthor(int id, ResultHandler handler);
+    void selectAuthor(int id, ResultHandler handler);
 
-  @Select("select")
-  void selectAuthor2(int id, ResultHandler handler);
-  
-  void insertAuthor(Author author);
+    @Select("select")
+    void selectAuthor2(int id, ResultHandler handler);
 
-  int deleteAuthor(int id);
+    void insertAuthor(Author author);
 
-  int updateAuthor(Author author);
+    int deleteAuthor(int id);
+
+    int updateAuthor(Author author);
 
 }

@@ -30,47 +30,47 @@ import org.junit.Test;
 
 public class ComplexTypeTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_type/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_type/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_type/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  // see https://issues.apache.org/jira/browse/IBATIS-653
-  @Test
-  public void shouldUpdateProps() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Item item = new Item();
-      item.id = 10;
-      Property p1 = new Property();
-      p1.id = 11;
-      p1.value = "value11";
-      Property p2 = new Property();
-      p2.id = 12;
-      p2.value = "value12";
-      List<Property> list = new ArrayList<Property>();
-      list.add(p1);
-      list.add(p2);
-      item.properties = list;
-      sqlSession.update("updateProps", item);
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/complex_type/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
+
+    // see https://issues.apache.org/jira/browse/IBATIS-653
+    @Test
+    public void shouldUpdateProps() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Item item = new Item();
+            item.id = 10;
+            Property p1 = new Property();
+            p1.id = 11;
+            p1.value = "value11";
+            Property p2 = new Property();
+            p2.id = 12;
+            p2.value = "value12";
+            List<Property> list = new ArrayList<Property>();
+            list.add(p1);
+            list.add(p2);
+            item.properties = list;
+            sqlSession.update("updateProps", item);
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

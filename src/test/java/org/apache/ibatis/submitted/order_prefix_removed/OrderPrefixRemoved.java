@@ -32,48 +32,48 @@ import org.junit.Test;
 
 public class OrderPrefixRemoved {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void initDatabase() throws Exception {
-    Connection conn = null;
+    @BeforeClass
+    public static void initDatabase() throws Exception {
+        Connection conn = null;
 
-    try {
-      Class.forName("org.hsqldb.jdbcDriver");
-      conn = DriverManager.getConnection("jdbc:hsqldb:mem:order_prefix_removed", "sa", "");
+        try {
+            Class.forName("org.hsqldb.jdbcDriver");
+            conn = DriverManager.getConnection("jdbc:hsqldb:mem:order_prefix_removed", "sa", "");
 
-      Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/order_prefix_removed/CreateDB.sql");
+            Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/order_prefix_removed/CreateDB.sql");
 
-      ScriptRunner runner = new ScriptRunner(conn);
-      runner.setLogWriter(null);
-      runner.setErrorLogWriter(null);
-      runner.runScript(reader);
-      conn.commit();
-      reader.close();
+            ScriptRunner runner = new ScriptRunner(conn);
+            runner.setLogWriter(null);
+            runner.setErrorLogWriter(null);
+            runner.runScript(reader);
+            conn.commit();
+            reader.close();
 
-      reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/order_prefix_removed/ibatisConfig.xml");
-      sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-      reader.close();
-    } finally {
-      if (conn != null) {
-        conn.close();
-      }
+            reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/order_prefix_removed/ibatisConfig.xml");
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            reader.close();
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+        }
     }
-  }
 
-  @Test
-  public void testOrderPrefixNotRemoved() {
-    SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
-    try {
-      PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
+    @Test
+    public void testOrderPrefixNotRemoved() {
+        SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.SIMPLE);
+        try {
+            PersonMapper personMapper = sqlSession.getMapper(PersonMapper.class);
 
-      Person person = personMapper.select(new String("slow"));
+            Person person = personMapper.select(new String("slow"));
 
-      assertNotNull(person);
-      
-      sqlSession.commit();
-    } finally {
-      sqlSession.close();
+            assertNotNull(person);
+
+            sqlSession.commit();
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
 }

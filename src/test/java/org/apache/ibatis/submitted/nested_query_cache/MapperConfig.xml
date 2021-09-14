@@ -18,52 +18,52 @@
 -->
 
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 
-  <properties resource="org/apache/ibatis/submitted/nested_query_cache/mapper.properties">
-    <property name="driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
-  </properties>
+    <properties resource="org/apache/ibatis/submitted/nested_query_cache/mapper.properties">
+        <property name="driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+    </properties>
 
-  <settings>
-    <setting name="cacheEnabled" value="true"/>
-    <setting name="lazyLoadingEnabled" value="false"/>
-    <setting name="multipleResultSetsEnabled" value="true"/>
-    <setting name="useColumnLabel" value="true"/>
-    <setting name="useGeneratedKeys" value="false"/>
-    <setting name="defaultExecutorType" value="SIMPLE"/>
-    <setting name="defaultStatementTimeout" value="25"/>
-  </settings>
+    <settings>
+        <setting name="cacheEnabled" value="true"/>
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="multipleResultSetsEnabled" value="true"/>
+        <setting name="useColumnLabel" value="true"/>
+        <setting name="useGeneratedKeys" value="false"/>
+        <setting name="defaultExecutorType" value="SIMPLE"/>
+        <setting name="defaultStatementTimeout" value="25"/>
+    </settings>
 
-  <typeAliases>
-    <typeAlias alias="Author" type="domain.blog.Author"/>
-    <typeAlias alias="Blog" type="domain.blog.Blog"/>
-    <typeAlias alias="Comment" type="domain.blog.Comment"/>
-    <typeAlias alias="Post" type="domain.blog.Post"/>
-    <typeAlias alias="Section" type="domain.blog.Section"/>
-    <typeAlias alias="Tag" type="domain.blog.Tag"/>
-  </typeAliases>
+    <typeAliases>
+        <typeAlias alias="Author" type="domain.blog.Author"/>
+        <typeAlias alias="Blog" type="domain.blog.Blog"/>
+        <typeAlias alias="Comment" type="domain.blog.Comment"/>
+        <typeAlias alias="Post" type="domain.blog.Post"/>
+        <typeAlias alias="Section" type="domain.blog.Section"/>
+        <typeAlias alias="Tag" type="domain.blog.Tag"/>
+    </typeAliases>
 
-  <environments default="development">
-    <environment id="development">
-      <transactionManager type="JDBC">
-        <property name="" value=""/>
-      </transactionManager>
-      <dataSource type="UNPOOLED">
-        <property name="driver" value="${driver}"/>
-        <property name="url" value="${url}"/>
-        <property name="username" value="${username}"/>
-        <property name="password" value="${password}"/>
-      </dataSource>
-    </environment>
-  </environments>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+                <property name="" value=""/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
 
-  <mappers>
-    <mapper resource="org/apache/ibatis/submitted/nested_query_cache/AuthorMapper.xml"/>
-    <mapper resource="org/apache/ibatis/submitted/nested_query_cache/BlogMapper.xml"/>
-  </mappers>
+    <mappers>
+        <mapper resource="org/apache/ibatis/submitted/nested_query_cache/AuthorMapper.xml"/>
+        <mapper resource="org/apache/ibatis/submitted/nested_query_cache/BlogMapper.xml"/>
+    </mappers>
 
 </configuration>
 

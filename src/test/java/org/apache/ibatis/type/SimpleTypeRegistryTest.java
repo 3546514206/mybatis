@@ -26,19 +26,19 @@ import domain.misc.RichType;
 
 public class SimpleTypeRegistryTest {
 
-  @Test
-  public void shouldTestIfClassIsSimpleTypeAndReturnTrue() {
-    assertTrue(SimpleTypeRegistry.isSimpleType(String.class));
-  }
+    @Test
+    public void shouldTestIfClassIsSimpleTypeAndReturnTrue() {
+        assertTrue(SimpleTypeRegistry.isSimpleType(String.class));
+    }
 
-  @Test
-  public void shouldTestIfClassIsSimpleTypeAndReturnFalse() {
-    assertFalse(SimpleTypeRegistry.isSimpleType(RichType.class));
-  }
+    @Test
+    public void shouldTestIfClassIsSimpleTypeAndReturnFalse() {
+        assertFalse(SimpleTypeRegistry.isSimpleType(RichType.class));
+    }
 
-  @Test
-  public void shouldTestIfMapIsSimpleTypeAndReturnFalse() {
-    assertFalse(SimpleTypeRegistry.isSimpleType(HashMap.class)); // see issue #165, a Map is not a simple type
-  }
+    @Test
+    public void shouldTestIfMapIsSimpleTypeAndReturnFalse() {
+        assertFalse(SimpleTypeRegistry.isSimpleType(HashMap.class)); // see issue #165, a Map is not a simple type
+    }
 
 }

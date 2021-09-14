@@ -15,23 +15,24 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.javassist.Mapper">
 
-	<select id="getUser" resultMap="users" >
+    <select id="getUser" resultMap="users">
 		select * from users
 	</select>
-	
-	<select id="getGroupsForUser" resultType="org.apache.ibatis.submitted.javassist.Group">
+
+    <select id="getGroupsForUser" resultType="org.apache.ibatis.submitted.javassist.Group">
 		select * from groups where owner = #{id}
 	</select>
-	
-	<resultMap type="org.apache.ibatis.submitted.javassist.User" id="users">
-		<id column="id" property="id" />
-		<result column="name" property="name" />
-		<collection property="groups" column="id" ofType="org.apache.ibatis.submitted.javassist.Group" select="getGroupsForUser" />
-	</resultMap>
+
+    <resultMap type="org.apache.ibatis.submitted.javassist.User" id="users">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <collection property="groups" column="id" ofType="org.apache.ibatis.submitted.javassist.Group"
+                    select="getGroupsForUser"/>
+    </resultMap>
 
 </mapper>

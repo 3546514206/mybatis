@@ -32,80 +32,80 @@ import org.junit.Test;
 
 public class DuplicateStatementsTest {
 
-  private SqlSessionFactory sqlSessionFactory;
+    private SqlSessionFactory sqlSessionFactory;
 
-  @Before
-  public void setupDb() throws Exception {
-      // create a SqlSessionFactory
-      Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/duplicate_statements/mybatis-config.xml");
-      sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-      reader.close();
-      
-      // populate in-memory database
-      SqlSession session = sqlSessionFactory.openSession();
-      Connection conn = session.getConnection();
-      reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/duplicate_statements/CreateDB.sql");
-      ScriptRunner runner = new ScriptRunner(conn);
-      runner.setLogWriter(null);
-      runner.runScript(reader);
-      reader.close();
-      session.close();
-  }
+    @Before
+    public void setupDb() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/duplicate_statements/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-  @Test
-  public void shouldGetAllUsers() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      List<User> users = mapper.getAllUsers();
-      Assert.assertEquals(10, users.size());
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/duplicate_statements/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
 
-  @Test
-  public void shouldGetFirstFourUsers() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      List<User> users = mapper.getAllUsers(new RowBounds(0, 4));
-      Assert.assertEquals(4, users.size());
-    } finally {
-      sqlSession.close();
+    @Test
+    public void shouldGetAllUsers() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            List<User> users = mapper.getAllUsers();
+            Assert.assertEquals(10, users.size());
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
 
-  @Test
-  @Ignore("fails currently - issue 507")
-  public void shouldGetAllUsers_Annotated() {
-    sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapper.class);
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      AnnotatedMapper mapper = sqlSession.getMapper(AnnotatedMapper.class);
-      List<User> users = mapper.getAllUsers();
-      Assert.assertEquals(10, users.size());
-    } finally {
-      sqlSession.close();
+    @Test
+    public void shouldGetFirstFourUsers() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            List<User> users = mapper.getAllUsers(new RowBounds(0, 4));
+            Assert.assertEquals(4, users.size());
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
 
-  @Test
-  @Ignore("fails currently - issue 507")
-  public void shouldGetFirstFourUsers_Annotated() {
-    sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapper.class);
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      AnnotatedMapper mapper = sqlSession.getMapper(AnnotatedMapper.class);
-      List<User> users = mapper.getAllUsers(new RowBounds(0, 4));
-      Assert.assertEquals(4, users.size());
-    } finally {
-      sqlSession.close();
+    @Test
+    @Ignore("fails currently - issue 507")
+    public void shouldGetAllUsers_Annotated() {
+        sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapper.class);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            AnnotatedMapper mapper = sqlSession.getMapper(AnnotatedMapper.class);
+            List<User> users = mapper.getAllUsers();
+            Assert.assertEquals(10, users.size());
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
 
-  @Test(expected=IllegalArgumentException.class)
-  public void shouldFailForDuplicateMethod() {
-    sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapperExtended.class);
-  }
+    @Test
+    @Ignore("fails currently - issue 507")
+    public void shouldGetFirstFourUsers_Annotated() {
+        sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapper.class);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            AnnotatedMapper mapper = sqlSession.getMapper(AnnotatedMapper.class);
+            List<User> users = mapper.getAllUsers(new RowBounds(0, 4));
+            Assert.assertEquals(4, users.size());
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldFailForDuplicateMethod() {
+        sqlSessionFactory.getConfiguration().addMapper(AnnotatedMapperExtended.class);
+    }
 }

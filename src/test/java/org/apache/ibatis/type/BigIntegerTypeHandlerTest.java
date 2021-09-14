@@ -26,26 +26,26 @@ import org.junit.Test;
 
 public class BigIntegerTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<BigInteger> TYPE_HANDLER = new BigIntegerTypeHandler();
+    private static final TypeHandler<BigInteger> TYPE_HANDLER = new BigIntegerTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, new BigInteger("707070656505050302797979792923232303"), null);
-    verify(ps).setBigDecimal(1, new BigDecimal("707070656505050302797979792923232303"));
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, new BigInteger("707070656505050302797979792923232303"), null);
+        verify(ps).setBigDecimal(1, new BigDecimal("707070656505050302797979792923232303"));
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getBigDecimal("column")).thenReturn(new BigDecimal("707070656505050302797979792923232303"));
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new BigInteger("707070656505050302797979792923232303"), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getBigDecimal("column")).thenReturn(new BigDecimal("707070656505050302797979792923232303"));
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new BigInteger("707070656505050302797979792923232303"), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getBigDecimal(1)).thenReturn(new BigDecimal("707070656505050302797979792923232303"));
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new BigInteger("707070656505050302797979792923232303"), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getBigDecimal(1)).thenReturn(new BigDecimal("707070656505050302797979792923232303"));
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new BigInteger("707070656505050302797979792923232303"), TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

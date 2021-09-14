@@ -22,15 +22,15 @@ import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import domain.blog.Author;
 
 public class CustomBeanWrapperFactory implements ObjectWrapperFactory {
-  public boolean hasWrapperFor(Object object) {
-    if (object instanceof Author) {
-      return true;
-    } else {
-      return false;
+    public boolean hasWrapperFor(Object object) {
+        if (object instanceof Author) {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
-  
-  public ObjectWrapper getWrapperFor(MetaObject metaObject, Object object) {
-    return new CustomBeanWrapper(metaObject, object);
-  }
+
+    public ObjectWrapper getWrapperFor(MetaObject metaObject, Object object) {
+        return new CustomBeanWrapper(metaObject, object);
+    }
 }

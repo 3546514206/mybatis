@@ -23,6 +23,7 @@ import java.io.Reader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.ibatis.session.SqlSession;
@@ -69,8 +70,7 @@ public class CustomCollectionHandlingTest {
             assertEquals(2, list.get(0).getContacts().size());
             assertEquals(1, list.get(1).getContacts().size());
             assertEquals("3 Wall Street", list.get(0).getContacts().get(1).getAddress());
-        } 
-        finally {
+        } finally {
             sqlSession.close();
         }
     }

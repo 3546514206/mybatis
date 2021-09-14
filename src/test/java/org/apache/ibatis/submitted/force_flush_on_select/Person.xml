@@ -17,20 +17,20 @@
 
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.force_flush_on_select.PersonMapper">
 
     <!-- One hour cache -->
-	<cache flushInterval="3600000"/>
-    
+    <cache flushInterval="3600000"/>
+
     <resultMap id="personMap" type="Person">
         <id property="id" column="id"/>
         <result property="firstName" column="firstName"/>
         <result property="lastName" column="lastName"/>
     </resultMap>
-    
+
     <select id="selectByIdFlush" resultMap="personMap" parameterType="int" flushCache="true">
         SELECT id, firstName, lastName
         FROM person
@@ -42,7 +42,7 @@
         FROM person
         WHERE id = #{id}
     </select>
-    
+
     <select id="selectAllFlush" resultMap="personMap" flushCache="true">
         SELECT id, firstName, lastName
         FROM person
@@ -54,9 +54,9 @@
         FROM person
         ORDER BY id
     </select>
-    
+
     <update id="update" parameterType="org.apache.ibatis.submitted.force_flush_on_select.Person">
         UPDATE person set firstname = #{firstName} where id = #{id} 
     </update>
-    
+
 </mapper>

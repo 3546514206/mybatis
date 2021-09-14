@@ -18,23 +18,23 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.refid_resolution.ExternalMapper1">
-	<select id="select" resultType="map">
-		select
-		<include
-			refid="org.apache.ibatis.submitted.refid_resolution.ExternalMapper2.externalColumnList" />
-		from table1
-	</select>
-	<insert id="insert" parameterType="map">
-		<selectKey resultType="java.lang.Integer" keyProperty="id">
-			CALL IDENTITY()
-		</selectKey>
-		insert into table1 (
-		<include
-			refid="org.apache.ibatis.submitted.refid_resolution.ExternalMapper2.externalColumnList" />
-		) values (#{field1},#{field2})
-	</insert>
+    <select id="select" resultType="map">
+        select
+        <include
+                refid="org.apache.ibatis.submitted.refid_resolution.ExternalMapper2.externalColumnList"/>
+        from table1
+    </select>
+    <insert id="insert" parameterType="map">
+        <selectKey resultType="java.lang.Integer" keyProperty="id">
+            CALL IDENTITY()
+        </selectKey>
+        insert into table1 (
+        <include
+                refid="org.apache.ibatis.submitted.refid_resolution.ExternalMapper2.externalColumnList"/>
+        ) values (#{field1},#{field2})
+    </insert>
 </mapper>

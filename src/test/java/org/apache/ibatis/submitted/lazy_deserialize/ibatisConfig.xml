@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE configuration
-    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
     <settings>
-        <setting name="lazyLoadingEnabled"      value="true"/>
-        <setting name="aggressiveLazyLoading"   value="false" />
-        <setting name="configurationFactory"    value="org.apache.ibatis.submitted.lazy_deserialize.LazyDeserializeTest" />
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="configurationFactory" value="org.apache.ibatis.submitted.lazy_deserialize.LazyDeserializeTest"/>
     </settings>
 
     <typeAliases>

@@ -25,26 +25,26 @@ import org.junit.Test;
 
 public class BigDecimalTypeHandlerTest extends BaseTypeHandlerTest {
 
-  private static final TypeHandler<BigDecimal> TYPE_HANDLER = new BigDecimalTypeHandler();
+    private static final TypeHandler<BigDecimal> TYPE_HANDLER = new BigDecimalTypeHandler();
 
-  @Test
-  public void shouldSetParameter() throws Exception {
-    TYPE_HANDLER.setParameter(ps, 1, new BigDecimal(1), null);
-    verify(ps).setBigDecimal(1, new BigDecimal(1));
-  }
+    @Test
+    public void shouldSetParameter() throws Exception {
+        TYPE_HANDLER.setParameter(ps, 1, new BigDecimal(1), null);
+        verify(ps).setBigDecimal(1, new BigDecimal(1));
+    }
 
-  @Test
-  public void shouldGetResultFromResultSet() throws Exception {
-    when(rs.getBigDecimal("column")).thenReturn(new BigDecimal(1));
-    when(rs.wasNull()).thenReturn(false);
-    assertEquals(new BigDecimal(1), TYPE_HANDLER.getResult(rs, "column"));
-  }
+    @Test
+    public void shouldGetResultFromResultSet() throws Exception {
+        when(rs.getBigDecimal("column")).thenReturn(new BigDecimal(1));
+        when(rs.wasNull()).thenReturn(false);
+        assertEquals(new BigDecimal(1), TYPE_HANDLER.getResult(rs, "column"));
+    }
 
-  @Test
-  public void shouldGetResultFromCallableStatement() throws Exception {
-    when(cs.getBigDecimal(1)).thenReturn(new BigDecimal(1));
-    when(cs.wasNull()).thenReturn(false);
-    assertEquals(new BigDecimal(1), TYPE_HANDLER.getResult(cs, 1));
-  }
+    @Test
+    public void shouldGetResultFromCallableStatement() throws Exception {
+        when(cs.getBigDecimal(1)).thenReturn(new BigDecimal(1));
+        when(cs.wasNull()).thenReturn(false);
+        assertEquals(new BigDecimal(1), TYPE_HANDLER.getResult(cs, 1));
+    }
 
 }

@@ -20,7 +20,7 @@ import java.util.List;
  * @Description:RoleDao测试
  */
 
-public class RoleDaoTest{
+public class RoleDaoTest {
     private Log log = LogFactory.getLog(this.getClass());
 
     private SqlSessionFactory sqlSessionFactory;
@@ -40,20 +40,20 @@ public class RoleDaoTest{
     }
 
     @After
-    public void close() throws Exception{
-        if (session != null){
+    public void close() throws Exception {
+        if (session != null) {
             session.close();
         }
-        if (reader != null){
+        if (reader != null) {
             reader.close();
         }
     }
 
-    private void printRoleInfo(String rolename){
+    private void printRoleInfo(String rolename) {
         Role role = roleDao.getRoleByName(rolename);
-        if (role != null){
+        if (role != null) {
             log.info("rolename=" + role.getRolename() + ",alias=" + role.getAlias());
-        }else{
+        } else {
             log.error("role is null");
         }
     }
@@ -85,7 +85,7 @@ public class RoleDaoTest{
         log.info("testGetAllRoles");
         List<Role> roleList = roleDao.getAllRoles();
         log.info("roleList:" + roleList.size());
-        for (Role role : roleList){
+        for (Role role : roleList) {
             printRoleInfo(role.getRolename());
         }
 
@@ -102,7 +102,7 @@ public class RoleDaoTest{
         log.info("testGetRoleList");
         List<Role> roleList = roleDao.getRoleList(1);
         log.info("roleList:" + roleList.size());
-        for (Role role : roleList){
+        for (Role role : roleList) {
             printRoleInfo(role.getRolename());
         }
     }

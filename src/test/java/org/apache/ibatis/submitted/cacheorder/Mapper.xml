@@ -15,14 +15,14 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.cacheorder.Mapper">
 
-	<cache-ref namespace="org.apache.ibatis.submitted.cacheorder.Mapper2"/>
+    <cache-ref namespace="org.apache.ibatis.submitted.cacheorder.Mapper2"/>
 
-	<select id="getUser" resultType="org.apache.ibatis.submitted.cacheorder.User">
+    <select id="getUser" resultType="org.apache.ibatis.submitted.cacheorder.User">
 		select * from users
 	</select>
 

@@ -9,7 +9,7 @@
     </select>
 
 
-    <select id="getUserList"  parameterType="int" resultMap="BaseResultMap">
+    <select id="getUserList" parameterType="int" resultMap="BaseResultMap">
         select
         a.id,username,password
         from user a JOIN user_role b

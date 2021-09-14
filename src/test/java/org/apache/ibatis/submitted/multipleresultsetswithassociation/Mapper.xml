@@ -15,24 +15,27 @@
        limitations under the License.
 -->
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.multipleresultsetswithassociation.Mapper">
-    
-    <select id="getOrderDetailsWithHeaders" resultSets="orderDetailResultSet,orderHeaderResultSet" resultMap="orderDetailResultMap" statementType="CALLABLE">
+
+    <select id="getOrderDetailsWithHeaders" resultSets="orderDetailResultSet,orderHeaderResultSet"
+            resultMap="orderDetailResultMap" statementType="CALLABLE">
         { call GetOrderDetailsAndHeaders() }
     </select>
 
-    <resultMap type="org.apache.ibatis.submitted.multipleresultsetswithassociation.OrderDetail" id="orderDetailResultMap">
+    <resultMap type="org.apache.ibatis.submitted.multipleresultsetswithassociation.OrderDetail"
+               id="orderDetailResultMap">
         <id property="orderId" column="order_id"/>
         <id property="lineNumber" column="line_number"/>
         <association property="orderHeader" column="order_id" foreignColumn="order_id"
-                     resultSet="orderHeaderResultSet" resultMap="orderHeaderResultMap" />
+                     resultSet="orderHeaderResultSet" resultMap="orderHeaderResultMap"/>
     </resultMap>
-	
-    <resultMap type="org.apache.ibatis.submitted.multipleresultsetswithassociation.OrderHeader" id="orderHeaderResultMap">
+
+    <resultMap type="org.apache.ibatis.submitted.multipleresultsetswithassociation.OrderHeader"
+               id="orderHeaderResultMap">
         <id property="orderId" column="order_id"/>
     </resultMap>
-	
+
 </mapper>

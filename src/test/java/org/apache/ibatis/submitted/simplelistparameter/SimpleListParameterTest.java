@@ -31,38 +31,38 @@ import org.junit.Test;
 
 public class SimpleListParameterTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldGetACar() throws Exception {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      CarMapper carMapper = sqlSession.getMapper(CarMapper.class);
-      Car car = new Car();
-      car.setDoors(Arrays.asList(new String[] {"2", "4"}));
-      List<Car> cars = carMapper.getCar(car);
-      Assert.assertNotNull(cars);
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/simplelistparameter/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
+
+    @Test
+    public void shouldGetACar() throws Exception {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            CarMapper carMapper = sqlSession.getMapper(CarMapper.class);
+            Car car = new Car();
+            car.setDoors(Arrays.asList(new String[]{"2", "4"}));
+            List<Car> cars = carMapper.getCar(car);
+            Assert.assertNotNull(cars);
+        } finally {
+            sqlSession.close();
+        }
+    }
 
 }

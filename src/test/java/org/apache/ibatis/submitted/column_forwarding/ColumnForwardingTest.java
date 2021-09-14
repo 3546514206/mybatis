@@ -29,55 +29,55 @@ import org.junit.Test;
 
 public class ColumnForwardingTest {
 
-  private static SqlSessionFactory sqlSessionFactory;
+    private static SqlSessionFactory sqlSessionFactory;
 
-  @BeforeClass
-  public static void setUp() throws Exception {
-    // create a SqlSessionFactory
-    Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding/mybatis-config.xml");
-    sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-    reader.close();
+    @BeforeClass
+    public static void setUp() throws Exception {
+        // create a SqlSessionFactory
+        Reader reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding/mybatis-config.xml");
+        sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+        reader.close();
 
-    // populate in-memory database
-    SqlSession session = sqlSessionFactory.openSession();
-    Connection conn = session.getConnection();
-    reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding/CreateDB.sql");
-    ScriptRunner runner = new ScriptRunner(conn);
-    runner.setLogWriter(null);
-    runner.runScript(reader);
-    reader.close();
-    session.close();
-  }
-
-  @Test
-  public void shouldGetUserWithGroup() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      User user = mapper.getUser(1);
-      Assert.assertNotNull(user);
-      Assert.assertNotNull(user.getId());
-      Assert.assertEquals("active", user.getState());
-      Assert.assertNotNull(user.getGroup());
-      Assert.assertNotNull(user.getGroup().getId());
-      Assert.assertEquals("active", user.getGroup().getState());
-    } finally {
-      sqlSession.close();
+        // populate in-memory database
+        SqlSession session = sqlSessionFactory.openSession();
+        Connection conn = session.getConnection();
+        reader = Resources.getResourceAsReader("org/apache/ibatis/submitted/column_forwarding/CreateDB.sql");
+        ScriptRunner runner = new ScriptRunner(conn);
+        runner.setLogWriter(null);
+        runner.runScript(reader);
+        reader.close();
+        session.close();
     }
-  }
 
-  @Test
-  public void shouldGetUserWithoutGroup() {
-    SqlSession sqlSession = sqlSessionFactory.openSession();
-    try {
-      Mapper mapper = sqlSession.getMapper(Mapper.class);
-      User user = mapper.getUser(2);
-      Assert.assertNotNull(user);
-      Assert.assertNotNull(user.getId());
-      Assert.assertNull(user.getState());
-      Assert.assertNull(user.getGroup());
-    } finally {
-      sqlSession.close();
+    @Test
+    public void shouldGetUserWithGroup() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            User user = mapper.getUser(1);
+            Assert.assertNotNull(user);
+            Assert.assertNotNull(user.getId());
+            Assert.assertEquals("active", user.getState());
+            Assert.assertNotNull(user.getGroup());
+            Assert.assertNotNull(user.getGroup().getId());
+            Assert.assertEquals("active", user.getGroup().getState());
+        } finally {
+            sqlSession.close();
+        }
     }
-  }
+
+    @Test
+    public void shouldGetUserWithoutGroup() {
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Mapper mapper = sqlSession.getMapper(Mapper.class);
+            User user = mapper.getUser(2);
+            Assert.assertNotNull(user);
+            Assert.assertNotNull(user.getId());
+            Assert.assertNull(user.getState());
+            Assert.assertNull(user.getGroup());
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

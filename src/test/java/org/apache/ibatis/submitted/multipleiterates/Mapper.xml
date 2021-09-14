@@ -20,37 +20,37 @@
 
 <mapper namespace="org.apache.ibatis.submitted.multipleiterates.Mapper">
 
-  <select id="getUser" resultType="org.apache.ibatis.submitted.multipleiterates.User">
+    <select id="getUser" resultType="org.apache.ibatis.submitted.multipleiterates.User">
     select * from users
   </select>
 
-  <insert id="insertUser" parameterType="org.apache.ibatis.submitted.multipleiterates.User">
-    insert into users
-    (id,
-    name,
-    <foreach item="attr" index="index" collection="firstAttr"
-      separator=",">
-      first_attr_${index + 1}
-    </foreach>
-    ,
-    <foreach item="attr" index="index" collection="secondAttr"
-      separator=",">
-      second_attr_${index + 1}
-    </foreach>
-    )
-    values(
-    1,
-    'User1',
-    <foreach item="attr" index="index" collection="firstAttr"
-      separator=",">
-      #{attr}
-    </foreach>
-    ,
-    <foreach item="attr" index="index" collection="secondAttr"
-      separator=",">
-      #{attr}
-    </foreach>
-    )
-  </insert>
+    <insert id="insertUser" parameterType="org.apache.ibatis.submitted.multipleiterates.User">
+        insert into users
+        (id,
+        name,
+        <foreach item="attr" index="index" collection="firstAttr"
+                 separator=",">
+            first_attr_${index + 1}
+        </foreach>
+        ,
+        <foreach item="attr" index="index" collection="secondAttr"
+                 separator=",">
+            second_attr_${index + 1}
+        </foreach>
+        )
+        values(
+        1,
+        'User1',
+        <foreach item="attr" index="index" collection="firstAttr"
+                 separator=",">
+            #{attr}
+        </foreach>
+        ,
+        <foreach item="attr" index="index" collection="secondAttr"
+                 separator=",">
+            #{attr}
+        </foreach>
+        )
+    </insert>
 
 </mapper>

@@ -18,17 +18,20 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.serializecircular.DepartmentMapper">
-	<resultMap id="map" type="org.apache.ibatis.submitted.serializecircular.Department">
-		<id column="nr_id" property="id" />
-		<association column="nr_attribute" property="attribute" javaType="org.apache.ibatis.submitted.serializecircular.Attribute" select="org.apache.ibatis.submitted.serializecircular.AttributeMapper.getById"/>
-		<collection column="person" property="person" javaType="org.apache.ibatis.submitted.serializecircular.Person"  select="org.apache.ibatis.submitted.serializecircular.PersonMapper.getById"/>
-	</resultMap>
-		
-	<select id="getById" parameterType="Integer" resultMap="map">
+    <resultMap id="map" type="org.apache.ibatis.submitted.serializecircular.Department">
+        <id column="nr_id" property="id"/>
+        <association column="nr_attribute" property="attribute"
+                     javaType="org.apache.ibatis.submitted.serializecircular.Attribute"
+                     select="org.apache.ibatis.submitted.serializecircular.AttributeMapper.getById"/>
+        <collection column="person" property="person" javaType="org.apache.ibatis.submitted.serializecircular.Person"
+                    select="org.apache.ibatis.submitted.serializecircular.PersonMapper.getById"/>
+    </resultMap>
+
+    <select id="getById" parameterType="Integer" resultMap="map">
         SELECT
 			department.nr_id,
 			department.nr_attribute,

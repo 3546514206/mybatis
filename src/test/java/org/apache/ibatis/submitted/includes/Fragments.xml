@@ -18,17 +18,17 @@
 -->
 
 <!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.apache.ibatis.submitted.includes.fragments">
-  <sql id="select">
+    <sql id="select">
     select
   </sql>
-  <sql id="update">
+    <sql id="update">
     update
   </sql>
-  <sql id="values">
+    <sql id="values">
     VALUES (1);
   </sql>
 </mapper>

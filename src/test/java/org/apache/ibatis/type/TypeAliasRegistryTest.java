@@ -24,46 +24,46 @@ import java.math.BigDecimal;
 
 public class TypeAliasRegistryTest {
 
-  @Test
-  public void shouldRegisterAndResolveTypeAlias() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+    @Test
+    public void shouldRegisterAndResolveTypeAlias() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
 
-    typeAliasRegistry.registerAlias("rich", "domain.misc.RichType");
+        typeAliasRegistry.registerAlias("rich", "domain.misc.RichType");
 
-    assertEquals("domain.misc.RichType", typeAliasRegistry.resolveAlias("rich").getName());
-  }
+        assertEquals("domain.misc.RichType", typeAliasRegistry.resolveAlias("rich").getName());
+    }
 
-  @Test
-  public void shouldFetchArrayType() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
-    assertEquals(Byte[].class, typeAliasRegistry.resolveAlias("byte[]"));
-  }
+    @Test
+    public void shouldFetchArrayType() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+        assertEquals(Byte[].class, typeAliasRegistry.resolveAlias("byte[]"));
+    }
 
-  @Test
-  public void shouldBeAbleToRegisterSameAliasWithSameTypeAgain() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
-    typeAliasRegistry.registerAlias("String", String.class);
-    typeAliasRegistry.registerAlias("string", String.class);
-  }
+    @Test
+    public void shouldBeAbleToRegisterSameAliasWithSameTypeAgain() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+        typeAliasRegistry.registerAlias("String", String.class);
+        typeAliasRegistry.registerAlias("string", String.class);
+    }
 
-  @Test(expected = TypeException.class)
-  public void shouldNotBeAbleToRegisterSameAliasWithDifferentType() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
-    typeAliasRegistry.registerAlias("string", BigDecimal.class);
-  }
+    @Test(expected = TypeException.class)
+    public void shouldNotBeAbleToRegisterSameAliasWithDifferentType() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+        typeAliasRegistry.registerAlias("string", BigDecimal.class);
+    }
 
-  @Test
-  public void shouldBeAbleToRegisterAliasWithNullType() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
-    typeAliasRegistry.registerAlias("foo", (Class<?>) null);
-    assertNull(typeAliasRegistry.resolveAlias("foo"));
-  }
+    @Test
+    public void shouldBeAbleToRegisterAliasWithNullType() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+        typeAliasRegistry.registerAlias("foo", (Class<?>) null);
+        assertNull(typeAliasRegistry.resolveAlias("foo"));
+    }
 
-  @Test
-  public void shouldBeAbleToRegisterNewTypeIfRegisteredTypeIsNull() {
-    TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
-    typeAliasRegistry.registerAlias("foo", (Class<?>) null);
-    typeAliasRegistry.registerAlias("foo", String.class);
-  }
+    @Test
+    public void shouldBeAbleToRegisterNewTypeIfRegisteredTypeIsNull() {
+        TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+        typeAliasRegistry.registerAlias("foo", (Class<?>) null);
+        typeAliasRegistry.registerAlias("foo", String.class);
+    }
 
 }

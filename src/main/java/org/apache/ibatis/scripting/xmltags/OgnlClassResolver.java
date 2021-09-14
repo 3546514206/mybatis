@@ -26,32 +26,30 @@ import org.apache.ibatis.io.Resources;
 /**
  * Custom ognl {@code ClassResolver} which behaves same like ognl's
  * {@code DefaultClassResolver}. But uses the {@code Resources}
- * utility class to find the target class instead of {@code Class#forName(String)}. 
- * 
- * @see https://github.com/mybatis/mybatis-3/issues/161
- * 
+ * utility class to find the target class instead of {@code Class#forName(String)}.
+ *
  * @author Daniel Guggi
- * 
+ * @see https://github.com/mybatis/mybatis-3/issues/161
  */
 public class OgnlClassResolver implements ClassResolver {
 
-  private Map<String, Class<?>> classes = new HashMap<String, Class<?>>(101);
+    private Map<String, Class<?>> classes = new HashMap<String, Class<?>>(101);
 
-  @Override
-  public Class classForName(String className, Map context) throws ClassNotFoundException {
-    Class<?> result = null;
-    if ((result = classes.get(className)) == null) {
-      try {
-        result = Resources.classForName(className);
-      } catch (ClassNotFoundException e1) {
-        if (className.indexOf('.') == -1) {
-          result = Resources.classForName("java.lang." + className);
-          classes.put("java.lang." + className, result);
+    @Override
+    public Class classForName(String className, Map context) throws ClassNotFoundException {
+        Class<?> result = null;
+        if ((result = classes.get(className)) == null) {
+            try {
+                result = Resources.classForName(className);
+            } catch (ClassNotFoundException e1) {
+                if (className.indexOf('.') == -1) {
+                    result = Resources.classForName("java.lang." + className);
+                    classes.put("java.lang." + className, result);
+                }
+            }
+            classes.put(className, result);
         }
-      }
-      classes.put(className, result);
+        return result;
     }
-    return result;
-  }
 
 }
