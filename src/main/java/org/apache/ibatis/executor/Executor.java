@@ -32,7 +32,7 @@ import org.apache.ibatis.transaction.Transaction;
  * 增删改查操作都是由Executor组件完成的。Executor接口中定义了对数据库的增删改查方法，其
  * 中query()和queryCursor()方法用于执行查询操作，update()方法用
  * 于执行插入、删除、修改操作。
- * <p>
+ *
  *                      Executor接口
  *                     /\          /\
  *                     |           |
@@ -40,11 +40,10 @@ import org.apache.ibatis.transaction.Transaction;
  *           BaseExecutor抽象类   CachingExecutor
  *           /\    /\   /\
  *           |     |    |
- *SimpleExecutor   |    |
+ *  SimpleExecutor |    |
  *       ReuseExecutor  |
  *              BatchExecutor
- * <p>
- * <p>
+ *
  * MyBatis提供了3种不同的Executor，分别为SimpleExecutor、ResueExecutor、BatchExecutor。
  * 这些Executor都继承至BaseExecutor，BaseExecutor实现了Executor，BaseExecutor中定义了方法的执行
  * 流程及通用的处理逻辑，具体的方法由子类来实现，是典型的模板方法模式的应用。
