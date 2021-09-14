@@ -25,27 +25,30 @@ import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.session.ResultHandler;
 
 /**
+ * StatementHandler封装了对JDBC Statement对象的操作，
+ * 比如为Statement对象设置参数，调用Statement接口提供的方法与数据库交互，等等。
+ *
  * @author Clinton Begin
  */
 public interface StatementHandler {
 
-  Statement prepare(Connection connection)
-      throws SQLException;
+    Statement prepare(Connection connection)
+            throws SQLException;
 
-  void parameterize(Statement statement)
-      throws SQLException;
+    void parameterize(Statement statement)
+            throws SQLException;
 
-  void batch(Statement statement)
-      throws SQLException;
+    void batch(Statement statement)
+            throws SQLException;
 
-  int update(Statement statement)
-      throws SQLException;
+    int update(Statement statement)
+            throws SQLException;
 
-  <E> List<E> query(Statement statement, ResultHandler resultHandler)
-      throws SQLException;
+    <E> List<E> query(Statement statement, ResultHandler resultHandler)
+            throws SQLException;
 
-  BoundSql getBoundSql();
+    BoundSql getBoundSql();
 
-  ParameterHandler getParameterHandler();
+    ParameterHandler getParameterHandler();
 
 }

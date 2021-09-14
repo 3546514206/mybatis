@@ -21,16 +21,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * TypeHandler是MyBatis中的类型处理器，用于处理Java类型与JDBC类型之
+ * 间的映射。它的作用主要体现在能够
+ * 根据Java类型调用PreparedStatement或CallableStatement对象对
+ * 应的setXXX()方法为Statement对象设置值，而且能够根据Java类型调
+ * 用ResultSet对象对应的getXXX()获取SQL执行结果。
+ *
  * @author Clinton Begin
  */
 public interface TypeHandler<T> {
 
-  void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
+    void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
 
-  T getResult(ResultSet rs, String columnName) throws SQLException;
+    T getResult(ResultSet rs, String columnName) throws SQLException;
 
-  T getResult(ResultSet rs, int columnIndex) throws SQLException;
+    T getResult(ResultSet rs, int columnIndex) throws SQLException;
 
-  T getResult(CallableStatement cs, int columnIndex) throws SQLException;
+    T getResult(CallableStatement cs, int columnIndex) throws SQLException;
 
 }

@@ -19,15 +19,18 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
+ * 当MyBatis框架使用的Statement类型为CallableStatement和PreparedStatement时，
+ * ParameterHandler用于为Statement对象参数占位符设置值。
+ * <p>
  * A parameter handler sets the parameters of the {@code PreparedStatement}
  *
  * @author Clinton Begin
  */
 public interface ParameterHandler {
 
-  Object getParameterObject();
+    Object getParameterObject();
 
-  void setParameters(PreparedStatement ps)
-      throws SQLException;
+    void setParameters(PreparedStatement ps)
+            throws SQLException;
 
 }

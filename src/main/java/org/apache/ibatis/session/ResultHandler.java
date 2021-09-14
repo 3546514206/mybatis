@@ -16,10 +16,13 @@
 package org.apache.ibatis.session;
 
 /**
+ * ResultSetHandler封装了对JDBC中的ResultSet对象操作，当执行SQL类型为SELECT语句时，
+ * ResultSetHandler用于将查询结果转换成Java对象。
+ *
  * @author Clinton Begin
  */
 public interface ResultHandler {
 
-  void handleResult(ResultContext context);
+    void handleResult(ResultContext context);
 
 }
