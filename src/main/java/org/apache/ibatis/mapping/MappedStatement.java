@@ -36,27 +36,38 @@ import org.apache.ibatis.session.Configuration;
  */
 public final class MappedStatement {
 
+    // Mapper的资源路径
     private String resource;
+    // 主配置类对象的引用
     private Configuration configuration;
+    // 二级缓存实例
+    private Cache cache;
+    // 解析sql语句生成的sqlSource实例
+    private SqlSource sqlSource;
+    // 主键生成策略
+    private KeyGenerator keyGenerator;
+    // 是否有嵌套的ResultMaps
+    private boolean hasNestedResultMaps;
+    // 输出日志
+    private Log statementLog;
+
+    /**
+     * 下面这些属性都是在<select|insert|update|delete>标签中的配置项
+     */
     private String id;
     private Integer fetchSize;
     private Integer timeout;
-    private StatementType statementType;
     private ResultSetType resultSetType;
-    private SqlSource sqlSource;
-    private Cache cache;
     private ParameterMap parameterMap;
     private List<ResultMap> resultMaps;
     private boolean flushCacheRequired;
     private boolean useCache;
     private boolean resultOrdered;
     private SqlCommandType sqlCommandType;
-    private KeyGenerator keyGenerator;
     private String[] keyProperties;
     private String[] keyColumns;
-    private boolean hasNestedResultMaps;
     private String databaseId;
-    private Log statementLog;
+    private StatementType statementType;
     private LanguageDriver lang;
     private String[] resultSets;
 
