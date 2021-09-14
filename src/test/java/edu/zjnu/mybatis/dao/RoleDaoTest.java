@@ -33,7 +33,7 @@ public class RoleDaoTest{
 
     @Before
     public void init() throws Exception {
-        reader = Resources.getResourceAsReader("Configuration.xml");
+        reader = Resources.getResourceAsReader("configuration.xml");
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         session = sqlSessionFactory.openSession();
         roleDao = session.getMapper(RoleDao.class);

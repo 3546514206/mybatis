@@ -88,6 +88,10 @@ import org.apache.ibatis.type.TypeAliasRegistry;
 import org.apache.ibatis.type.TypeHandlerRegistry;
 
 /**
+ * MyBatis框架的配置信息有两种，一种是配置MyBatis框架属性的
+ * 主配置文件；另一种是配置执行SQL语句的Mapper配置文件。Configuration的作用
+ * 是描述MyBatis主配置文件的信息。
+ * <p>
  * 用于描述MyBatis的主配置信息，其他组件需要获取配置信息时，直
  * 接通过Configuration对象获取。除此之外，MyBatis在应用启动时，将Mapper配置
  * 信息、类型别名、TypeHandler等注册到Configuration组件中，其他组件需要这些信
@@ -99,13 +103,20 @@ public class Configuration {
 
     protected Environment environment;
 
+    /**
+     * 这些布尔值可以通过<setting/>配置
+     */
     protected boolean safeRowBoundsEnabled = false;
     protected boolean safeResultHandlerEnabled = true;
     protected boolean mapUnderscoreToCamelCase = false;
     protected boolean aggressiveLazyLoading = true;
+    // 是否允许单一对象返回多个结果集
     protected boolean multipleResultSetsEnabled = true;
+    // 允许JDBC自动生成主键
     protected boolean useGeneratedKeys = false;
+    // 是否使用列标签代替列名。不同的驱动在这里会有不同的表现，
     protected boolean useColumnLabel = true;
+    // 是否开启二级缓存
     protected boolean cacheEnabled = true;
     protected boolean callSettersOnNulls = false;
     protected String logPrefix;
@@ -118,15 +129,15 @@ public class Configuration {
     protected ExecutorType defaultExecutorType = ExecutorType.SIMPLE;
     protected AutoMappingBehavior autoMappingBehavior = AutoMappingBehavior.PARTIAL;
 
-    protected Properties variables = new Properties();
-    protected ObjectFactory objectFactory = new DefaultObjectFactory();
-    protected ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
-    protected MapperRegistry mapperRegistry = new MapperRegistry(this);
-
+    // 延迟加载开关全局开关，当为true时，所有的关联对象都会延迟加载对象
     protected boolean lazyLoadingEnabled = false;
     protected ProxyFactory proxyFactory;
 
     protected String databaseId;
+
+    protected Properties variables = new Properties();
+    protected ObjectFactory objectFactory = new DefaultObjectFactory();
+    protected ObjectWrapperFactory objectWrapperFactory = new DefaultObjectWrapperFactory();
     /**
      * Configuration factory class.
      * Used to create Configuration for loading deserialized unread properties.
@@ -135,23 +146,51 @@ public class Configuration {
      */
     protected Class<?> configurationFactory;
 
+    /**
+     * Configuration除了提供一些列的属性控制MyBatis的行为外，还作为容器存
+     * 放TypeHandler（类型处理器）、TypeAlias（类型别名）、Mapper接口
+     * 及Mapper SQL配置信息。这些信息在MyBatis框架启动时注册到Configuration组件
+     * 中。Configuration类中通过下面的属性保存TypeHandler、TypeAlias等信息：
+     */
+    // 用于注册Mapper接口信息，建立Mapper接口的Class对象和MapperProxyFactory对象之间的
+    // 关系，其中MapperProxyFactory对象用于创建Mapper动态代理对象。
+    protected MapperRegistry mapperRegistry = new MapperRegistry(this);
+
+    // 用于注册MyBatis插件信息，MyBatis插件实际上就是一个拦截器(注意，不是Spring MVC范畴的拦截器)。
     protected final InterceptorChain interceptorChain = new InterceptorChain();
+    // 用于注册所有的TypeHandler，并建立Jdbc类型、JDBC类型与TypeHandler之间的对应关系。
     protected final TypeHandlerRegistry typeHandlerRegistry = new TypeHandlerRegistry();
+    // 用于注册所有的类型别名。
     protected final TypeAliasRegistry typeAliasRegistry = new TypeAliasRegistry();
+    // 用于注册LanguageDriver，LanguageDriver用于解析SQL配置，将配置信息转换为SqlSource对象。
     protected final LanguageDriverRegistry languageRegistry = new LanguageDriverRegistry();
-
+    // MappedStatement对象描述<insert|select|update|delete>等标签或者通
+    // 过@Select、@Delete、@Update、@Insert等注解配置的SQL信息。MyBatis将所
+    // 有的MappedStatement对象注册到mappedStatements属性中，其中Key为Mapper的Id，Value为MappedStatement对象。
     protected final Map<String, MappedStatement> mappedStatements = new StrictMap<MappedStatement>("Mapped Statements collection");
+    // 用于注册Mapper中配置的所有缓存信息，其中Key为Cache的Id，也就是Mapper的命名空间，Value为Cache对象。
     protected final Map<String, Cache> caches = new StrictMap<Cache>("Caches collection");
+    // 用于注册Mapper配置文件中通过<resultMap>标签配置的ResultMap信息，ResultMap用于建立Java实体属性与数据库字段之间的映射
+    // 关系，其中Key为ResultMap的Id，该Id是由Mapper命名空间和<resultMap>标签的id属性组成的，Value为解析<resultMap>标签后得到的ResultMap对象。
     protected final Map<String, ResultMap> resultMaps = new StrictMap<ResultMap>("Result Maps collection");
+    // 用于注册Mapper中通过<parameterMap>标签注册的参数映射信息。Key为ParameterMap的Id，由Mapper命名空间和<parameterMap>标签
+    // 的id属性构成，Value为解析<parameterMap>标签后得到的ParameterMap对象。
     protected final Map<String, ParameterMap> parameterMaps = new StrictMap<ParameterMap>("Parameter Maps collection");
+    // 用于注册KeyGenerator，KeyGenerator是MyBatis的主键生成器，MyBatis中提供了3种KeyGenerator，
+    // 即Jdbc3KeyGenerator（数据库自增主键）
+    // NoKeyGenerator（无自增主键）、SelectKeyGenerator（通过select语句查询自增主键，例如oracle的sequence）。
     protected final Map<String, KeyGenerator> keyGenerators = new StrictMap<KeyGenerator>("Key Generators collection");
-
+    // 用于注册所有Mapper XML配置文件路径。
     protected final Set<String> loadedResources = new HashSet<String>();
+    // 用于注册Mapper中通过<sql>标签配置的SQL片段，Key为SQL片段的Id，Value为MyBatis封装的表示XML节点的XNode对象。
     protected final Map<String, XNode> sqlFragments = new StrictMap<XNode>("XML fragments parsed from previous mappers");
-
+    // 用于注册解析出现异常的XMLStatementBuilder对象。
     protected final Collection<XMLStatementBuilder> incompleteStatements = new LinkedList<XMLStatementBuilder>();
+    // 用于注册解析出现异常的CacheRefResolver对象
     protected final Collection<CacheRefResolver> incompleteCacheRefs = new LinkedList<CacheRefResolver>();
+    // 用于注册解析出现异常的ResultMapResolver对象。
     protected final Collection<ResultMapResolver> incompleteResultMaps = new LinkedList<ResultMapResolver>();
+    // 用于注册解析出现异常的MethodResolver对象。
     protected final Collection<MethodResolver> incompleteMethods = new LinkedList<MethodResolver>();
 
     /*
@@ -465,6 +504,15 @@ public class Configuration {
         return MetaObject.forObject(object, objectFactory, objectWrapperFactory);
     }
 
+    /**
+     * Configuration组件还作为Executor、StatementHandler、ResultSetHandler、ParameterHandler组件的工厂类，用于创
+     * 建这些组件的实例。Configuration类中提供了这些组件的工厂方法，这些工厂方法签名如下：
+     *
+     * @param mappedStatement
+     * @param parameterObject
+     * @param boundSql
+     * @return
+     */
     public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
         ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
         parameterHandler = (ParameterHandler) interceptorChain.pluginAll(parameterHandler);
