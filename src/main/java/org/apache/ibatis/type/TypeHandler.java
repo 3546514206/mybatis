@@ -21,6 +21,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * 使用JDBC API开发应用程序，其中一个比较烦琐的环节是处理JDBC类型与Java类型之间的转换。
+ * 涉及Java类型和JDBC类型转换的两种情况如下：
+ * （1）PreparedStatement对象为参数占位符设置值时，需要调用PreparedStatement接口中提供
+ * 的一系列的setXXX()方法，将Java类型转换为对应的JDBC类型并为参数占位符赋值。
+ * （2）执行SQL语句获取ResultSet对象后，需要调用ResultSet对象的getXXX()方法获取字段值，此
+ * 时会将JDBC类型转换为Java类型。
+ *
+ * MyBatis中使用TypeHandler解决上面两种情况下，JDBC类型与Java类型之间的转换。
+ *
  * TypeHandler是MyBatis中的类型处理器，用于处理Java类型与JDBC类型之
  * 间的映射。它的作用主要体现在能够
  * 根据Java类型调用PreparedStatement或CallableStatement对象对
@@ -31,8 +40,24 @@ import java.sql.SQLException;
  */
 public interface TypeHandler<T> {
 
+    /**
+     * setParameter()方法用于为PreparedStatement对象参数的占位符设置值
+     *
+     * @param ps
+     * @param i
+     * @param parameter
+     * @param jdbcType
+     * @throws SQLException
+     */
     void setParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException;
 
+    /**
+     * 另外3个重载的getResult()方法用于从ResultSet对象中获取列的值，或者获取存储过程调用结果。
+     * @param rs
+     * @param columnName
+     * @return
+     * @throws SQLException
+     */
     T getResult(ResultSet rs, String columnName) throws SQLException;
 
     T getResult(ResultSet rs, int columnIndex) throws SQLException;

@@ -15,12 +15,12 @@
  */
 package org.apache.ibatis.mapping;
 
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.session.Configuration;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.session.Configuration;
 
 /**
  * An actual SQL String got form an {@link SqlSource} after having processed any dynamic content.
@@ -32,6 +32,8 @@ import org.apache.ibatis.session.Configuration;
  */
 
 /**
+ * 表示动态生成的SQL语句和封装的参数信息
+ *
  * @author Clinton Begin
  */
 public class BoundSql {
