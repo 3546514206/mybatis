@@ -15,14 +15,19 @@
  */
 package org.apache.ibatis.type;
 
+import org.apache.ibatis.session.Configuration;
+
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.ibatis.session.Configuration;
-
 /**
+ * MyBatis中的BaseTypeHandler类实现了TypeHandler接口.
+ * 对调用setParameter()方法，参数为Null的情况做了通用的处理。
+ * 对调用getResult()方法，从ResultSet对象或存储过程调用结果中获取列的值出现的异常做了处理。
+ * 因此，当我们需要自定义TypeHandler时，只需要继承BaseTypeHandler类即可。
+ *
  * @author Clinton Begin
  * @author Simone Tripodi
  */
