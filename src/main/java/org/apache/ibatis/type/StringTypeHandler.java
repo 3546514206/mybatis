@@ -21,10 +21,26 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+ * MyBatis中内置了很多TypeHandler，
+ * 例如StringTypeHandler用于java.lang.String类型和JDBC中
+ * 的CHAR、VARCHAR、LONGVARCHAR、NCHAR、NVARCHAR、LONGNVARCHAR等类型之间的转换。
+ *
  * @author Clinton Begin
  */
 public class StringTypeHandler extends BaseTypeHandler<String> {
 
+    /**
+     * setNonNullParameter()方法调用PreparedStatement对象的setString()方法
+     * 将Java中的java.lang.String类型转换为JDBC类型，并为参数占位符赋值。getNullableResult()方法
+     * 调用ResultSet对象的getString()方法将JDBC中的字符串类型转
+     * 为Java中的java.lang.String类型，并返回列的值。
+     *
+     * @param ps
+     * @param i
+     * @param parameter
+     * @param jdbcType
+     * @throws SQLException
+     */
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType)
             throws SQLException {
