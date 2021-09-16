@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<!-- xpath 的使用 -->
+<users>
+    <user id="1">
+        <name>杨海波</name>
+        <age>18</age>
+    </user>
+
+    <user id="2">
+        <name>赵美玉</name>
+        <age>19</age>
+    </user>
+</users>
