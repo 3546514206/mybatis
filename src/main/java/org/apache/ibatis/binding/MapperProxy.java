@@ -15,31 +15,48 @@
  */
 package org.apache.ibatis.binding;
 
+import org.apache.ibatis.reflection.ExceptionUtil;
+import org.apache.ibatis.session.SqlSession;
+
 import java.io.Serializable;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import org.apache.ibatis.reflection.ExceptionUtil;
-import org.apache.ibatis.session.SqlSession;
-
 /**
+ *
+ * 代理对象
+ *
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
 public class MapperProxy<T> implements InvocationHandler, Serializable {
 
     private static final long serialVersionUID = -6424540398559729838L;
+
     private final SqlSession sqlSession;
-    private final Class<T> mapperInterface;
+    private final Class<T> mapperInterface;//被代理的接口
     private final Map<Method, MapperMethod> methodCache;
 
     public MapperProxy(SqlSession sqlSession, Class<T> mapperInterface, Map<Method, MapperMethod> methodCache) {
+        // MapperProxy是跟SqlSession绑定在一起的，也就是说开启一次会话之后，才有MapperProxy
+        // 由这里可以推测，实际进行数据库访问的动态代理对象并不是在Mybatis程序启动起来（维持好Configuration对象）
+        // 的时候就加载的
         this.sqlSession = sqlSession;
+        // 需要的dao（mapper）类型
         this.mapperInterface = mapperInterface;
+        //
         this.methodCache = methodCache;
     }
 
+    /**
+     *
+     * @param proxy
+     * @param method
+     * @param args
+     * @return
+     * @throws Throwable
+     */
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if (Object.class.equals(method.getDeclaringClass())) {
             try {

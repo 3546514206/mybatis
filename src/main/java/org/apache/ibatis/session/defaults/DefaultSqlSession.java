@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.session.defaults;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.binding.BindingException;
 import org.apache.ibatis.exceptions.ExceptionFactory;
 import org.apache.ibatis.exceptions.TooManyResultsException;
@@ -35,6 +29,12 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Clinton Begin
  */
@@ -46,10 +46,18 @@ public class DefaultSqlSession implements SqlSession {
     private boolean autoCommit;
     private boolean dirty;
 
+    /**
+     * 创建DefaultSqlSession的时候把配置configuration也跟着传了进来
+     * @param configuration
+     * @param executor
+     * @param autoCommit
+     */
     public DefaultSqlSession(Configuration configuration, Executor executor, boolean autoCommit) {
         this.configuration = configuration;
+        // 指定了当前会话选用的执行器
         this.executor = executor;
         this.dirty = false;
+        // 自动提交？
         this.autoCommit = autoCommit;
     }
 
@@ -58,12 +66,12 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     public <T> T selectOne(String statement) {
-        return this.<T>selectOne(statement, null);
+        return this.selectOne(statement, null);
     }
 
     public <T> T selectOne(String statement, Object parameter) {
         // Popular vote was to return null on 0 results and throw exception on too many.
-        List<T> list = this.<T>selectList(statement, parameter);
+        List<T> list = this.selectList(statement, parameter);
         if (list.size() == 1) {
             return list.get(0);
         } else if (list.size() > 1) {
@@ -219,7 +227,7 @@ public class DefaultSqlSession implements SqlSession {
     }
 
     public <T> T getMapper(Class<T> type) {
-        return configuration.<T>getMapper(type, this);
+        return configuration.getMapper(type, this);
     }
 
     public Connection getConnection() {

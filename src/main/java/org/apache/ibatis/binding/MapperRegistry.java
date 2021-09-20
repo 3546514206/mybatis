@@ -20,26 +20,34 @@ import org.apache.ibatis.io.ResolverUtil;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Clinton Begin
  * @author Eduardo Macarron
  * @author Lasse Voss
  */
-public class MapperRegistry {
 
+/**
+ *
+ *Mapper的注册中心
+ *
+ * Mybatis在启动的时候会解析所有的Mapper接口，然后调用MapperRegistry对象的addMapper()方法将Mapper接口信息和对应的
+ * MapperProxyFactory对象注册到MapperRegistry对象中
+ *
+ */
+public class MapperRegistry {
+    // 用于注册Mapper接口对应的Class对象和MapperProxyFactory对象对应的关系
+    private final Map<Class<?>, MapperProxyFactory<?>> knownMappers =
+            new HashMap<Class<?>, MapperProxyFactory<?>>();
+    // Configuration对象的引用
     private Configuration config;
-    private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<Class<?>, MapperProxyFactory<?>>();
 
     public MapperRegistry(Configuration config) {
         this.config = config;
     }
 
+    //根据Mapper接口的Class对象获取Mapper动态代理对象
     @SuppressWarnings("unchecked")
     public <T> T getMapper(Class<T> type, SqlSession sqlSession) {
         final MapperProxyFactory<T> mapperProxyFactory = (MapperProxyFactory<T>) knownMappers.get(type);
@@ -56,6 +64,8 @@ public class MapperRegistry {
         return knownMappers.containsKey(type);
     }
 
+    // 根据Mapper接口的Class对象创建MapperProxyFactory对象
+    // 并注册到knownMappers属性中
     public <T> void addMapper(Class<T> type) {
         if (type.isInterface()) {
             if (hasMapper(type)) {

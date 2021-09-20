@@ -15,14 +15,16 @@
  */
 package org.apache.ibatis.binding;
 
+import org.apache.ibatis.session.SqlSession;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.ibatis.session.SqlSession;
-
 /**
+ * 代理工厂
+ *
  * @author Lasse Voss
  */
 public class MapperProxyFactory<T> {
@@ -47,6 +49,7 @@ public class MapperProxyFactory<T> {
         return (T) Proxy.newProxyInstance(mapperInterface.getClassLoader(), new Class[]{mapperInterface}, mapperProxy);
     }
 
+    //工厂方法，非静态的，使用MapperProxyFactory创建Mapper动态代理对象需要首先创建MapperProxyFactory实例
     public T newInstance(SqlSession sqlSession) {
         final MapperProxy<T> mapperProxy = new MapperProxy<T>(sqlSession, mapperInterface, methodCache);
         return newInstance(mapperProxy);
