@@ -136,7 +136,7 @@ public class XMLConfigBuilder extends BaseBuilder {
              *
              */
             typeHandlerElement(root.evalNode("typeHandlers"));
-            mapperElement(root.evalNode("mappers"));
+            mapperElement(root.evalNode("mappers"));// 解析主配置文件中配置的 mapper.xml
         } catch (Exception e) {
             throw new BuilderException("Error parsing SQL Mapper Configuration. Cause: " + e, e);
         }
@@ -351,6 +351,7 @@ public class XMLConfigBuilder extends BaseBuilder {
                     if (resource != null && url == null && mapperClass == null) {
                         ErrorContext.instance().resource(resource);
                         InputStream inputStream = Resources.getResourceAsStream(resource);
+                        //  解析mapper.xml
                         XMLMapperBuilder mapperParser = new XMLMapperBuilder(inputStream, configuration, resource, configuration.getSqlFragments());
                         mapperParser.parse();
                     } else if (resource == null && url != null && mapperClass == null) {

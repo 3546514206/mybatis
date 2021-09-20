@@ -15,37 +15,20 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.ibatis.builder.BaseBuilder;
-import org.apache.ibatis.builder.BuilderException;
-import org.apache.ibatis.builder.CacheRefResolver;
-import org.apache.ibatis.builder.IncompleteElementException;
-import org.apache.ibatis.builder.MapperBuilderAssistant;
-import org.apache.ibatis.builder.ResultMapResolver;
+import org.apache.ibatis.builder.*;
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.executor.ErrorContext;
 import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.mapping.Discriminator;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
-import org.apache.ibatis.mapping.ResultFlag;
-import org.apache.ibatis.mapping.ResultMap;
-import org.apache.ibatis.mapping.ResultMapping;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.parsing.XPathParser;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
+
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.*;
 
 /**
  * @author Clinton Begin
@@ -90,7 +73,7 @@ public class XMLMapperBuilder extends BaseBuilder {
     public void parse() {
         if (!configuration.isResourceLoaded(resource)) {
             configurationElement(parser.evalNode("/mapper"));
-            configuration.addLoadedResource(resource);
+            configuration.addLoadedResource(resource); // 加载mapper.xml
             bindMapperForNamespace();
         }
 
@@ -105,16 +88,24 @@ public class XMLMapperBuilder extends BaseBuilder {
 
     private void configurationElement(XNode context) {
         try {
+            // 获取命名空间
             String namespace = context.getStringAttribute("namespace");
             if (namespace.equals("")) {
                 throw new BuilderException("Mapper's namespace cannot be empty");
             }
+            // 设置当前正在解析的Mapper配置的命名空间
             builderAssistant.setCurrentNamespace(namespace);
+            // 解析<Cache-ref>标签
             cacheRefElement(context.evalNode("cache-ref"));
+            // 解析<cache>标签
             cacheElement(context.evalNode("cache"));
+            // 解析parameterMap标签
             parameterMapElement(context.evalNodes("/mapper/parameterMap"));
+            // 解析resultMap标签
             resultMapElements(context.evalNodes("/mapper/resultMap"));
+            // 解析sql标签
             sqlElement(context.evalNodes("/mapper/sql"));
+            // 解析所有的增删改查标签
             buildStatementFromContext(context.evalNodes("select|insert|update|delete"));
         } catch (Exception e) {
             throw new BuilderException("Error parsing Mapper XML. Cause: " + e, e);
@@ -130,8 +121,10 @@ public class XMLMapperBuilder extends BaseBuilder {
 
     private void buildStatementFromContext(List<XNode> list, String requiredDatabaseId) {
         for (XNode context : list) {
+            // 一路下来的Builder:  XMLConfigBuilder(主配置文件)  -> XMLMapperBuilder(Mapper配置文件) -> XMLStatementBuilder(增删改查SQL)
             final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, context, requiredDatabaseId);
             try {
+                // 执行解析，最终会将解析结果存放到主配置类configuration的mappedStatements属性中
                 statementParser.parseStatementNode();
             } catch (IncompleteElementException e) {
                 configuration.addIncompleteStatement(statementParser);
@@ -336,9 +329,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
     private boolean databaseIdMatchesCurrent(String id, String databaseId, String requiredDatabaseId) {
         if (requiredDatabaseId != null) {
-            if (!requiredDatabaseId.equals(databaseId)) {
-                return false;
-            }
+            return requiredDatabaseId.equals(databaseId);
         } else {
             if (databaseId != null) {
                 return false;
@@ -346,9 +337,7 @@ public class XMLMapperBuilder extends BaseBuilder {
             // skip this fragment if there is a previous one with a not null databaseId
             if (this.sqlFragments.containsKey(id)) {
                 XNode context = this.sqlFragments.get(id);
-                if (context.getStringAttribute("databaseId") != null) {
-                    return false;
-                }
+                return context.getStringAttribute("databaseId") == null;
             }
         }
         return true;

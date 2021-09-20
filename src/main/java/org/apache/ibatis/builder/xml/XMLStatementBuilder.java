@@ -15,23 +15,19 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.util.List;
-import java.util.Locale;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.executor.keygen.NoKeyGenerator;
 import org.apache.ibatis.executor.keygen.SelectKeyGenerator;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ResultSetType;
-import org.apache.ibatis.mapping.SqlCommandType;
-import org.apache.ibatis.mapping.SqlSource;
-import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.parsing.XNode;
 import org.apache.ibatis.scripting.LanguageDriver;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Clinton Begin
@@ -104,6 +100,7 @@ public class XMLStatementBuilder extends BaseBuilder {
                     ? new Jdbc3KeyGenerator() : new NoKeyGenerator();
         }
 
+        // builderAssistant的addMappedStatement方法将MappedStatement put到主配置类的mappedStatements属性中
         builderAssistant.addMappedStatement(id, sqlSource, statementType, sqlCommandType,
                 fetchSize, timeout, parameterMap, parameterTypeClass, resultMap, resultTypeClass,
                 resultSetTypeEnum, flushCache, useCache, resultOrdered,
@@ -170,9 +167,7 @@ public class XMLStatementBuilder extends BaseBuilder {
 
     private boolean databaseIdMatchesCurrent(String id, String databaseId, String requiredDatabaseId) {
         if (requiredDatabaseId != null) {
-            if (!requiredDatabaseId.equals(databaseId)) {
-                return false;
-            }
+            return requiredDatabaseId.equals(databaseId);
         } else {
             if (databaseId != null) {
                 return false;
@@ -181,9 +176,7 @@ public class XMLStatementBuilder extends BaseBuilder {
             id = builderAssistant.applyCurrentNamespace(id, false);
             if (this.configuration.hasStatement(id, false)) {
                 MappedStatement previous = this.configuration.getMappedStatement(id, false); // issue #2
-                if (previous.getDatabaseId() != null) {
-                    return false;
-                }
+                return previous.getDatabaseId() == null;
             }
         }
         return true;
