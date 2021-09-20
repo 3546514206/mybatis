@@ -15,12 +15,6 @@
  */
 package org.apache.ibatis.builder.xml;
 
-import java.io.InputStream;
-import java.io.Reader;
-import java.util.Properties;
-
-import javax.sql.DataSource;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.datasource.DataSourceFactory;
@@ -41,6 +35,11 @@ import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.LocalCacheScope;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.type.JdbcType;
+
+import javax.sql.DataSource;
+import java.io.InputStream;
+import java.io.Reader;
+import java.util.Properties;
 
 /**
  * @author Clinton Begin
@@ -85,24 +84,57 @@ public class XMLConfigBuilder extends BaseBuilder {
     }
 
     public Configuration parse() {
+        // 防止parsed被多个Mybatis实例同时调用
         if (parsed) {
             throw new BuilderException("Each XMLConfigBuilder can only be used once.");
         }
         parsed = true;
+        // 调用XPathParser的evalNode方法创建表示configuration的XNode对象。
         parseConfiguration(parser.evalNode("/configuration"));
         return configuration;
     }
 
+    /**
+     * 在parseConfiguration()方法中，对于<configuration>标签的子节点，
+     * 都有一个单独的方法处理，例如使用propertiesElement()方法解析<properties>标签，
+     * 使用pluginElement()方法解析<plugin>标签。
+     *
+     * @param root
+     *
+     */
     private void parseConfiguration(XNode root) {
         try {
+            /**
+             * <properties>：用于配置属性信息，这些属性的值可以通过${...}方式引用。
+             * 例如jdbc.properties
+             */
             propertiesElement(root.evalNode("properties")); //issue #117 read properties first
+            /**
+             * <typeAliases>：用于配置类型别名，目的是为Java类型设置一个更短的名字。它存在的意义仅在于用来减少类完全限定名的冗余
+             */
             typeAliasesElement(root.evalNode("typeAliases"));
+            /**
+             * <plugins>：用于注册用户自定义的插件信息。
+             */
             pluginElement(root.evalNode("plugins"));
             objectFactoryElement(root.evalNode("objectFactory"));
             objectWrapperFactoryElement(root.evalNode("objectWrapperFactory"));
+            /**
+             * <settings>：通过一些属性来控制MyBatis运行时的一些行为。例如，指定日志实现、默认的Executor类型等：
+             */
             settingsElement(root.evalNode("settings"));
+            /**
+             * <environments>：用于配置MyBatis数据连接相关的环境及事务管理器信息。
+             * 通过该标签可以配置多个环境信息，然后指定具体使用哪个。
+             */
             environmentsElement(root.evalNode("environments")); // read it after objectFactory and objectWrapperFactory issue #631
+            /**
+             * <databaseIdProvider>：MyBatis能够根据不同的数据库厂商执行不同的SQL语句，该标签用于配置数据库厂商信息。
+             */
             databaseIdProviderElement(root.evalNode("databaseIdProvider"));
+            /**
+             *
+             */
             typeHandlerElement(root.evalNode("typeHandlers"));
             mapperElement(root.evalNode("mappers"));
         } catch (Exception e) {
@@ -342,10 +374,7 @@ public class XMLConfigBuilder extends BaseBuilder {
             throw new BuilderException("No environment specified.");
         } else if (id == null) {
             throw new BuilderException("Environment requires an id attribute.");
-        } else if (environment.equals(id)) {
-            return true;
-        }
-        return false;
+        } else return environment.equals(id);
     }
 
 }
