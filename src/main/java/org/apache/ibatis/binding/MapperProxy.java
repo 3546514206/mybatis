@@ -58,6 +58,7 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
      * @throws Throwable
      */
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        // 从Object类继承的方法不做处理
         if (Object.class.equals(method.getDeclaringClass())) {
             try {
                 return method.invoke(this, args);
@@ -65,11 +66,13 @@ public class MapperProxy<T> implements InvocationHandler, Serializable {
                 throw ExceptionUtil.unwrapThrowable(t);
             }
         }
+        // 对Mapepr接口中定义的方法进行封装生成MapperMethod对象
         final MapperMethod mapperMethod = cachedMapperMethod(method);
         return mapperMethod.execute(sqlSession, args);
     }
 
     private MapperMethod cachedMapperMethod(Method method) {
+        // methodCache是享元思想的体现
         MapperMethod mapperMethod = methodCache.get(method);
         if (mapperMethod == null) {
             mapperMethod = new MapperMethod(mapperInterface, method, sqlSession.getConfiguration());

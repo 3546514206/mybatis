@@ -31,6 +31,10 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
+ *
+ * MapperMethod类是对Mapper方法相关信息的封装，通过MapperMethod
+ * 能够很方便地获取SQL语句的类型、方法的签名等信息
+ *
  * @author Clinton Begin
  * @author Eduardo Macarron
  * @author Lasse Voss
@@ -40,6 +44,12 @@ public class MapperMethod {
     private final SqlCommand command;
     private final MethodSignature method;
 
+    /**
+     * 构造方法中创建了一个SqlCommand实例和一个MethodSignature实例
+     * @param mapperInterface
+     * @param method
+     * @param config
+     */
     public MapperMethod(Class<?> mapperInterface, Method method, Configuration config) {
         this.command = new SqlCommand(config, mapperInterface, method);
         this.method = new MethodSignature(config, method);
@@ -117,9 +127,9 @@ public class MapperMethod {
         Object param = method.convertArgsToSqlCommandParam(args);
         if (method.hasRowBounds()) {
             RowBounds rowBounds = method.extractRowBounds(args);
-            result = sqlSession.<E>selectList(command.getName(), param, rowBounds);
+            result = sqlSession.selectList(command.getName(), param, rowBounds);
         } else {
-            result = sqlSession.<E>selectList(command.getName(), param);
+            result = sqlSession.selectList(command.getName(), param);
         }
         // issue #510 Collections & arrays support
         if (!method.getReturnType().isAssignableFrom(result.getClass())) {
@@ -151,9 +161,9 @@ public class MapperMethod {
         Object param = method.convertArgsToSqlCommandParam(args);
         if (method.hasRowBounds()) {
             RowBounds rowBounds = method.extractRowBounds(args);
-            result = sqlSession.<K, V>selectMap(command.getName(), param, method.getMapKey(), rowBounds);
+            result = sqlSession.selectMap(command.getName(), param, method.getMapKey(), rowBounds);
         } else {
-            result = sqlSession.<K, V>selectMap(command.getName(), param, method.getMapKey());
+            result = sqlSession.selectMap(command.getName(), param, method.getMapKey());
         }
         return result;
     }
@@ -172,14 +182,19 @@ public class MapperMethod {
 
     }
 
+    /**
+     * SqlCommand类用于封装SQL的类型、执行SQL的id等
+     */
     public static class SqlCommand {
 
         private final String name;
         private final SqlCommandType type;
 
+
         public SqlCommand(Configuration configuration, Class<?> mapperInterface, Method method) throws BindingException {
             String statementName = mapperInterface.getName() + "." + method.getName();
             MappedStatement ms = null;
+            // 从主配置类中获取MappedStatement对象，进而从MappedStatement对象中获取SQL语句的类型和Mapper的ID
             if (configuration.hasStatement(statementName)) {
                 ms = configuration.getMappedStatement(statementName);
             } else if (!mapperInterface.equals(method.getDeclaringClass().getName())) { // issue #35
@@ -225,6 +240,7 @@ public class MapperMethod {
         private final SortedMap<Integer, String> params;
         private final boolean hasNamedParameters;
 
+        //同样，主配置类的引用被一路往下传递
         public MethodSignature(Configuration configuration, Method method) throws BindingException {
             this.returnType = method.getReturnType();
             this.returnsVoid = void.class.equals(this.returnType);
@@ -249,7 +265,7 @@ public class MapperMethod {
                 for (Map.Entry<Integer, String> entry : params.entrySet()) {
                     param.put(entry.getValue(), args[entry.getKey()]);
                     // issue #71, add param names as param1, param2...but ensure backward compatibility
-                    final String genericParamName = "param" + String.valueOf(i + 1);
+                    final String genericParamName = "param" + (i + 1);
                     if (!param.containsKey(genericParamName)) {
                         param.put(genericParamName, args[entry.getKey()]);
                     }
