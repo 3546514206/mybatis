@@ -13,7 +13,7 @@ public interface UserDao {
 
     User getUserByName(String username);
 
-    User getUserById(Integer id);
+    List<User> getUsersByCache();
 
     boolean modifyUser(String username, String password);
 
