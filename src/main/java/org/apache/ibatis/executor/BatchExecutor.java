@@ -15,14 +15,6 @@
  */
 package org.apache.ibatis.executor;
 
-import java.sql.BatchUpdateException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.apache.ibatis.executor.keygen.Jdbc3KeyGenerator;
 import org.apache.ibatis.executor.keygen.KeyGenerator;
 import org.apache.ibatis.executor.keygen.NoKeyGenerator;
@@ -33,6 +25,14 @@ import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
+
+import java.sql.BatchUpdateException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Jeff Butler
@@ -76,6 +76,8 @@ public class BatchExecutor extends BaseExecutor {
 
     public <E> List<E> doQuery(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql)
             throws SQLException {
+        // 看到没，这里就是对JDBC的封装
+        // JDBC的Statement
         Statement stmt = null;
         try {
             flushStatements();
@@ -84,7 +86,7 @@ public class BatchExecutor extends BaseExecutor {
             Connection connection = getConnection(ms.getStatementLog());
             stmt = handler.prepare(connection);
             handler.parameterize(stmt);
-            return handler.<E>query(stmt, resultHandler);
+            return handler.query(stmt, resultHandler);
         } finally {
             closeStatement(stmt);
         }

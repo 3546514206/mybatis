@@ -102,6 +102,12 @@ public class DefaultSqlSession implements SqlSession {
         return selectedMap;
     }
 
+    /**
+     * 只有一个默认实现
+     * @param statement Unique identifier matching the statement to use.
+     * @param <E>
+     * @return
+     */
     public <E> List<E> selectList(String statement) {
         return this.selectList(statement, null);
     }
@@ -112,7 +118,9 @@ public class DefaultSqlSession implements SqlSession {
 
     public <E> List<E> selectList(String statement, Object parameter, RowBounds rowBounds) {
         try {
+            //根据Mapper的id从主配置类中获取对应的MappedStatement对象
             MappedStatement ms = configuration.getMappedStatement(statement);
+            //以MappedStatement对象作为参数，调用执行器的query方法完成查询操作
             List<E> result = executor.query(ms, wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
             return result;
         } catch (Exception e) {

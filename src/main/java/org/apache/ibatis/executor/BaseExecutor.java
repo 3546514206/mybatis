@@ -15,24 +15,12 @@
  */
 package org.apache.ibatis.executor;
 
-import static org.apache.ibatis.executor.ExecutionPlaceholder.EXECUTION_PLACEHOLDER;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
-
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.cache.impl.PerpetualCache;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.logging.jdbc.ConnectionLogger;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
-import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.reflection.factory.ObjectFactory;
 import org.apache.ibatis.session.Configuration;
@@ -41,6 +29,14 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
 import org.apache.ibatis.type.TypeHandlerRegistry;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
+import static org.apache.ibatis.executor.ExecutionPlaceholder.EXECUTION_PLACEHOLDER;
 
 /**
  * @author Clinton Begin
@@ -53,6 +49,7 @@ public abstract class BaseExecutor implements Executor {
     protected Executor wrapper;
 
     protected ConcurrentLinkedQueue<DeferredLoad> deferredLoads;
+    // 一级缓存实例
     protected PerpetualCache localCache;
     protected PerpetualCache localOutputParameterCache;
     protected Configuration configuration;
@@ -115,8 +112,11 @@ public abstract class BaseExecutor implements Executor {
     }
 
     public <E> List<E> query(MappedStatement ms, Object parameter, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
+        // 获取BoundSql对象，BoundSql是对动态SQL解析生成的Sql语句和参数映射的封装
         BoundSql boundSql = ms.getBoundSql(parameter);
+        // 创建CacheKey，用于缓存key
         CacheKey key = createCacheKey(ms, parameter, rowBounds, boundSql);
+        // 调用重载的query()方法
         return query(ms, parameter, rowBounds, resultHandler, key, boundSql);
     }
 
@@ -134,6 +134,7 @@ public abstract class BaseExecutor implements Executor {
             if (list != null) {
                 handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
             } else {
+                // 没命中缓存则调用handleLocallyCachedOutputParameters方法从数据库查询
                 list = queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
             }
         } finally {
@@ -268,6 +269,7 @@ public abstract class BaseExecutor implements Executor {
         } finally {
             localCache.removeObject(key);
         }
+        // 将查询结果缓存起来
         localCache.putObject(key, list);
         if (ms.getStatementType() == StatementType.CALLABLE) {
             localOutputParameterCache.putObject(key, parameter);
