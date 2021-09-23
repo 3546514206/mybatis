@@ -38,27 +38,35 @@ import java.util.concurrent.locks.ReadWriteLock;
  *
  * @author Clinton Begin
  */
-
+// mybatis的缓存都是内存级别的缓存
 public interface Cache {
 
     /**
+     *
+     * 用于获取缓存的ID，通常就是Mapper的命名空间
      * @return The identifier of this cache
      */
     String getId();
 
     /**
+     * giant方法将一个Java对象添加到缓存中，该方法有两个参数，第一个参数为缓存的key,即CacheKey的实例
+     * 第二个参数为需要缓存的对象
+     *
      * @param key   Can be any object but usually it is a {@link CacheKey}
      * @param value The result of a select.
      */
     void putObject(Object key, Object value);
 
     /**
+     * 用于从缓存中获取缓存的对象
      * @param key The key
      * @return The object stored in the cache.
      */
     Object getObject(Object key);
 
     /**
+     *
+     * 讲一个对象从缓存中移除
      * Optional. It is not called by the core.
      *
      * @param key The key
@@ -67,6 +75,8 @@ public interface Cache {
     Object removeObject(Object key);
 
     /**
+     *
+     * 清空缓存
      * Clears this cache instance
      */
     void clear();
@@ -79,6 +89,7 @@ public interface Cache {
     int getSize();
 
     /**
+     *
      * Optional. As of 3.2.6 this method is no longer called by the core.
      * <p>
      * Any locking needed by the cache must be provided internally by the cache provider.
