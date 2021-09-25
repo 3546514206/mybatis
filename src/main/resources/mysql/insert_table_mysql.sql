@@ -9,7 +9,7 @@ insert into user(id, username,password) values(1,'zhenqing.wang','123');
 insert into user(id, username,password) values(2,'admin','admin');
 insert into user(id, username,password) values(3,'anonymous','ano');
 
---user_role
+-- user_role
 insert into user_role(id, user_id, role_id) values(1, 1, 1);
 insert into user_role(id, user_id, role_id) values(2, 2, 2);
 insert into user_role(id, user_id, role_id) values(3, 3, 3);

@@ -1,3 +1,5 @@
+CREATE DATABASE mybatis CHARACTER SET utf8 COLLATE utf8_general_ci;
+use mybatis;
 CREATE TABLE user(
  id int(11) NOT NULL AUTO_INCREMENT,
  username varchar(20),
