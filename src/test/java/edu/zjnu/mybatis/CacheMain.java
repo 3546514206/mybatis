@@ -14,16 +14,6 @@ import java.io.IOException;
 public class CacheMain {
 
     public static void main(String[] args) throws IOException {
-//        Reader reader = Resources.getResourceAsReader("configuration-cache.xml");
-//        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(reader);
-//        SqlSession session = factory.openSession();
-//
-//        List<User> users = session.selectList("edu.zjnu.mybatis.dao.UserDao.getUsersByCache");
-//
-//        users.forEach(e -> System.out.println(e.getUsername()));
-//        session.close();
-//        reader.close();
-
         final int N = 100000;
         Cache cache = new PerpetualCache("default");
         cache = new LruCache(cache);
