@@ -15,20 +15,23 @@
  */
 package org.apache.ibatis.cache.decorators;
 
+import org.apache.ibatis.cache.Cache;
+
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReadWriteLock;
 
-import org.apache.ibatis.cache.Cache;
-
 /**
  * FIFO (first in, first out) cache decorator
- *
+ *先入先出缓存装饰器，FifoCache内部有一个维护具有长度限制的
+ * Key键值链表（LinkedList实例）和一个被装饰的缓存对象，Key值链表
+ * 主要是维护Key的FIFO顺序，而缓存存储和获取则交给被装饰的缓存对象来完成。
  * @author Clinton Begin
  */
 public class FifoCache implements Cache {
 
     private final Cache delegate;
     private LinkedList<Object> keyList;
+    // 默认长度1024
     private int size;
 
     public FifoCache(Cache delegate) {

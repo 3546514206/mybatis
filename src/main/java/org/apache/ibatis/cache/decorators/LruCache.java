@@ -15,15 +15,22 @@
  */
 package org.apache.ibatis.cache.decorators;
 
+import org.apache.ibatis.cache.Cache;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 
-import org.apache.ibatis.cache.Cache;
-
 /**
  * Lru (first in, first out) cache decorator
  *
+ *
+ * 最近最少使用的缓存装饰器，当缓存容量满了之后，使用LRU
+ * 算法淘汰最近最少使用的Key和Value。LruCache中通过重
+ * 写LinkedHashMap类的removeEldestEntry()方法获取
+ * 最近最少使用的Key值，将Key值保存在LruCache类的eldestKey
+ * 属性中，然后在缓存中添加对象时，淘汰eldestKey对应的Value值。
+ * 具体实现细节读者可参考LruCache类的源码。
  * @author Clinton Begin
  */
 public class LruCache implements Cache {

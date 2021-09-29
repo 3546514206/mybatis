@@ -15,13 +15,17 @@
  */
 package org.apache.ibatis.cache.decorators;
 
+import org.apache.ibatis.cache.Cache;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 
-import org.apache.ibatis.cache.Cache;
-
 /**
+ * 事务缓存装饰器，该缓存与其他缓存的不同之处在于，TransactionalCache增加了两个方法，
+ * 即commit()和rollback()。当写入缓存时，只有调用commit()方法后，缓存对象
+ * 才会真正添加到TransactionalCache对象中，如果调用了rollback()方法，写入操作将被回滚。
+ *
  * @author Clinton Begin
  */
 public class TransactionalCache implements Cache {

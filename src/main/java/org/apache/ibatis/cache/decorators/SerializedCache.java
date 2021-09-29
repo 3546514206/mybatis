@@ -15,21 +15,16 @@
  */
 package org.apache.ibatis.cache.decorators;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamClass;
-import java.io.Serializable;
-import java.util.concurrent.locks.ReadWriteLock;
-
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.cache.CacheException;
 import org.apache.ibatis.io.Resources;
 
+import java.io.*;
+import java.util.concurrent.locks.ReadWriteLock;
+
 /**
+ * 序列化缓存装饰器，向缓存中添加对象时，对添加的对象进行
+ * 序列化处理，从缓存中取出对象时，进行反序列化处理。
  * @author Clinton Begin
  */
 public class SerializedCache implements Cache {

@@ -15,14 +15,16 @@
  */
 package org.apache.ibatis.cache.decorators;
 
-import java.util.concurrent.locks.ReadWriteLock;
-
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 
+import java.util.concurrent.locks.ReadWriteLock;
+
 /**
  * @author Clinton Begin
+ *
+ * 为缓存增加日志输出功能，记录缓存的请求次数和命中次数，通过日志输出缓存命中率
  */
 public class LoggingCache implements Cache {
 

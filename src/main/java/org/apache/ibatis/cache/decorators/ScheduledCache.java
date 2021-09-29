@@ -15,12 +15,16 @@
  */
 package org.apache.ibatis.cache.decorators;
 
-import java.util.concurrent.locks.ReadWriteLock;
-
 import org.apache.ibatis.cache.Cache;
+
+import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  * @author Clinton Begin
+ *
+ * 自动刷新缓存装饰器，当操作缓存对象时，如果当前时间与上次清空缓存的
+ * 时间间隔大于指定的时间间隔，则清空缓存。清空缓存的动作由getObject()、
+ * putObject()、removeObject()等方法触发。
  */
 public class ScheduledCache implements Cache {
 
