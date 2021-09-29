@@ -131,6 +131,10 @@ public abstract class BaseExecutor implements Executor {
         try {
             queryStack++;
             list = resultHandler == null ? (List<E>) localCache.getObject(key) : null;
+            // 在BaseExecutor类的query()方法中，首先根据缓存Key从
+            // localCache属性中查找是否有缓存对象，如果查找不到，则
+            // 调用queryFromDatabase()方法从数据库中获取数据，然后将数据
+            // 写入localCache对象中。如果localCache中缓存了本次查询的结果，则直接从缓存中获取。
             if (list != null) {
                 handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
             } else {
@@ -146,6 +150,10 @@ public abstract class BaseExecutor implements Executor {
             }
             deferredLoads.clear(); // issue #601
             if (configuration.getLocalCacheScope() == LocalCacheScope.STATEMENT) {
+                // 需要注意的是，如果localCacheScope属性设置为STATEMENT，则每次查询操作完成后，都
+                // 会调用clearLocalCache()方法清空缓存。除此之外，MyBatis会在执行完任意更新语句后清空缓存
+                // 在分布式环境下，务必将MyBatis的localCacheScope属性设置为STATEMENT，避免其他应用节点执行SQL更新语
+                // 句后，本节点缓存得不到刷新而导致的数据一致性问题。
                 clearLocalCache(); // issue #482
             }
         }
@@ -164,6 +172,12 @@ public abstract class BaseExecutor implements Executor {
 
     public CacheKey createCacheKey(MappedStatement ms, Object parameterObject, RowBounds rowBounds, BoundSql boundSql) {
         if (closed) throw new ExecutorException("Executor was closed.");
+        // 从上面的代码可以看出，缓存的Key与下面这些因素有关：
+        // （1）Mapper的Id，即Mapper命名空间与<select|update|insert|delete>标签的Id组成的全局限定名。\
+        // （2）查询结果的偏移量及查询的条数。
+        // （3）具体的SQL语句及SQL语句中需要传递的所有参数。
+        // （4）MyBatis主配置文件中，通过<environment>标签配置的环境信息对应的Id属性值。
+        // 执行两次查询时，只有上面的信息完全相同时，才会认为两次查询执行的是相同的SQL语句，缓存才会生效。
         CacheKey cacheKey = new CacheKey();
         cacheKey.update(ms.getId());
         cacheKey.update(rowBounds.getOffset());

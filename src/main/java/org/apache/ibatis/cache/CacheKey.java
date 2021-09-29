@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *  MyBatis通过CacheKey对象来描述缓存的Key值。在进行查询操作时，首先创建CacheKey对象
+ * （CacheKey对象决定了缓存的Key与哪些因素有关系）。如果两次查询操作CacheKey对象相同，
+ * 就认为这两次查询执行的是相同的SQL语句。CacheKey对象通过BaseExecutor类的createCacheKey()方法创建。
+ *
  * @author Clinton Begin
  */
 public class CacheKey implements Cloneable, Serializable {
