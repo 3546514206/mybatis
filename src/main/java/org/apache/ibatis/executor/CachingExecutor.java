@@ -15,29 +15,35 @@
  */
 package org.apache.ibatis.executor;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import org.apache.ibatis.cache.Cache;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.cache.TransactionalCacheManager;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
-import org.apache.ibatis.mapping.StatementType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.transaction.Transaction;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
+ * SqlSession将执行Mapper的逻辑委托给Executor组件完成，而Executor接口有几种不同的实
+ * 现，分别为SimpleExecutor、BatchExecutor、ReuseExecutor。另外，还有一个比
+ * 较特殊的CachingExecutor，CachingExecutor用到了装饰器模式，在其他几种Executor的基础
+ * 上增加了二级缓存功能。
+ *
  * @author Clinton Begin
  * @author Eduardo Macarron
  */
 public class CachingExecutor implements Executor {
 
     private Executor delegate;
+
+    /**
+     * CachingExecutor类中维护了一个TransactionalCacheManager实例，
+     * TransactionalCacheManager用于管理所有的二级缓存对象。
+     */
     private TransactionalCacheManager tcm = new TransactionalCacheManager();
 
     public CachingExecutor(Executor delegate) {
@@ -87,13 +93,13 @@ public class CachingExecutor implements Executor {
                 @SuppressWarnings("unchecked")
                 List<E> list = (List<E>) tcm.getObject(cache, key);
                 if (list == null) {
-                    list = delegate.<E>query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+                    list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
                     tcm.putObject(cache, key, list); // issue #578. Query must be not synchronized to prevent deadlocks
                 }
                 return list;
             }
         }
-        return delegate.<E>query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
+        return delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
     }
 
     public List<BatchResult> flushStatements() throws SQLException {
