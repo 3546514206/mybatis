@@ -85,13 +85,16 @@ public class CachingExecutor implements Executor {
 
     public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql)
             throws SQLException {
+        //获取mappedStatement中维护的二级缓存对象
         Cache cache = ms.getCache();
         if (cache != null) {
+            // 根据需要刷新缓存从MappedStatement对象对应的二级缓存中获取数据
             flushCacheIfRequired(ms);
             if (ms.isUseCache() && resultHandler == null) {
                 ensureNoOutParams(ms, parameterObject, boundSql);
                 @SuppressWarnings("unchecked")
-                List<E> list = (List<E>) tcm.getObject(cache, key);
+                //
+                        List<E> list = (List<E>) tcm.getObject(cache, key);
                 if (list == null) {
                     list = delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
                     tcm.putObject(cache, key, list); // issue #578. Query must be not synchronized to prevent deadlocks
