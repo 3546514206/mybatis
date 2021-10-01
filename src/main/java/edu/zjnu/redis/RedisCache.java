@@ -24,16 +24,21 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 
 /**
- * Cache adapter for Redis.
- *
- * @author Eduardo Macarron
- */
+ * @description: 替换 CacheExecutor.query  走的缓存实
+ * 现类，将数据库执行的结果缓存到redis
+ * @author:
+ * @date: 2021-10-01
+ **/
 public final class RedisCache implements Cache {
 
   private static JedisPool pool;
+
   private final ReadWriteLock readWriteLock = new DummyReadWriteLock();
+
   private final RedisConfig redisConfig;
+
   private String id;
+
   private Integer timeout;
 
   public RedisCache(final String id) {
@@ -48,7 +53,6 @@ public final class RedisCache implements Cache {
             redisConfig.getHostnameVerifier());
   }
 
-  // TODO Review this is UNUSED
   private Object execute(RedisCallback callback) {
     Jedis jedis = pool.getResource();
     try {
@@ -76,44 +80,35 @@ public final class RedisCache implements Cache {
 
   @Override
   public void putObject(final Object key, final Object value) {
+
     execute(jedis -> {
+
       final byte[] idBytes = id.getBytes();
       jedis.hset(idBytes, key.toString().getBytes(), redisConfig.getSerializer().serialize(value));
       if (timeout != null && jedis.ttl(idBytes) == -1) {
         jedis.expire(idBytes, timeout);
       }
+
       return null;
     });
   }
 
   @Override
   public Object getObject(final Object key) {
-    return execute(new RedisCallback() {
-      @Override
-      public Object doWithRedis(Jedis jedis) {
-        return redisConfig.getSerializer().unserialize(jedis.hget(id.getBytes(), key.toString().getBytes()));
-      }
-    });
+
+    return execute(jedis -> redisConfig.getSerializer().unserialize(jedis.hget(id.getBytes(), key.toString().getBytes())));
   }
 
   @Override
   public Object removeObject(final Object key) {
-    return execute(new RedisCallback() {
-      @Override
-      public Object doWithRedis(Jedis jedis) {
-        return jedis.hdel(id, key.toString());
-      }
-    });
+    return execute(jedis -> jedis.hdel(id, key.toString()));
   }
 
   @Override
   public void clear() {
-    execute(new RedisCallback() {
-      @Override
-      public Object doWithRedis(Jedis jedis) {
-        jedis.del(id);
-        return null;
-      }
+    execute(jedis -> {
+      jedis.del(id);
+      return null;
     });
 
   }
