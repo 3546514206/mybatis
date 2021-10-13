@@ -86,9 +86,7 @@ public class Configuration {
 
     protected Environment environment;
 
-    /**
-     * 这些布尔值可以通过<setting/>配置
-     */
+    //这些布尔值可以通过<setting/>配置
     protected boolean safeRowBoundsEnabled = false;
     protected boolean safeResultHandlerEnabled = true;
     protected boolean mapUnderscoreToCamelCase = false;
