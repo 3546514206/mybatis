@@ -1,0 +1,12 @@
+2021-10-13 20:14:27 [INFO] Redisson 3.11.1
+2021-10-13 20:14:28 [INFO] 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2021-10-13 20:14:28 [INFO] 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2021-10-13 20:14:53 [INFO] Redisson 3.11.1
+2021-10-13 20:14:54 [INFO] 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2021-10-13 20:14:54 [INFO] 1 connections initialized for 127.0.0.1/127.0.0.1:6379
+2021-10-13 20:17:28 [INFO] Redisson 3.11.1
+2021-10-13 20:18:21 [INFO] Redisson 3.11.1
+2021-10-13 20:18:40 [INFO] Redisson 3.11.1
+2021-10-13 20:20:07 [INFO] Redisson 3.11.1
+2021-10-13 20:20:08 [INFO] 24 connections initialized for 127.0.0.1/127.0.0.1:6379
+2021-10-13 20:20:08 [INFO] 1 connections initialized for 127.0.0.1/127.0.0.1:6379

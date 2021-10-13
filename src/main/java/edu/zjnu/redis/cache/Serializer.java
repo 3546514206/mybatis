@@ -13,14 +13,24 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package edu.zjnu.redis.sslconfig;
+package edu.zjnu.redis.cache;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
+public interface Serializer {
 
-public class TestHostnameVerifier implements HostnameVerifier {
-  @Override
-  public boolean verify(String hostname, SSLSession session) {
-    return false;
-  }
+  /**
+   * Serialize method
+   *
+   * @param object
+   * @return serialized bytes
+   */
+  byte[] serialize(Object object);
+
+  /**
+   * Unserialize method
+   *
+   * @param bytes
+   * @return unserialized object
+   */
+  Object unserialize(byte[] bytes);
+
 }

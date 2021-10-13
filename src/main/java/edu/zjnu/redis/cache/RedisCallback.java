@@ -13,9 +13,12 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package edu.zjnu.redis.sslconfig;
+package edu.zjnu.redis.cache;
 
-import javax.net.ssl.SSLParameters;
+import redis.clients.jedis.Jedis;
 
-public class TestSSLParameters extends SSLParameters {
+@FunctionalInterface
+public interface RedisCallback {
+
+  Object doWithRedis(Jedis jedis);
 }

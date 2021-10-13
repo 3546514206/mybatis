@@ -13,7 +13,7 @@
  *    See the License for the specific language governing permissions and
  *    limitations under the License.
  */
-package edu.zjnu.redis;
+package edu.zjnu.redis.cache;
 
 import org.apache.ibatis.cache.CacheException;
 import org.apache.ibatis.io.Resources;
