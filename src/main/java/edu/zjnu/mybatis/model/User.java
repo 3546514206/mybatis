@@ -1,5 +1,6 @@
 package edu.zjnu.mybatis.model;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,9 +10,18 @@ import java.util.List;
  */
 public class User {
 
-    private int id;
+    private Integer id;
     private String username;
     private String password;
+    private Integer isVip;
+    private String adder;
+    private Integer age ;
+    private Date birth ;
+    private Integer height ;
+    private Date createTime;
+    private Integer creator;
+    private Date updateTime;
+    private Integer updater;
     private List<Role> roleList;
 
     public User(String username, String password) {
@@ -52,5 +62,81 @@ public class User {
 
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getIsVip() {
+        return isVip;
+    }
+
+    public void setIsVip(Integer isVip) {
+        this.isVip = isVip;
+    }
+
+    public String getAdder() {
+        return adder;
+    }
+
+    public void setAdder(String adder) {
+        this.adder = adder;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Date getBirth() {
+        return birth;
+    }
+
+    public void setBirth(Date birth) {
+        this.birth = birth;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Integer getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Integer creator) {
+        this.creator = creator;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Integer getUpdater() {
+        return updater;
+    }
+
+    public void setUpdater(Integer updater) {
+        this.updater = updater;
     }
 }
