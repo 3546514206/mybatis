@@ -1,4 +1,4 @@
-package edu.zjnu.mybatis;
+package edu.zjnu.mysql;
 
 import edu.zjnu.mybatis.dao.UserDao;
 import edu.zjnu.mybatis.model.User;
@@ -10,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @description: 一千万条数据

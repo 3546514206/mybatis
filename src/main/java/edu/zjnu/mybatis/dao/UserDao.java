@@ -24,4 +24,6 @@ public interface UserDao {
     List<User> getAllUsers();
 
     List<User> getUserList(int id);
+
+    void modifyAgeAddOneById(int i);
 }

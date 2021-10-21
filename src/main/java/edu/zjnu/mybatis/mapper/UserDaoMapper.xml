@@ -60,6 +60,10 @@
         UPDATE user SET password=#{param2} WHERE username=#{param1}
     </update>
 
+    <update id="modifyAgeAddOneById">
+        UPDATE user SET age = age + 1 WHERE id = #{id}
+    </update>
+
     <delete id="deleteUser" parameterType="String">
         DELETE FROM user WHERE username=#{username}
     </delete>
