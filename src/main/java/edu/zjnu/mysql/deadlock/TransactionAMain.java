@@ -34,7 +34,7 @@ public class TransactionAMain {
         // 断点
         System.out.println();
         //更新id=2的记录
-        userDao.modifyAgeAddOneById(2);
+        //userDao.modifyAgeAddOneById(2);
         session.commit();
 
 

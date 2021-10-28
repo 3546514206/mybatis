@@ -4,8 +4,13 @@
 
 
 <configuration>
+    
 
     <properties resource="jdbc.properties"/>
+    
+    <plugins>
+        <plugin interceptor="edu.zjnu.mysql.plugin.MyPlugin"></plugin>
+    </plugins>
 
     <!--    <settings>-->
     <!--        <setting name="cacheEnabled" value="true"/>-->
@@ -36,11 +41,15 @@
             </dataSource>
         </environment>
     </environments>
+    
+    
 
     <mappers>
         <mapper resource="edu/zjnu/mybatis/mapper/UserDaoMapper.xml"/>
         <mapper resource="edu/zjnu/mybatis/mapper/RoleDaoMapper.xml"/>
         <mapper resource="edu/zjnu/mybatis/mapper/CustomerDaoMapper.xml"/>
     </mappers>
+    
+    
 
 </configuration>
