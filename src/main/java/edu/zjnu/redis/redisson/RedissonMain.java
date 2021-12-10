@@ -26,6 +26,7 @@ public class RedissonMain {
     }
 
     private static RedissonClient getRedissonClient() {
+
         Config config = new Config();
         //config.setCodec(new org.redisson.client.codec.StringCodec());
         config.useSingleServer().setAddress("redis://127.0.0.1:6379");
