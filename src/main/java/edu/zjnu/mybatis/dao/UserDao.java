@@ -3,6 +3,7 @@ package edu.zjnu.mybatis.dao;
 import edu.zjnu.mybatis.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author: wangzhenqing
@@ -12,6 +13,8 @@ import java.util.List;
 public interface UserDao {
 
     User getUserByName(String username);
+
+    User getUserByDynamicSql(Map map);
 
     List<User> getUsersByCache();
 

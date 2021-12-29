@@ -55,6 +55,21 @@
         from user
     </select>
 
+    <select id="getUserByDynamicSql" resultType="edu.zjnu.mybatis.model.User">
+        SELECT * FROM user
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id}
+            </if>
+            <if test="username != null">
+                AND username like #{username}
+            </if>
+            <if test="password != null ">
+                AND password like #{password}
+            </if>
+        </where>
+    </select>
+
 
     <update id="modifyUser" parameterType="Map">
         UPDATE user SET password=#{param2} WHERE username=#{param1}

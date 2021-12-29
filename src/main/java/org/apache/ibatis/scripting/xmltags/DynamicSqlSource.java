@@ -15,12 +15,12 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.Map;
-
 import org.apache.ibatis.builder.SqlSourceBuilder;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.session.Configuration;
+
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -38,6 +38,7 @@ public class DynamicSqlSource implements SqlSource {
     public BoundSql getBoundSql(Object parameterObject) {
         DynamicContext context = new DynamicContext(configuration, parameterObject);
         rootSqlNode.apply(context);
+        // 当出现where and id=1 的情况是，处理and的逻辑在这里？
         SqlSourceBuilder sqlSourceParser = new SqlSourceBuilder(configuration);
         Class<?> parameterType = parameterObject == null ? Object.class : parameterObject.getClass();
         SqlSource sqlSource = sqlSourceParser.parse(context.getSql(), parameterType, context.getBindings());
