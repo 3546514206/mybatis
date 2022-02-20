@@ -74,6 +74,7 @@ public class BatchExecutor extends BaseExecutor {
         return BATCH_UPDATE_RETURN_VALUE;
     }
 
+    @Override
     public <E> List<E> doQuery(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, BoundSql boundSql)
             throws SQLException {
         // 看到没，这里就是对JDBC的封装
