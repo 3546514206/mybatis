@@ -18,10 +18,12 @@ public class JDBC {
         try {
             //1.加载驱动
             // DriverManager.registerDriver(new Driver());
-            Class.forName("com.mysql.jdbc.Driver");//加载类时就会加载驱动,需要导入jar包
+            Class.forName("com.mysql.jdbc.Driver");
+
 
             //2.获得链接
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mybatis", "root", "Yhb199605"); //替换成自己的数据库名称
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mybatis", "root", null); //替换成自己的数据库名称
+
 
             //3.创建执行SQL语句的对象，执行SQl
             //3.1 创建执行SQL的对象
