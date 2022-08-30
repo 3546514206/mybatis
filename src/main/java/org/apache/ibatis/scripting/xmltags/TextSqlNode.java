@@ -36,12 +36,14 @@ public class TextSqlNode implements SqlNode {
         return checker.isDynamic();
     }
 
+    @Override
     public boolean apply(DynamicContext context) {
         GenericTokenParser parser = createParser(new BindingTokenParser(context));
         context.appendSql(parser.parse(text));
         return true;
     }
 
+    //
     private GenericTokenParser createParser(TokenHandler handler) {
         return new GenericTokenParser("${", "}", handler);
     }
@@ -54,6 +56,7 @@ public class TextSqlNode implements SqlNode {
             this.context = context;
         }
 
+        @Override
         public String handleToken(String content) {
             Object parameter = context.getBindings().get("_parameter");
             if (parameter == null) {

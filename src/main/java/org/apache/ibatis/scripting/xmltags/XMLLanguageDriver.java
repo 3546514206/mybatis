@@ -33,15 +33,21 @@ import org.apache.ibatis.session.Configuration;
  */
 public class XMLLanguageDriver implements LanguageDriver {
 
+    @Override
     public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
         return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
     }
 
+    // 创建 SqlSource
+    @Override
     public SqlSource createSqlSource(Configuration configuration, XNode script, Class<?> parameterType) {
+        // 创建 XMLScriptBuilder 对象
         XMLScriptBuilder builder = new XMLScriptBuilder(configuration, script, parameterType);
+        // 通过 XMLScriptBuilder 解析 SQL 脚本
         return builder.parseScriptNode();
     }
 
+    @Override
     public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
         if (script.startsWith("<script>")) { // issue #3
             XPathParser parser = new XPathParser(script, false, configuration.getVariables(), new XMLMapperEntityResolver());

@@ -65,10 +65,12 @@ public class DefaultSqlSession implements SqlSession {
         this(configuration, executor, false);
     }
 
+    @Override
     public <T> T selectOne(String statement) {
         return this.selectOne(statement, null);
     }
 
+    @Override
     public <T> T selectOne(String statement, Object parameter) {
         // Popular vote was to return null on 0 results and throw exception on too many.
         List<T> list = this.selectList(statement, parameter);
@@ -130,14 +132,17 @@ public class DefaultSqlSession implements SqlSession {
         }
     }
 
+    @Override
     public void select(String statement, Object parameter, ResultHandler handler) {
         select(statement, parameter, RowBounds.DEFAULT, handler);
     }
 
+    @Override
     public void select(String statement, ResultHandler handler) {
         select(statement, null, RowBounds.DEFAULT, handler);
     }
 
+    @Override
     public void select(String statement, Object parameter, RowBounds rowBounds, ResultHandler handler) {
         try {
             MappedStatement ms = configuration.getMappedStatement(statement);
@@ -149,18 +154,22 @@ public class DefaultSqlSession implements SqlSession {
         }
     }
 
+    @Override
     public int insert(String statement) {
         return insert(statement, null);
     }
 
+    @Override
     public int insert(String statement, Object parameter) {
         return update(statement, parameter);
     }
 
+    @Override
     public int update(String statement) {
         return update(statement, null);
     }
 
+    @Override
     public int update(String statement, Object parameter) {
         try {
             dirty = true;

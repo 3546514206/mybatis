@@ -17,7 +17,7 @@ import java.util.Properties;
  * @author: 杨海波
  * @date: 2021-09-13
  **/
-public class DataSourceMain {
+public class  DataSourceMain {
 
     public static void main(String[] args) throws IOException, SQLException {
         DataSourceFactory dataSourceFactory = new UnpooledDataSourceFactory();

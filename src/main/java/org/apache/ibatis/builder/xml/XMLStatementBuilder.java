@@ -49,16 +49,22 @@ public class XMLStatementBuilder extends BaseBuilder {
         this.requiredDatabaseId = databaseId;
     }
 
+    /**
+     * 解析mapper中的SQL语句
+     */
     public void parseStatementNode() {
         String id = context.getStringAttribute("id");
         String databaseId = context.getStringAttribute("databaseId");
-
-        if (!databaseIdMatchesCurrent(id, databaseId, this.requiredDatabaseId)) return;
-
+        // 校验databaseId是否匹配
+        if (!databaseIdMatchesCurrent(id, databaseId, this.requiredDatabaseId)) {
+            return;
+        }
+        // SQL标签属性解析
         Integer fetchSize = context.getIntAttribute("fetchSize");
         Integer timeout = context.getIntAttribute("timeout");
         String parameterMap = context.getStringAttribute("parameterMap");
         String parameterType = context.getStringAttribute("parameterType");
+        // 参数类型
         Class<?> parameterTypeClass = resolveClass(parameterType);
         String resultMap = context.getStringAttribute("resultMap");
         String resultType = context.getStringAttribute("resultType");
@@ -67,6 +73,7 @@ public class XMLStatementBuilder extends BaseBuilder {
 
         Class<?> resultTypeClass = resolveClass(resultType);
         String resultSetType = context.getStringAttribute("resultSetType");
+        //Statement类型,默认PreparedStatement
         StatementType statementType = StatementType.valueOf(context.getStringAttribute("statementType", StatementType.PREPARED.toString()));
         ResultSetType resultSetTypeEnum = resolveResultSetType(resultSetType);
 
@@ -85,6 +92,7 @@ public class XMLStatementBuilder extends BaseBuilder {
         processSelectKeyNodes(id, parameterTypeClass, langDriver);
 
         // Parse the SQL (pre: <selectKey> and <include> were parsed and removed)
+        //重要:解析SQL语句,封装成一个SqlSource
         SqlSource sqlSource = langDriver.createSqlSource(configuration, context, parameterTypeClass);
         String resultSets = context.getStringAttribute("resultSets");
         String keyProperty = context.getStringAttribute("keyProperty");

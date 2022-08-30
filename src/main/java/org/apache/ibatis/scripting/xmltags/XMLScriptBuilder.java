@@ -15,11 +15,6 @@
  */
 package org.apache.ibatis.scripting.xmltags;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.builder.BaseBuilder;
 import org.apache.ibatis.builder.BuilderException;
 import org.apache.ibatis.mapping.SqlSource;
@@ -28,6 +23,11 @@ import org.apache.ibatis.scripting.defaults.RawSqlSource;
 import org.apache.ibatis.session.Configuration;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Clinton Begin
@@ -48,9 +48,16 @@ public class XMLScriptBuilder extends BaseBuilder {
         this.parameterType = parameterType;
     }
 
+    /**
+     * 解析SQL脚本
+     */
     public SqlSource parseScriptNode() {
+        // 解析动态标签,包括动态SQL和${}。执行后动态SQL和${}已经被解析完毕。
+        // 此时 SQL 语句中的#{}还没有处理,#{} 会在 SQL 执行时动态解析
         List<SqlNode> contents = parseDynamicTags(context);
         MixedSqlNode rootSqlNode = new MixedSqlNode(contents);
+
+        // 如果是 dynamic 的,则创建 DynamicSqlSource,否则创建 RawSqlSource
         SqlSource sqlSource = null;
         if (isDynamic) {
             sqlSource = new DynamicSqlSource(configuration, rootSqlNode);
@@ -65,13 +72,18 @@ public class XMLScriptBuilder extends BaseBuilder {
         NodeList children = node.getNode().getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             XNode child = node.newXNode(children.item(i));
+
+            // 处理文本节点( SQL 语句)
             if (child.getNode().getNodeType() == Node.CDATA_SECTION_NODE || child.getNode().getNodeType() == Node.TEXT_NODE) {
+                // 把 SQL 封装到 TextSqlNode
                 String data = child.getStringBody("");
                 TextSqlNode textSqlNode = new TextSqlNode(data);
+                // 如果包含 ${},则是 dynamic 的
                 if (textSqlNode.isDynamic()) {
                     contents.add(textSqlNode);
                     isDynamic = true;
                 } else {
+                    // 除了 ${} 外,其他的 SQL 都是静态的
                     contents.add(new StaticTextSqlNode(data));
                 }
             } else if (child.getNode().getNodeType() == Node.ELEMENT_NODE) { // issue #628
